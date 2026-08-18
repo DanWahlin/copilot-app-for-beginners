@@ -29,15 +29,14 @@ By the end of this chapter, you'll be able to:
 
 ## ✅ Prerequisites
 
-- A [GitHub account](https://github.com/signup) with [GitHub Copilot](https://github.com/features/copilot/plans) access
+- A [GitHub account](https://github.com/signup). A [Copilot plan](https://github.com/features/copilot/plans) is the usual path; you can also continue with your own model provider during sign-in
 - [Git](https://git-scm.com/install) installed
 - A fork of the [course repository][course-repository]. Many chapters in the course use the issues, branches, and pull requests seeded into your fork, so treat the fork as required unless you only plan to read along
-- [Node.js LTS and npm](https://nodejs.org) for later chapters that use `samples/book-app-web`
+- [Node.js LTS and npm](https://nodejs.org) for the setup script and for later chapters that use `samples/book-app-web`
 - [GitHub CLI (`gh`)](https://cli.github.com) for the setup script used in the course
-- [Python 3](https://www.python.org/downloads) for the macOS, Linux, or Git Bash setup script. The Windows PowerShell script does not need Python.
 - Permission to use the app if your account belongs to a GitHub Copilot Business or Enterprise organization
 
-> Note: A paid Copilot plan is required for the app. Business or Enterprise users may also need an administrator to enable the Copilot CLI policy or related app policies.
+> Note: The GitHub Copilot app is available with a Copilot plan, or you can continue with your own model provider (bring your own key) during sign-in. For Copilot Business or Enterprise, an administrator must leave the **GitHub Copilot app** policy enabled. That policy is on by default and is separate from the Copilot CLI policy.
 
 Quick checks before you continue (run these in a terminal):
 
@@ -48,7 +47,7 @@ npm -v
 gh --version
 ```
 
-You should see a version number for each command. Install anything that is missing before the setup script step.
+You should see a version number for each command. Install anything that is missing before the setup script step. The sample app needs a current Node.js LTS release. If `npm install` later fails with an engines error, update Node from [nodejs.org](https://nodejs.org).
 
 ---
 
@@ -58,17 +57,16 @@ Before you record anything, you get the recording studio ready. You sign in for 
 
 ![Setting up the studio analogy for GitHub Copilot app setup](assets/studio-setup-soundcheck.webp)
 
-The Copilot App setup is the same idea. In the following examples you'll do the following:
+The GitHub Copilot app setup is the same idea. The graphic matches the six steps below.
 
 1. Install the GitHub Copilot app
 2. Sign in to the app
-3. Fork and clone the course repository
-4. Run a setup script
-5. Connect the course repository to the app
-6. Ask a first question about the repository
-7. Start a small session
+3. Fork, clone, and run the setup script
+4. Connect the course repository
+5. Ask a first question in Chats
+6. Start a small project session
 
-![First 10 minutes in the GitHub Copilot app](assets/first-10-minutes-flow.webp)
+![First 10 minutes in the GitHub Copilot app: install, sign in, fork clone and run the setup script, connect the course repository, ask a first question in Chats, then start a small project session](assets/first-10-minutes-flow.webp)
 
 ## Core Concepts
 
@@ -138,33 +136,19 @@ Forking gives you your own copy of the course repository so the setup script can
 
     **Do a dry run of the setup script**
 
-    *MacOS, Linux, or Git Bash (requires Python 3)*
+    ```bash
+    node .github/scripts/setup-training-scenarios.js --dry-run
+    ```
+
+    Confirm that the `Repository:` line shows your fork.
+
+    **Run the script**
 
     ```bash
-    .github/scripts/setup-training-scenarios.sh --dry-run
+    node .github/scripts/setup-training-scenarios.js --yes
     ```
 
-    *Windows PowerShell*
-
-    ```powershell
-    powershell -ExecutionPolicy Bypass -File .\.github\scripts\setup-training-scenarios.ps1 -DryRun
-    ```
-
-    **Run the Script**
-
-    *MacOS, Linux, or Git Bash*
-
-    ```bash
-    .github/scripts/setup-training-scenarios.sh
-    ```
-
-    *Windows PowerShell*
-
-    ```powershell
-    powershell -ExecutionPolicy Bypass -File .\.github\scripts\setup-training-scenarios.ps1
-    ```
-
-    The setup script for your shell creates the GitHub issues, branches, pull requests, comments, and failing-check scenario used in later chapters. It is safe to rerun if needed because it reuses items that already exist.
+    The same Node.js command works on Windows, macOS, and Linux. The `--yes` option confirms that you reviewed the repository shown by the dry run. The script creates the GitHub issues, branches, pull requests, comments, and failing-check scenario used in later chapters. It is safe to rerun if needed because it reuses items that already exist.
 
 #### Success Check
 
@@ -241,6 +225,8 @@ You're able to answer these questions:
 
 ## Troubleshooting
 
+If you are still stuck after this list, see the [Troubleshooting Reference](../appendices/troubleshooting-reference.md).
+
 <details>
 <summary>Setup and access problems</summary>
 
@@ -249,8 +235,8 @@ You're able to answer these questions:
 Check:
 
 - You're using the expected GitHub account
-- Your Copilot plan is active
-- Your organization allows the app and related Copilot policies
+- You have a Copilot plan, or you continued with your own model provider
+- Your organization left the **GitHub Copilot app** policy enabled (separate from the Copilot CLI policy)
 - You entered the correct GitHub Enterprise Server URL if required
 
 ### I Cannot See the Repository

@@ -135,7 +135,7 @@ If a control label differs slightly by app version, stay on Manual + read-only t
 
 ![New automation form with the trigger dropdown open showing Manual, scheduled, and issue-based choices](assets/app-automation-new-triggers.webp)
 
-> Note: The trigger list offers more than this chapter uses: hourly, daily, weekly, and CRON schedules, plus event triggers for issue comments, pull request comments, and merged pull requests. You'll also see a **Templates** gallery with prebuilt automations. The same rules apply to all of them: start manual and read-only, then expand once the prompt is trustworthy.
+> Note: Official automations docs list **Manual**, **Hourly**, **Daily**, **Weekly**, **CRON**, **Issue**, and **Pull request** trigger categories. The exact events available under Issue and Pull request can vary by app version or repository capabilities. Use only **Manual** for this chapter. You'll also see a **Templates** gallery with prebuilt automations. The same rules apply: start manual and read-only, then expand once the prompt is trustworthy.
 
 Use this prompt:
 
@@ -167,7 +167,7 @@ The automation saves the prompt and trigger so you can run the same bounded task
 
 Run the automation manually. Then open the run details.
 
-![Automations tab showing a saved automation with trigger type and last run status](assets/app-automations-list.webp)
+![Automations tab showing the course open-work summary. Ignore any leftover personal automations in the capture, such as an SRT file task](assets/app-automations-list.webp)
 
 Look for:
 
@@ -270,11 +270,11 @@ Cloud automations can run when your machine is off, but they can depend on:
 - permissions
 - private or internal repository access for some cloud flows
 
-Use cloud automations only after the manual version works and after you understand the permission model. If cloud automations are unavailable on a public fork, stay on local manual runs for this course.
+Use cloud automations only after the manual version works and after you understand the permission model. Cloud automations can be unavailable on a public fork, which is what this course uses. Stay on local manual runs unless your account and repository clearly support cloud automations.
 
 ![Local versus cloud automations](assets/local-vs-cloud-automations.webp)
 
-![Cloud automation form with the Tools selector for least-privilege tool choices](assets/app-automation-cloud-tools.webp)
+![Cloud automation Tools selector. This capture still shows many tools selected. For the course, keep only read actions such as Read issue, List issues, and Search issues](assets/app-automation-cloud-tools.webp)
 
 </details>
 
@@ -298,6 +298,8 @@ If an issue-triggered automation fires too often, narrow the issue search query,
 ---
 
 ## Troubleshooting
+
+If you are still stuck, see the [Troubleshooting Reference](../appendices/troubleshooting-reference.md).
 
 <details>
 <summary>Automation issues</summary>
@@ -351,7 +353,7 @@ Here's a recap of everything you practiced:
 
 | Area | What you practiced |
 |---|---|
-| Sessions and worktrees | Work in scoped branches and isolated worktrees, including parallel sessions |
+| Sessions and worktrees | Work in scoped branches and isolated worktrees. Parallel sessions were optional |
 | Context | Use prompts, files, issues, and instructions intentionally |
 | Development and GitHub | Plan, change, and validate with tests, builds, browser previews, and diffs, then move work through issues, PRs, checks, and guided fixes |
 | Customization | Repository instructions, skills, MCP servers, and plugins |

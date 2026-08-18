@@ -6,7 +6,7 @@ It is intentionally small so learners can focus on app workflows instead of back
 
 ## Run the app
 
-Use Node.js 20.19+ or 22.12+.
+Use the current Node.js LTS.
 
 ```bash
 npm install

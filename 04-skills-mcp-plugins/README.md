@@ -69,7 +69,7 @@ Skills package task-specific instructions in a folder with a `SKILL.md` file. Gi
 
 ![Extending the GitHub Copilot app](assets/extending-copilot-app.webp)
 
-![Skills settings showing installed and available skills](assets/app-settings-skills.webp)
+![Skills settings. Your list will be shorter than this capture. Look for Project skills and `book-app-reviewer`, not every skill on someone else's machine](assets/app-settings-skills.webp)
 
 You can manage skills in app **Settings → Skills**. Skills already configured for your repositories or Copilot CLI are also available in the GitHub Copilot app.
 
@@ -181,10 +181,10 @@ The prompt and skill description point at the same concerns, so GitHub Copilot h
 
 ### 3. Use the skill before a real change
 
-Ask GitHub Copilot to plan a small improvement:
+Ask GitHub Copilot to plan a small improvement. Use book-card layout this time, not empty-state copy:
 
 ```text
-Using the book-app-reviewer skill, create a plan to improve the empty-state copy in @samples/book-app-web. Keep the change small and include validation commands. Do not edit files yet.
+Using the book-app-reviewer skill, create a plan to improve book-card spacing or responsive layout in @samples/book-app-web. Keep the change small and include validation commands. Do not edit files yet.
 ```
 
 Pause and inspect the plan before allowing implementation.
@@ -193,8 +193,8 @@ Pause and inspect the plan before allowing implementation.
 
 The plan should include:
 
-- the likely files to inspect
-- a small copy or accessibility improvement
+- the likely files to inspect, such as `BookCard.tsx` or `app.css`
+- a small spacing, hierarchy, or responsive-layout improvement
 - validation with:
   - `cd samples/book-app-web`
   - `npm test -- --run`
@@ -207,7 +207,7 @@ Demo output varies.
 Before you allow any file edits, confirm:
 
 1. The change is small enough for a beginner course chapter.
-2. The skill's accessibility or empty-state guidance is visible in the plan.
+2. The skill's accessibility or responsive-layout guidance is visible in the plan.
 3. Validation commands are present.
 4. You still want the change.
 
@@ -270,7 +270,7 @@ Custom agents are specialized roles. In a session, type `/agent` to choose one. 
 
 Use `/agent` only after you're able to explain why a role is better than a skill for the task.
 
-<!-- app-screenshot: ADVANCED: `/agent` picker showing available built-in, custom, plugin, or user agents, with personal details hidden. -->
+If `/agent` is available, the picker lists built-in, custom, plugin, or user agents. Skip it unless you can say why a role is better than the `book-app-reviewer` skill for this task.
 
 | Use a skill when... | Use a custom agent when... |
 |---|---|
@@ -288,6 +288,8 @@ The GitHub Copilot app also ships built-in skills. Treat them as optional tools 
 ---
 
 ## Troubleshooting
+
+If you are still stuck, see the [Troubleshooting Reference](../appendices/troubleshooting-reference.md).
 
 <details>
 <summary>Skills and extension issues</summary>
@@ -319,9 +321,9 @@ The GitHub Copilot app also ships built-in skills. Treat them as optional tools 
 
 ![Assignment](../assets/assignment.webp)
 
-Improve the `book-app-reviewer` skill:
+Improve the `book-app-reviewer` skill on a branch. Do not commit it unless you intend to contribute the change.
 
-1. Add one rule about empty-state copy.
+1. Add one rule about book-card spacing or visual hierarchy.
 2. Add one rule about validating responsive layout in the browser.
 3. Ask GitHub Copilot to review the skill for clarity.
 4. Use the skill in a Plan-mode prompt against `@samples/book-app-web`.
@@ -332,7 +334,7 @@ Success criteria: You're able to explain why the required exercise uses a repo-l
 
 ## ➡️ What's Next
 
-In the next chapter, you'll use canvases as shared control panels for a session. Start with built-in plan, browser, and terminal surfaces, then track a session plan and validation board for `samples/book-app-web`.
+In the next chapter, you'll use canvases as shared control panels for a session. Start with built-in plan, browser, and terminal surfaces, then run `/create-canvas` for a session board on `samples/book-app-web`.
 
 **[← Back to Chapter 03](../03-development-workflows/README.md)** | **[Next: Canvases →](../05-canvases/README.md)**
 

@@ -28,7 +28,7 @@ By the end of the course, you'll be able to:
 - Attach useful context with `@`, `#`, and `/`
 - Review diffs, run tests, preview a web app, and validate changes
 - Use My work for issues, PRs, review comments, and failing checks
-- Understand where settings, instructions, skills, canvases, automations, and Agent Merge fit
+- Understand where settings, instructions, skills, canvases, and automations fit
 
 The main sample used throughout the course can be found at:
 
@@ -45,7 +45,9 @@ This course is designed for:
 - Teams evaluating how to keep humans in control while agents do more work
 - Copilot CLI or IDE Copilot users who want to understand where the desktop app fits
 
-No agentic development experience is required. Basic GitHub, Git, and JavaScript project familiarity will help. The sample app is a small React/Vite project, so basic npm command familiarity helps in the development chapters.
+No agentic development experience is required. Basic GitHub, Git, and JavaScript project familiarity will help. The sample app is a small React/Vite project, so basic npm command familiarity helps in the development chapters. Use the current [Node.js LTS](https://nodejs.org) for `samples/book-app-web`.
+
+The GitHub Copilot app works with a Copilot plan or with your own model provider. Business and Enterprise accounts need the **GitHub Copilot app** policy left enabled. That policy is separate from the Copilot CLI policy.
 
 ## 🤖 Understanding the GitHub Copilot Family
 
@@ -67,10 +69,10 @@ This course focuses on the GitHub Copilot app. Along the way, you'll see how it 
 | 00 | 🚀 [Quick Start](./00-quick-start/README.md) | Prepare the course environment and verify a chat |
 | 01 | 👋 [First Steps](./01-first-steps/README.md) | Learn why you'd use the app, then tour key features: UI, Chats, settings, sessions, modes, and model controls |
 | 02 | 🌳 [Sessions, Worktrees, and Context](./02-sessions-worktrees-context/README.md) | Start isolated sessions and use `@`, `#`, and `/` for context |
-| 03 | ⚡ [Development and GitHub Workflows](./03-development-workflows/README.md) | Review, debug, test, and preview a change, then move it through My work, issues, PRs, review comments, checks, guided fixes, and advanced Agent Merge |
+| 03 | ⚡ [Development and GitHub Workflows](./03-development-workflows/README.md) | Review, debug, test, and preview a change, then move it through My work, issues, PRs, review comments, checks, and guided fixes |
 | 04 | 🧰 [Skills, Model Context Protocol (MCP) Servers, and Plugins](./04-skills-mcp-plugins/README.md) | Start with repo-local skills, then learn optional MCP servers, plugins, and agents |
-| 05 | 🖼️ [Canvases](./05-canvases/README.md) | Use session canvases and a plan + validation board as a shared control panel |
-| 06 | 🔁 [Automations](./06-automations/README.md) | Start with a manual open-work summary, then learn schedules and advanced cloud automations |
+| 05 | 🖼️ [Canvases](./05-canvases/README.md) | Run `/create-canvas` for a session board and keep plan plus validation evidence visible |
+| 06 | 🔁 [Automations](./06-automations/README.md) | Start with a manual open-work summary, then learn schedules and optional cloud automations |
 
 ## 📖 How This Course Works
 
@@ -88,6 +90,14 @@ Each chapter follows the same beginner-friendly pattern:
 10. Key takeaways, an assignment, and navigation links
 
 When a chapter shows a model response, remember that demo output varies. Your app version, model, reasoning setting, repository context, and enabled tools can change the response.
+
+## Glossary, Appendices, and Sample
+
+- [Glossary](./GLOSSARY.md)
+- [Git worktrees](./appendices/git-worktrees.md)
+- [Training GitHub scenarios](./appendices/training-github-scenarios.md)
+- [Troubleshooting reference](./appendices/troubleshooting-reference.md)
+- [Book App Web sample](./samples/book-app-web/README.md)
 
 ## Command, Reference, and Help
 

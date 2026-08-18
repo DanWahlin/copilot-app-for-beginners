@@ -6,35 +6,34 @@ Chat works well for instruction and ambiguity. Once a GitHub Copilot session is 
 
 That place is a **canvas**.
 
-A good canvas is not a prettier answer. It is a **shared control panel for the session**: you and GitHub Copilot both look at the same plan, evidence, and next action.
+A canvas is a shared board in the side panel. You create it with `/create-canvas` and say what you want on it. Chat is still for questions. The board is where you and Copilot keep the plan, checks, and next decision visible.
 
-Two related ideas show up in this chapter:
+This chapter asks `/create-canvas` for a **session board**: plan steps, validation checks, and notes. You don't pick a canvas type. The app builds one from your prompt.
 
-| Term | Meaning in this course |
-|---|---|
-| Built-in work surfaces | Plan output, terminal, browser, and diff/Review panel tools already in a session |
-| Custom canvas | An optional extension you can create later with `/create-canvas` |
-
-Built-in work surfaces are *canvas-style*: they make session work visible. A custom canvas extends that idea with its own UI and shared state. You do not need a custom canvas to learn the beginner path.
+| Term | Meaning in this course | Required? |
+|---|---|---|
+| Built-in work surfaces | Plan output, terminal, browser, and the Review panel already in a session | Yes |
+| Session canvas | The board `/create-canvas` opens in the side panel for this session | Yes |
+| Chat fallback | The same board returned as markdown in the session if a canvas does not open | Fallback only |
 
 In this chapter you'll:
 
 1. Recognize built-in work surfaces you already use: plan, browser, and terminal
-2. Track a session plan + validation board for `samples/book-app-web` (markdown is fine)
-3. Optionally create a custom canvas later with `/create-canvas`
+2. Run `/create-canvas` and ask for a session board for `samples/book-app-web`
+3. Update that canvas only when terminal or browser evidence exists
 
-Creating canvas extensions is more involved so the beginner path stays focused on session control.
+If `/create-canvas` is missing or the canvas does not open, keep the same board as markdown in the session and continue. Skip the generated extension files for now.
 
 ## 🎯 Learning Objectives
 
 By the end of this chapter, you'll be able to:
 
-- Explain why canvases exist and when chat is the wrong shape for the job
-- Identify built-in work surfaces such as plan, browser, and terminal as canvas-style panels
-- Use a session plan + validation board for `samples/book-app-web`
-- Keep plan state and validation evidence visible while a session runs
+- Explain why canvases exist and when a long chat thread gets in the way
+- Identify built-in work surfaces such as plan, browser, and terminal
+- Create a session canvas with `/create-canvas`
+- Keep plan state and validation evidence visible on that canvas
 - Explain the difference between chat history and shared canvas state
-- Recognize custom canvas extensions and `/create-canvas` as optional next steps
+- Fall back to markdown in the session if a canvas does not open
 
 > ⏱️ **Estimated Time**: ~50 minutes (15 min reading + 35 min hands-on)
 
@@ -93,7 +92,7 @@ A custom canvas can include:
 
 ### Built-in work surfaces come first
 
-You already used canvas-style surfaces in earlier chapters. These are **not** custom canvas extensions. They are the built-in session panels that make work inspectable:
+You already used these panels in earlier chapters. They come with the session. You don't create them with `/create-canvas`:
 
 | Built-in work surface | What you inspect |
 |---|---|
@@ -102,7 +101,7 @@ You already used canvas-style surfaces in earlier chapters. These are **not** cu
 | Browser | Running app behavior |
 | Diff / Review panel | What changed and what still needs review |
 
-Those surfaces matter because they are tied to the live session. Custom canvases are optional. Session control is the point.
+Those panels stay tied to the live session. In Exercise 2 you'll add one more surface with `/create-canvas`: the session board.
 
 ### When to use a canvas
 
@@ -115,13 +114,15 @@ Those surfaces matter because they are tied to the live session. Custom canvases
 
 ![Chat versus canvas work surfaces](assets/chat-vs-canvas.webp)
 
-### The beginner example: session plan + validation board
+### The beginner example: `/create-canvas` plus a session board
 
-For this course, the main custom example is a board that tracks one session:
+Type `/create-canvas`, then describe the board. The docs show sample prompts, like a kanban board or a planning board. Here you'll ask for a **session board** for one change. Save it in **user scope** (`~/.copilot/extensions`) so the generated files stay on your machine and don't land in the course fork.
+
+The board should include:
 
 ```text
 Plan
-- [ ] Understand empty-state copy
+- [ ] Understand book-card layout
 - [ ] Propose a small change
 - [ ] Pause for approval
 - [ ] Implement
@@ -140,7 +141,7 @@ Session notes
 
 ![Session plan and validation board](assets/session-plan-validation-board.webp)
 
-That board is useful only when it stays linked to evidence from the same session.
+That board is useful only when it stays linked to evidence from the same session. Checking a validation box because the chat sounded confident is not enough.
 
 ---
 
@@ -149,8 +150,8 @@ That board is useful only when it stays linked to evidence from the same session
 In these exercises, you'll:
 
 - Find built-in work surfaces in the app
-- Build a session plan + validation board for the sample app
-- Update the board only when evidence exists
+- Create a session canvas with `/create-canvas`
+- Update that canvas only when evidence exists
 
 ### 1. Find the built-in work surfaces
 
@@ -162,7 +163,7 @@ Open or create a session for the course repository.
 4. Locate the **Browser** surface or browser tab if your build exposes it.
 5. Notice where plan output appears in the session when you ask for a plan.
 
-![Review panel open beside a session, showing the plan surface with the Changes and Plan tabs](assets/app-review-panel.webp)
+![Review panel open beside a session. This capture is a README planning session. Your session title will differ. What matters is the Plan surface, Changes tab, and composer](assets/app-review-panel.webp)
 
 #### Expected result
 
@@ -170,22 +171,22 @@ You can point to at least two built-in work surfaces that make session work insp
 
 #### How it works
 
-Chat still carries the conversation. The plan, terminal, browser, and diff surfaces carry the work. That split is the canvas *idea*. A custom canvas extension is optional and comes later.
+Chat still carries the conversation. The plan, terminal, browser, and diff surfaces carry the work. Next you will run `/create-canvas` so the session board has its own surface in the side panel.
 
 ---
 
-### 2. Create a session plan + validation board
+### 2. Create a session canvas
 
-Stay in the same session. Ask GitHub Copilot:
+Stay in the same session. Type `/` in the composer and select `/create-canvas` if it appears, or paste the prompt below.
 
 ```text
-Create a session plan + validation board for improving empty-state copy in @samples/book-app-web.
+/create-canvas Create a session board for a small book-card spacing or responsive-layout improvement in @samples/book-app-web.
 
-Use this structure and keep it updated as shared state:
+Use this structure:
 
 Plan
-- [ ] Understand current empty-state copy
-- [ ] Propose one small beginner-safe improvement
+- [ ] Understand current book-card layout
+- [ ] Propose one small beginner-safe spacing or responsive improvement
 - [ ] Pause for my approval before editing files
 - [ ] Implement the approved change
 - [ ] Validate
@@ -200,19 +201,23 @@ Session notes
 - next human decision
 - blockers
 
-If a custom canvas is available, put the board there.
-If not, return the board as markdown and keep it updated each turn.
-Markdown is a complete success for this exercise.
-Do not edit files yet.
+People should be able to check and uncheck plan and validation items and edit session notes.
+The agent should update those items only from terminal or browser evidence in this session.
+Keep the first version simple. No GitHub write actions.
+Prefer user scope so this stays on my machine and is not committed.
+Do not edit the book-app-web source files yet.
 ```
 
-> Note: The board you're creating here is shared state in markdown, not a canvas extension. That's the point: you get the canvas *idea* (visible, updatable state you and Copilot both work from) with nothing to install.
+![The /create-canvas skill selected in the session composer typeahead](assets/app-create-canvas-command.webp)
+
+The canvas should open in the right side panel. If `/create-canvas` is missing or the canvas does not open, ask for the same board as markdown in the session and keep it updated each turn. That fallback is enough to finish the chapter.
 
 #### Expected output
 
-- A board with plan steps, validation checks, and session notes
+- A canvas in the side panel, or the same board as markdown in chat
+- Plan steps, validation checks, and session notes
 - A clear pause before file edits
-- No file changes yet
+- No `samples/book-app-web` file changes yet
 
 Demo output varies. What matters is that the board is scannable and tied to this session.
 
@@ -223,7 +228,7 @@ Before any implementation:
 1. Is the proposed change small?
 2. Is the pause point explicit?
 3. Are validation commands exact?
-4. Can you tell the next human decision without rereading the whole chat?
+4. Can you tell the next human decision from the board, without rereading the whole chat?
 
 ---
 
@@ -248,15 +253,14 @@ npm run dev -- --host 127.0.0.1 --port 5173
 Prompt GitHub Copilot:
 
 ```text
-Update the session plan + validation board for samples/book-app-web.
-Mark only the steps that have evidence from terminal or browser output in this session.
-If a custom canvas is available, update that surface.
+Update the session board for samples/book-app-web.
+If the canvas is open, update that surface.
 If not, return the full board as markdown.
-Markdown is enough.
+Mark only the steps that have evidence from terminal or browser output in this session.
 Do not invent passing results.
 ```
 
-<!-- app-screenshot: Canvas controls or markdown board being updated after terminal or browser evidence. -->
+The updated board should match the plan + validation graphic earlier in this chapter. Check off only items you can prove from this session's terminal or browser.
 
 #### Expected output
 
@@ -280,79 +284,38 @@ If you want a second shape to compare, open:
 .github/extensions/release-checklist/README.md
 ```
 
-That folder is a design concept, not a loadable extension. It is useful as a release-oriented checklist, but it is not the hero example for this chapter. Prefer the session plan + validation board because it stays tied to the live session.
+That folder is a design concept, not a loadable extension. It is useful as a release-oriented checklist after you have a pull request. Prefer the session canvas from Exercise 2 because it stays tied to live plan, terminal, and browser evidence.
 
 </details>
 
 <details>
 <summary>Intermediate: Markdown workboards that launch and track sessions</summary>
 
-Official docs also describe markdown canvases that can combine prioritized issues and pull requests, then help launch and track agent sessions from one surface.
-
-That pattern is powerful when your day spans several workstreams. For this beginner chapter, stay with one session board first. After that feels natural, a multi-session workboard is a strong next step.
+After one session board feels natural, you can run `/create-canvas` again for a board that lists issues and pull requests and tracks session status. Official docs show that kind of planning board as another example prompt.
 
 Example stretch prompt:
 
 ```text
-Design a markdown workboard for this repository that lists open issues and pull requests, lets me choose one item, and tracks the session status for that item. Do not create an extension yet. Return the board design only.
+/create-canvas Create a workboard for this repository that lists open issues and pull requests, lets me choose one item, and tracks the session status for that item. Prefer user scope. No GitHub write actions.
 ```
 
 </details>
 
 <details>
-<summary>Advanced: Project-scoped and user-scoped canvases</summary>
+<summary>Advanced: Where canvas files live</summary>
 
-Custom canvases can live in different places:
+You already ran `/create-canvas` on the beginner path. Opening the generated files is optional.
 
 | Location | Scope | Best for |
 |---|---|---|
+| `~/.copilot/extensions` | User | Personal experiments. Prefer this in the course so nothing is committed |
 | `.github/extensions` | Project or team | Shared course and team workflows |
-| `~/.copilot/extensions` | User | Personal experiments |
 
-Project-scoped canvases can become team assets. User-scoped canvases are better for experiments that should not be committed.
+A canvas commonly includes `package.json`, an entry file such as `extension.mjs`, and optional JSON artifacts for persisted state.
 
-A canvas extension commonly includes:
+Pause before accepting extra generated code. Inspect capability names, stored state, UI controls, and whether any private data is included.
 
-- `package.json` for metadata and dependencies
-- an entry file such as `extension.mjs`
-- optional JSON artifacts for persisted state
-
-</details>
-
-<details>
-<summary>Advanced: Canvas authoring and `/create-canvas`</summary>
-
-Create or revise a canvas only after the session board workflow feels clear.
-
-Optional stretch prompt:
-
-```text
-/create-canvas Create a session plan + validation board canvas for samples/book-app-web.
-
-People should be able to:
-- check and uncheck plan steps
-- check validation items only after evidence exists
-- edit session notes
-
-The agent should be able to:
-- update plan status
-- mark validation items from terminal or browser evidence
-- record the next human decision
-
-Keep the first version simple. No GitHub write actions.
-```
-
-![The /create-canvas skill selected in the session composer typeahead](assets/app-create-canvas-command.webp)
-
-Pause before accepting generated extension code. Inspect:
-
-- capability names
-- input schemas
-- stored state
-- UI controls
-- whether any private data is included
-
-If a canvas fails to open after edits, check extension dependencies, reload requirements, syntax errors, and whether the app is reading the project-scoped or user-scoped extension.
+If a canvas fails to open after edits, check extension dependencies, reload requirements, syntax errors, and whether the app is reading the user-scoped or project-scoped folder.
 
 </details>
 
@@ -360,12 +323,14 @@ If a canvas fails to open after edits, check extension dependencies, reload requ
 
 ## Troubleshooting
 
+If you are still stuck, see the [Troubleshooting Reference](../appendices/troubleshooting-reference.md).
+
 <details>
 <summary>Canvas issues</summary>
 
 | Problem | What to check |
 |---|---|
-| No custom canvas opens | That is fine for the beginner path; use markdown board state in the session |
+| No canvas opens | Confirm you typed `/create-canvas`. If the command or panel is missing, keep the same board as markdown in the session |
 | Built-in terminal or browser missing | Review panel toggle, View menu, app version |
 | Agent says it updated the board but state looks wrong | Ask for the full board again and compare it with terminal or browser evidence |
 | Validation marked complete without proof | Require evidence; uncheck items that lack output |
@@ -378,12 +343,12 @@ If a canvas fails to open after edits, check extension dependencies, reload requ
 
 ## 🔑 Key Takeaways
 
-1. Chat is for conversation. Canvases and canvas-style surfaces are for visible, shared work.
-2. A good canvas is a shared control panel for the session, not a prettier answer.
-3. Master built-in work surfaces first: plan, browser, terminal, and diff.
-4. A session plan + validation board keeps pause points and evidence scannable.
-5. Update board state only when evidence exists.
-6. Custom canvas extensions and `/create-canvas` are optional advanced steps.
+1. Chat is for questions. A canvas is the board in the side panel.
+2. Create that board with `/create-canvas` and a short description.
+3. Use the built-in plan, browser, terminal, and diff panels first.
+4. This chapter's board tracks the plan, the checks you ran, and the next decision.
+5. Only check off items you can prove from this session.
+6. If a canvas does not open, keep the same board as markdown in the session.
 
 ---
 
@@ -391,15 +356,15 @@ If a canvas fails to open after edits, check extension dependencies, reload requ
 
 ![Assignment](../assets/assignment.webp)
 
-Run one small session with a visible board:
+Run one small session with `/create-canvas`:
 
-1. Create a session plan + validation board for one beginner-safe improvement in `samples/book-app-web`.
-2. Keep a pause point before file edits.
+1. Use `/create-canvas` to create a session board for one beginner-safe **stats-label** improvement in `samples/book-app-web`. Do not reuse empty-state copy, book-card polish, or a filter-row change you already shipped in Chapter 03.
+2. Prefer user scope. Keep a pause point before file edits.
 3. Run `npm test -- --run` and `npm run build`.
-4. Mark board items only after evidence exists.
+4. Update the canvas (or the markdown fallback) only after evidence exists.
 5. Ask GitHub Copilot to summarize what remains unchecked and what the next human decision is.
 
-Success criteria: You're able to explain the difference between a chat answer and shared session board state.
+Success criteria: You can point to the canvas in the side panel, or say why you used the markdown fallback. You can also tell the next decision from the board without rereading the whole chat.
 
 ---
 

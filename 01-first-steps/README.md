@@ -70,7 +70,7 @@ A producer in the control room doesn't handle every song the same way. Some take
 
 ![Producer's control room analogy for GitHub Copilot app session modes](assets/producer-control-room-modes.webp)
 
-The Copilot App works the same way:
+The GitHub Copilot app works the same way:
 
 - A chat is like asking a session musician a quick question.
 - Interactive mode is like directing a take with frequent check-ins.
@@ -96,7 +96,7 @@ The Copilot App works the same way:
 | Plan | "Plan first, execute when ready" | Copilot creates a plan before executing | The initial approach and project details matter |
 | Autopilot | "End-to-end execution without interruption" | Copilot works independently | Tasks that are well defined and have clear outcomes |
 
-![Session mode decision ladder](assets/session-mode-decision-ladder.webp)
+![Session modes: Interactive, Plan, and Autopilot. Pick one for the task.](assets/session-mode-decision-ladder.webp)
 
 ### Automations
 
@@ -119,16 +119,18 @@ In these exercises, you'll:
 
 ### 1. Tour the App
 
-Open GitHub Copilot app and notice these areas in the sidebar:
+Open the GitHub Copilot app and notice these areas in the sidebar:
 
-1. Home
-2. My work
-3. Automations
-4. Search
-5. Sessions
-6. Chats
+1. **Home**: the landing view. Start a session, pick a repository, and see **Up next** issues or pull requests from connected repos
+2. **My work**: your GitHub inbox for issues, pull requests, review requests, and checks
+3. **Automations**: saved agent tasks you can run later
+4. **Search**: find sessions, issues, pull requests, or paste a GitHub URL
+5. **Sessions**: project sessions grouped by repository
+6. **Chats**: short conversations that do not create a branch or worktree.
 
 ![App sidebar with Home, My work, Automations, Search, Sessions, and Chats](assets/app-sidebar.webp)
+
+When you open **Home**, notice that you can start a session without picking a sidebar project first, and that **Up next** is a shortcut into GitHub work. You will use My work for that inbox in Chapter 03.
 
 When you open **Automations**, you should see a place to create and manage saved agent runs. Do not build one yet. The goal is only to know where recurring work lives in the app.
 
@@ -147,12 +149,18 @@ Here's a summary of the key settings areas:
 
 | Setting area | What to notice now |
 |---|---|
-| General | Theme and notification preferences |
+| General | App updates, where worktrees are stored, and some appearance controls |
 | Accounts | Personal and Enterprise account information |
-| Sessions | Default model, reasoning effort, custom instructions, remote access, branch prefix, and session lifecycle settings |
-| Themes | Theme settings for the app (dark/light mode themes) |
+| Sessions | Default model, reasoning effort, remote access, branch prefix, session lifecycle settings, and **app-wide instructions** that apply to every session across projects |
+| Themes | Dedicated light and dark theme options. Some theme controls also appear under General |
 | Accessibility | Display zoom and keyboard shortcuts |
 | Voice dictation | Microphone settings, shortcut setup, and transcription models |
+
+Instructions live in more than one place:
+
+- **Settings → Sessions**: app-wide **App instructions** that apply to every session across projects
+- **Settings → Projects**, then the repository name: per-repository instructions added alongside the app-wide ones
+- `.github/copilot-instructions.md`: the git-reviewable file form. You will open that file in Chapter 03.
 
 Don't worry about changing any settings at this point - unless you want to. The goal is to know where key app settings live.
 
@@ -212,7 +220,7 @@ You'll compare the session modes by starting from the course project in the side
 4. Choose the mode listed below, paste the matching prompt, and run it.
 5. After you review the response, change the dropdown to the next mode and repeat.
 
-> 💡 **Tip**: The model and **reasoning effort** controls sit beside the mode selector. Reasoning effort is how much thinking budget the model uses. Choose a faster model with lower reasoning for quick questions, and a stronger model with higher reasoning for complex changes. Use enough capability for the task, but not more than you need.
+> 💡 **Tip**: The model and **reasoning effort** controls sit beside the mode selector. Reasoning effort is how much thinking budget the model uses. Choose a faster model with lower reasoning for quick questions, and a stronger model with higher reasoning for complex changes. If the picker offers **Auto**, the app chooses a model from the task. Use `/usage` later if you want to see plan limits and credit spend. Use enough capability for the task, but not more than you need.
 
 #### Plan Mode Prompt
 
@@ -252,9 +260,13 @@ You're able to describe, in your own words, how Plan, Interactive, and Autopilot
 
 ### 4. Search
 
-Select **Search** from the sidebar. Notice that you can search for sessions, PRs, issues, or paste a URL. Type `copilot-app-for-beginners` into the textbox and you should be presented with the option to create a new session.
+Select **Search** from the sidebar. It is a jump box, not a full GitHub search engine.
 
-Close **Search** and reopen it. Scroll through the list to see what else it offers. Notice that several actions can be performed such as:
+1. Type `copilot-app-for-beginners`. You should see a way to create a new session or open the connected project.
+2. Clear the box and type `is:issue`. Notice that issues can appear alongside sessions.
+3. Paste a GitHub issue or pull request URL from your fork if you have one. Search can open that item in the app.
+
+Close **Search** and reopen it. Scroll through the list to see other actions such as:
 
 - New session
 - Start from a canvas (you'll use canvases in [Chapter 05](../05-canvases/README.md); skip this for now)
@@ -265,7 +277,7 @@ Experiment with **New session** or **Add a project** if you want practice. You d
 
 #### Success Check
 
-You're able to explain what the **Search** feature does and how it can be used.
+You can find a session, issue, or pull request in Search, and you know it can start a session from what you find.
 
 ---
 
@@ -300,6 +312,8 @@ Voice dictation turns speech into editable prompt text which can save time and e
 
 ## Troubleshooting
 
+If you are still stuck, see the [Troubleshooting Reference](../appendices/troubleshooting-reference.md).
+
 <details>
 <summary>First navigation problems</summary>
 
@@ -323,7 +337,7 @@ Check your plan, organization policy, project settings, and app version.
 
 1. Keep your editor for deep coding. Open GitHub Copilot app when agent work needs a clearer place to run and review.
 2. From the app, you can open the project in VS Code any time you want the full editor.
-3. The app is organized around work surfaces: Home, My work, Search, Sessions, Chats, and Automations.
+3. The app is organized around work surfaces: Home for starting work, My work for GitHub items, Search, Sessions, Chats, and Automations.
 4. **Chats** are for exploration. **Sessions** are for focused repository work. **Automations** are for repeatable agent runs.
 5. **Interactive**, **Plan**, and **Autopilot** change the level of autonomy.
 6. Model and reasoning choices affect speed, quality, and cost. Use enough capability for the task, but not more than needed.

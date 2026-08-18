@@ -4,11 +4,15 @@ Quick reference for beginner terms used in this course.
 
 ## Agent Merge
 
-An advanced GitHub Copilot app workflow where the agent helps carry a pull request through review, checks, and merge readiness. Use it only after you understand the diff, tests, required reviews, and branch protection rules.
+An advanced finishing workflow. Official docs enable it with the **agent merge** toggle at the top of a pull request view. It can read the pull request, work on blockers, and merge when GitHub allows. Use it only after you understand the diff, tests, required reviews, and branch protection rules.
 
 ## Automation
 
 A saved agent task that can run on demand, on a schedule, or in advanced cases from repository events. Automations should have a clear prompt, limited tools, and a review path.
+
+## Autopilot
+
+A session mode where the agent works with high autonomy. Use it for a well-defined, low-risk task after you understand the scope.
 
 ## Branch
 
@@ -16,11 +20,11 @@ A named line of work in git. A branch lets you make changes without changing the
 
 ## Canvas
 
-A shared surface inside the Copilot App where humans and agents can inspect or update visible state. Examples include plans, checklists, browser sessions, terminal sessions, dashboards, and documents.
+A shared board created with `/create-canvas` and opened in the session side panel. You describe what you want on it, and the app builds the canvas. In this course you ask for a session board: the plan, the checks you ran, and the next decision.
 
 ## Chat
 
-A lightweight Copilot App conversation for questions, brainstorming, or repository exploration. A chat does not create a branch or worktree, which makes it safe for exploring before you change code.
+A lightweight GitHub Copilot app conversation for questions, brainstorming, or repository exploration. The sidebar calls this **Chats**. A chat does not create a branch or worktree, which makes it safe for exploring before you change code.
 
 ## CI check
 
@@ -28,7 +32,11 @@ An automated check that runs on a pull request or branch. It may run tests, buil
 
 ## Cloud sandbox
 
-A GitHub-hosted environment where an agent can work away from your local machine. It can improve isolation and portability, but availability depends on plan, policy, repository settings, and permissions.
+A GitHub-hosted environment where an agent can work away from your local machine. Availability depends on plan, policy, repository settings, and permissions.
+
+## Create from
+
+The sidebar control next to a project name that starts a session from a branch, issue, or pull request.
 
 ## Custom agent
 
@@ -40,31 +48,43 @@ A view of what changed between two versions of files. In this course, the diff i
 
 ## Guided fix
 
-Asking GitHub Copilot to address a specific review comment or failing check while the diff and validation evidence stay visible. It keeps follow-up work small and reviewable.
+Asking GitHub Copilot to address a specific review comment or failing check while the diff and validation evidence stay visible. Official pull request views may also show **Fix** and **Fix failing checks**. It keeps follow-up work small and reviewable.
+
+## Home
+
+The app landing view. Start a session, connect a repository, and see **Up next** GitHub items from connected repos.
+
+## Interactive
+
+A session mode where you and the agent work step by step. The agent waits for your input more often than in Autopilot.
 
 ## Local sandbox
 
 A local execution environment with restrictions on file system, network, or system access. It keeps work closer to your machine while limiting what the agent can reach.
 
-## Model Context Protocol (MCP) server
-
-A tool server that uses Model Context Protocol to connect Copilot to external tools or data. MCP servers are useful, but they can add permissions, credentials, and complexity.
-
 ## Model
 
-The AI system used for a response or session. Different models may vary in speed, cost, reasoning ability, and output style.
+The AI system used for a response or session. Different models may vary in speed, cost, reasoning ability, and output style. Some builds offer **Auto**, which chooses a model from the task.
+
+## Model Context Protocol (MCP) server
+
+A tool server that uses Model Context Protocol to connect Copilot to external tools and data. MCP servers are useful, but they can add permissions, credentials, and complexity.
 
 ## My work
 
-The app view that gathers your GitHub issues, pull requests, review requests, and failing checks in one inbox. It supports search qualifiers such as `repo:` and `is:pr` to narrow what you see.
+The app view that gathers your GitHub issues, pull requests, review requests, and failing checks in one inbox. Official default sections are **All**, **Active**, **Review requests**, and **Done**. It supports search qualifiers such as `repo:` and `is:pr`.
 
 ## Pick and Polish
 
 A UI workflow where you pick or describe a visible part of the app, ask Copilot to improve polish, then preview and validate the result. It is useful for spacing, hierarchy, copy, contrast, and responsive layout.
 
+## Plan mode
+
+A session mode where the agent proposes a plan first. You review and approve before it implements.
+
 ## Plugin
 
-A packaged extension that can add capabilities to the Copilot App. Plugins may include tools, agents, skills, or canvases. Enable only what a workflow needs.
+A packaged extension that can add capabilities to the GitHub Copilot app. Plugins may include custom agents, skills, hooks, MCP server configurations, or LSP server configurations. Canvas extensions are a separate extension type. Enable only what a workflow needs.
 
 ## PR
 
@@ -78,13 +98,17 @@ A risk where untrusted text, such as an issue title or body, tries to steer the 
 
 A setting that controls how much thinking the model spends on a task. Higher effort can help complex work, but may be slower or more expensive.
 
+## Review panel
+
+The session side panel for diffs, terminal, browser preview, and plan surfaces.
+
 ## Rubber duck
 
 A built-in critic agent, invoked with `/rubber-duck`, that reviews a plan, diff, tests, or design and points out weaknesses before you accept the work.
 
 ## Session
 
-A Copilot App workspace where an agent can plan, edit, run commands, inspect diffs, and report progress. Sessions may run in a local repository, a new worktree, or a cloud sandbox.
+A GitHub Copilot app workspace where an agent can plan, edit, run commands, inspect diffs, and report progress. Sessions may run in a local repository, a new worktree, or a cloud sandbox.
 
 ## Skill
 
@@ -92,4 +116,4 @@ Reusable guidance that helps the agent handle a specific kind of task. In this c
 
 ## Worktree
 
-A second working folder attached to the same git repository. In the Copilot App, a session worktree usually has its own branch so parallel work does not collide with your main checkout.
+A second working folder attached to the same git repository. In the GitHub Copilot app, a session worktree usually has its own branch so parallel work does not collide with your main checkout.

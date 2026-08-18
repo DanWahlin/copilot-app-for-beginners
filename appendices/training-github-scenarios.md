@@ -18,14 +18,13 @@ Use a fork or disposable training repository. Do not use a production repository
 
 - A GitHub account with permission to create issues and pull requests in the training repository
 - A fork of this course repository, or another disposable training copy pushed to GitHub
-- GitHub Actions enabled for the repository if you'd like to practice failing checks
-- Git and the GitHub CLI (`gh`)
-- `python3` for the Bash script, or PowerShell for the Windows script
+- GitHub Actions enabled for the repository if you'd like to practice failing checks. In a new fork, open its **Actions** tab on GitHub and enable workflows if GitHub shows a prompt.
+- Git, Node.js LTS, and the GitHub CLI (`gh`)
 - `gh auth login` completed for the account that owns the fork or training repository
 
 If you cannot create issues or pull requests, read the workflows and follow along with the screenshots instead.
 
-## Recommended path: Fork, clone, run the setup script for your shell
+## Recommended path: Fork, clone, run the setup script
 
 1. Fork this repository on GitHub.
 2. Clone your fork:
@@ -43,35 +42,19 @@ If you cannot create issues or pull requests, read the workflows and follow alon
 
 4. Preview what the setup script will do:
 
-   On macOS, Linux, or Git Bash:
+   ```bash
+   node .github/scripts/setup-training-scenarios.js --dry-run
+   ```
+
+5. Confirm that the `Repository:` line shows your fork, then run the setup:
 
    ```bash
-   .github/scripts/setup-training-scenarios.sh --dry-run
-   ```
-
-   On Windows PowerShell:
-
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File .\.github\scripts\setup-training-scenarios.ps1 -DryRun
-   ```
-
-5. Run the setup:
-
-   On macOS, Linux, or Git Bash:
-
-   ```bash
-   .github/scripts/setup-training-scenarios.sh
-   ```
-
-   On Windows PowerShell:
-
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File .\.github\scripts\setup-training-scenarios.ps1
+   node .github/scripts/setup-training-scenarios.js --yes
    ```
 
 6. Open the GitHub Copilot app and connect your fork or local clone.
 
-The setup scripts are designed to be safe to rerun. They reuse existing labels, issues, branches, pull requests, and the seeded PR comment when they already exist.
+The setup script is designed to be safe to rerun. It reuses existing labels, issues, branches, pull requests, and the seeded PR comment when they already exist.
 
 ## What the setup script creates
 
@@ -84,7 +67,7 @@ The setup script creates:
 - a safe PR conversation comment for the empty-state copy exercise
 - one failing-check PR that uses the `Book app web` workflow
 
-The setup scripts assign seeded issues to the GitHub user authenticated with `gh`, so they are easier to find in My work. Manual fallback issues should be assigned to the learner when possible.
+The setup script assigns seeded issues to the GitHub user authenticated with `gh`, so they are easier to find in My work. Manual fallback issues should be assigned to the learner when possible.
 
 ## Manual fallback: Create the seeded issues
 

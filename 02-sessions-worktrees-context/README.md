@@ -22,6 +22,8 @@ By the end of this chapter, you'll be able to:
 
 Complete Chapters [00](../00-quick-start/README.md) and [01](../01-first-steps/README.md). At this point, you've connected the course repository and understand the difference between chats and project sessions.
 
+If git worktrees are new, keep [appendices/git-worktrees.md](../appendices/git-worktrees.md) open. You do not create worktrees by hand in this chapter. The app creates them when you start a session in a **new worktree**.
+
 ---
 
 ## 🧩 Real-World Analogy: One Studio, Many Recording Booths
@@ -40,7 +42,7 @@ A **Git worktree** lets you create additional working directories for the same r
 
 This allows you to work on multiple tasks or branches simultaneously without stashing changes or constantly switching branches in a single folder.
 
-### Why Copilot App Uses Worktrees
+### Why the GitHub Copilot app uses worktrees
 
 | Without isolation | With a worktree-backed session |
 |---|---|
@@ -83,19 +85,20 @@ Before you run multiple sessions, find the app's session settings you toured in 
 |---|---|
 | Default model and reasoning | Affects speed, quality, and cost for new sessions |
 | Branch prefix | Makes app-created session branches easier to recognize |
-| Instructions | Instructions for the agent to follow for every session across projects |
+| App instructions | Settings → **Sessions**. These apply to every session across projects |
 
 ### Context Syntax
 
-Copilot App provides a dedicated context syntax (`@`, `#`, and `&`) that you can use to give a session the context it needs to understand the problem and generate helpful responses.
+The GitHub Copilot app lets you attach context in the composer with `@`, `#`, and `/`.
 
 | Syntax | Use it for | Example |
 |---|---|---|
 | `@` | Files or folders | `@samples/book-app-web/src` |
 | `#` | Issues or pull requests | `#12` |
-| `&` | Other sessions | Type `&` and pick a session from the list |
+| `/` | Slash commands | `/chronicle standup` |
+| `&` | Other sessions, when the composer offers it | Type `&` and pick a session from the list |
 
-You'll mostly use `@` and `#` in this course. The `&` reference is handy later, when you want one session to see what another session already worked on.
+You'll use `@`, `#`, and `/` in this course. Treat `&` as optional. Use it later if you want one session to see what another session already worked on.
 
 > Tip: Provide the smallest amount of useful context - less is often more.
 
@@ -116,7 +119,6 @@ For this chapter, you only need `/chronicle` and `/context`. Additional commands
 | Command | Description |
 |---|---|
 | `/agent` | Select or switch the active agent for a session. |
-| `/agent-merge` | Start or enable the Agent Merge workflow for PR merge-readiness automation. |
 | `/chronicle` | Summarize session history, generate standups, search past work, or get workflow/cost tips. |
 | `/collect-debug-logs` | Collect app logs for troubleshooting or filing GitHub Copilot app issues. |
 | `/context` | Show session context details such as token usage (how much text the model is holding), context window size, and AI credit spend. |
@@ -128,7 +130,7 @@ For this chapter, you only need `/chronicle` and `/context`. Additional commands
 | `/rubber-duck` | Ask a critic agent to review a plan, diff, tests, design, or proposed approach. |
 | `/skills` | Discover available skills; `/skills reload` reloads skills during a session. |
 | `/usage` | Open usage, rate-limit, plan-limit, or credit information. |
-| `/[skill-name]` | Invoke an installed skill directly, such as `/security-audit`; available commands depend on installed skills. |
+| `/[skill-name]` | Invoke an installed skill directly, such as `/security-review`; available commands depend on installed skills. |
 
 When in doubt, type `/` and use the in-app palette to discover what's available.
 
@@ -248,7 +250,7 @@ Perform these steps:
 
 #### Expected Output
 
-Copilot will focus on the sample app source folder instead of referencing unrelated files or folders and show a list of files that are likely involved in the empty-state copy. When you use the `#` reference, Copilot App will focus on the selected issue or PR.
+Copilot will focus on the sample app source folder instead of referencing unrelated files or folders and show a list of files that are likely involved in the empty-state copy. When you use the `#` reference, the GitHub Copilot app will focus on the selected issue or PR.
 
 #### How It Works
 
@@ -268,7 +270,7 @@ Perform these steps:
 
    ![App Issues Dialog](assets/app-issues-dialog.webp)
 
-4. Review the plan. Do not approve implementation yet. The goal is to practice starting from an issue with context attached.
+4. Review the plan. Do not approve implementation yet. The goal is to practice starting from an issue with context attached. You already planned this empty-state task from a branch in Exercise 1. This time, notice that the issue arrives already attached so you do not paste the repro steps.
 
 #### Expected Output
 
@@ -290,9 +292,9 @@ Perform these steps:
    ```
 3. Select the **branch name** or **worktree name** to open a dialog that provides more information about the session, the worktree path, and other relevant details. An example of the dialog is shown here: 
 
-   ![Session Details Dialog](assets/app-session-details.webp)
+   ![Example session details dialog. Your branch name will differ. Look for the worktree path, project, and context usage](assets/app-session-details.webp)
 
-   > Note: [your-prefix] will be replaced with your personal prefix that's defined in the app settings.
+   > Note: `[your-prefix]` is the personal prefix from app settings. The screenshot is an example session, not necessarily `practice-empty-state-copy`. Match the branch name at the top of *your* session.
 
 4. Select the **Review panel** toggle in the upper-right corner of the app. This is where a session's diff, terminal surfaces, and other tools live.
 
@@ -353,13 +355,40 @@ Perform these steps:
 
 #### Expected Output
 
-Copilot App opens the session dialog to display session context details and usage information.
+The GitHub Copilot app opens the session dialog to display session context details and usage information.
 
 ![Session Context](assets/app-session-context.webp)
 
 #### How It Works
 
 Context is the content the GitHub Copilot app is using for the current session: recent messages, attached files, issues, and related text. Checking it helps you know when a session is getting overloaded before you add more files, issues, or instructions.
+
+---
+
+## Troubleshooting
+
+If a session folder, branch, or preview looks wrong, start with [appendices/git-worktrees.md](../appendices/git-worktrees.md) and the [Troubleshooting Reference](../appendices/troubleshooting-reference.md).
+
+<details>
+<summary>Session, worktree, and context problems</summary>
+
+### I don't see the practice branches
+
+Run the Chapter 00 setup script again, or follow [appendices/training-github-scenarios.md](../appendices/training-github-scenarios.md). Confirm you connected your fork, not the upstream course repo.
+
+### The session edited the wrong folder
+
+Open the session details and check the worktree path and branch name. Prefer a **new worktree** for course exercises.
+
+### `/context` or `/chronicle` is missing
+
+Type `/` and use the in-app palette. The official list is in [Slash commands for the GitHub Copilot app](https://docs.github.com/en/copilot/reference/github-copilot-app-reference/slash-commands).
+
+### Two previews collided
+
+Worktrees isolate files and branches, not ports. Stop one Vite server or start the second on port `5174`.
+
+</details>
 
 ---
 
@@ -405,11 +434,13 @@ In the next chapter, you'll use isolated sessions for real development work. Par
 
 - [About the GitHub Copilot app][about-app]
 - [Working with agent sessions][agent-sessions]
+- [Slash commands for the GitHub Copilot app][slash-commands]
 - [GitHub Copilot app repository][app-readme]
 - [GitHub Copilot app changelog][changelog]
 - [GitHub Copilot app product blog][app-blog]
 
 [agent-sessions]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/agent-sessions
+[slash-commands]: https://docs.github.com/en/copilot/reference/github-copilot-app-reference/slash-commands
 [about-app]: https://docs.github.com/en/copilot/concepts/agents/github-copilot-app
 [app-readme]: https://github.com/github/app
 [changelog]: https://github.blog/changelog/2026-06-17-github-copilot-app-generally-available/

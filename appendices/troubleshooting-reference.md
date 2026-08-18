@@ -9,10 +9,10 @@ Related chapter: [00 Quick Start](../00-quick-start/)
 | Symptom | Likely cause | Try this |
 |---|---|---|
 | Sign-in fails | Account, network, SSO, or GitHub Enterprise Server URL issue | Confirm the account, browser sign-in, Enterprise Server URL if used, and network access |
-| App access is unavailable | Copilot plan or organization policy | Confirm a paid Copilot plan and any Business or Enterprise policy requirements |
+| App access is unavailable | Copilot plan, own model provider, or organization policy | Confirm a Copilot plan or a configured model provider. For Business or Enterprise, confirm the **GitHub Copilot app** policy is enabled (it is separate from the Copilot CLI policy) |
 | Git is not detected | Git is missing or not on PATH | Install Git and restart the app |
 | Repository does not appear | Repository access or picker filter | Check account access, organization membership, repository permissions, and whether to add a local folder, GitHub repo, or URL |
-| Quick chat cannot summarize the repo | Repo not connected or context is too broad | Reconnect the project and ask for a small overview of the course repo |
+| A chat cannot summarize the repo | Repo not connected or context is too broad | Reconnect the project and ask for a small overview of the course repo |
 
 ## Chapter 01: First Steps
 
@@ -20,7 +20,7 @@ Related chapter: [01 First Steps](../01-first-steps/)
 
 | Symptom | Likely cause | Try this |
 |---|---|---|
-| Learner is unsure which mode to use | Modes sound like skill levels | Use Quick chat for exploration, Plan for approach review, Interactive for steering, and Autopilot for clear low-risk work |
+| Learner is unsure which mode to use | Modes sound like skill levels | Use Chats for exploration, Plan when you want an approach first, Interactive when you want to steer each step, and Autopilot for a clear low-risk task |
 | Responses are slow or costly | Model, reasoning effort, or context is larger than needed | Lower reasoning effort for simple tasks and attach only useful context |
 | Settings look different from screenshots | App version or platform difference | Check the app version and screenshot manifest |
 | Voice dictation does not work | Microphone permission or local transcription model | Check OS microphone permission, voice settings, downloaded model, shortcut, and language support |
@@ -64,8 +64,8 @@ Related chapter: [04 Skills, Model Context Protocol (MCP) Servers, and Plugins](
 | Symptom | Likely cause | Try this |
 |---|---|---|
 | Copilot ignores project style | Instructions are missing or too broad | Put stable project guidance in `.github/copilot-instructions.md` |
-| Responses include too much unrelated detail | Global instructions or context are noisy | Keep global instructions short and attach only relevant files |
-| Branch names are hard to recognize | Branch prefix is not configured | Set a project or app branch prefix that identifies Copilot App sessions |
+| Responses include too much unrelated detail | App-wide instructions or context are noisy | Keep **Settings → Sessions** app instructions short and attach only relevant files |
+| Branch names are hard to recognize | Branch prefix is not configured | Set a project or app branch prefix that identifies GitHub Copilot app sessions |
 | Screenshot exposes settings | Credentials or org details are visible | Retake the screenshot with private fields cropped or hidden |
 | Provider setup fails | Credential, endpoint, policy, or billing issue | Treat provider setup as intermediate and verify settings outside the beginner path |
 | Skill does not seem to apply | Skill location, metadata, or prompt mismatch | Check `.github/skills/.../SKILL.md` and prompt for the skill's purpose |
@@ -80,7 +80,7 @@ Related chapter: [05 Canvases](../05-canvases/)
 
 | Symptom | Likely cause | Try this |
 |---|---|---|
-| Canvas does not open | Extension syntax, dependency, or reload issue | Reload the app extension and check the canvas files |
+| Canvas does not open | `/create-canvas` missing, or extension syntax, dependency, or reload issue | Retry `/create-canvas`, or keep the same board as markdown in the session |
 | Canvas state looks stale | Stored state and visible UI are out of sync | Refresh the canvas or rerun the action that updates state |
 | Agent action fails | Capability name or input schema mismatch | Check the action name, required fields, and stored state |
 | Canvas contains private content | Shared surface was used like private notes | Remove secrets, private repo details, and customer data before publishing |

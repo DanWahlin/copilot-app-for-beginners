@@ -1,6 +1,6 @@
 # Release Checklist Canvas Concept
 
-This folder is optional fallback material for Chapter 05. The main beginner example in that chapter is a **session plan + validation board** tied to a live GitHub Copilot app session.
+This folder is optional fallback material for Chapter 05. The main beginner example in that chapter is a **session canvas** created with `/create-canvas`.
 
 This folder is intentionally lightweight. It is a design concept, not a loadable canvas extension.
 
@@ -24,4 +24,4 @@ Describe a release-oriented checklist for the sample app that helps learners ver
 
 ## Course use
 
-Use this concept only as a comparison shape after the session plan + validation board. Prefer session-linked boards for the beginner path because they stay tied to live plan, terminal, and browser evidence.
+Use this as a second shape after the session canvas in Chapter 05. Prefer that live canvas. It stays tied to the plan, terminal, and browser in the same session.

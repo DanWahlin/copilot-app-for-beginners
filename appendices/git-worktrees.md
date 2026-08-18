@@ -8,7 +8,7 @@ A git worktree is another working folder that is connected to the same repositor
 
 Think of your repository like a shared source library. A worktree is a separate desk where you can check out a different branch and work without disturbing the main desk.
 
-In the Copilot App, a session often gets its own branch and worktree. That means:
+In the GitHub Copilot app, a session often gets its own branch and worktree. That means:
 
 - your main checkout can stay clean,
 - each session can make changes in its own folder,
@@ -19,7 +19,7 @@ In the Copilot App, a session often gets its own branch and worktree. That means
 
 | Term | Beginner meaning |
 |---|---|
-| Session | A Copilot App workspace where an agent plans, edits, tests, and reports progress |
+| Session | A GitHub Copilot app workspace where an agent plans, edits, tests, and reports progress |
 | Branch | A named line of work in git, usually for one feature or fix |
 | Worktree | A separate folder attached to the same repo, often checked out to a session branch |
 
@@ -35,7 +35,7 @@ For example, one session can fix a search bug while another session writes tests
 
 Use this checklist when you'd like to look at a session worktree.
 
-1. Find the session in the Copilot App.
+1. Find the session in the GitHub Copilot app.
 2. Note the branch name and worktree path shown by the app.
 3. Open the worktree folder only for inspection or careful editing.
 4. Confirm your editor shows the session branch, not your main branch.
@@ -96,7 +96,7 @@ If a chapter later uses containers or local services, give each session a unique
 
 ## Cleanup
 
-Prefer cleanup from inside the Copilot App when possible. The app understands which session owns which worktree.
+Prefer cleanup from inside the GitHub Copilot app when possible. The app understands which session owns which worktree.
 
 Before cleanup:
 

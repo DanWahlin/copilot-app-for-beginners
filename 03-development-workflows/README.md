@@ -22,7 +22,7 @@ By the end of this chapter, you'll be able to:
 - Ask GitHub Copilot to address review comments and failing checks
 - Explain why Agent Merge still needs human judgment
 
-> ⏱️ **Estimated Time**: ~90 minutes for the full chapter (30 min reading + 60 min hands-on). The required Part A and Part B path is enough for beginners; optional advanced sections can wait.
+> ⏱️ **Estimated Time**: ~90 minutes for the full chapter (30 min reading + 60 min hands-on).
 
 ---
 
@@ -70,7 +70,7 @@ But a take isn't an album. A producer's review desk tracks briefs, approvals, no
 
 ![Better context layers for Copilot](assets/context-layers.webp)
 
-> Where these live in the app: open **Settings**, then set **global** instructions under **General**, and **repository-specific** instructions under the repository name in the **Projects** section. The committed `.github/copilot-instructions.md` file is the git-reviewable form of repository instructions that GitHub Copilot reads automatically.
+> Where these live in the app: **Settings → Sessions** holds app-wide **App instructions**. **Settings → Projects**, then the repository name, holds per-repository instructions. The committed `.github/copilot-instructions.md` file is the git-reviewable form that GitHub Copilot can also load automatically.
 
 Next, confirm the sample app builds and tests cleanly. This is also where you'll learn to open the session terminal.
 
@@ -104,9 +104,11 @@ You'll see dependencies install, tests run, and a build complete. Tests and buil
 In these exercises, you'll:
 
 - **Part A (inner loop):** review, debug, test, refactor, and preview a change with the evidence visible
-- **Part B (outer loop):** find work in My work, start from an issue, open a pull request, and ask Copilot App to fix comments and checks
+- **Part B (outer loop):** find work in My work, start from an issue, open a pull request, and ask the GitHub Copilot app to fix comments and checks
 
-> **Optional sections:** Pick and Polish is recommended if you want extra UI practice. Agent Merge and parallel sessions (`/orchestrate`) are advanced. Skip them unless you're curious after you finish the required Part A and Part B exercises.
+> **Minimum path:** Part A exercises 1–3, then Part B exercises 4–6. That is enough to finish the chapter. Pick and Polish is extra UI practice.
+
+> **Commands you'll type often:** `npm test -- --run` runs the Vitest suite once and exits. The extra `--` passes `--run` through npm to Vitest. Without it, Vitest can stay open in watch mode.
 
 **Part A: Develop and validate in a session.** Work the inner loop: review, fix, test, and preview a change while the evidence stays visible.
 
@@ -265,7 +267,7 @@ Remember: visual polish can change accessibility and behavior. Always finish wit
 
 ### 4. Find Work in My work
 
-Open **My work**, your in-app inbox for GitHub issues, pull requests, review requests, and checks.
+Open **My work**, your in-app inbox for GitHub issues, pull requests, review requests, and checks. Official docs organize it into default sections: **All**, **Active**, **Review requests**, and **Done**. You can add sections later. Stay on **All** for this exercise.
 
 1. Open My work and find issues assigned to you, pull requests you authored, review requests, and PRs with failing checks.
 2. Narrow the view with search qualifiers:
@@ -315,9 +317,10 @@ Starting from an issue attaches its context automatically, so Copilot plans agai
 
 4. Approve the plan, switch to **Interactive**, apply and validate the fix (tests + browser) as you did in Part A.
 5. Before opening a pull request, review the **Changes** tab and confirm the session only changed files needed for the search fix.
-6. Use the app's PR flow to open a pull request. Confirm the description explains the change and only reports validation you actually observed.
+6. Open a pull request from this session. Look for **Create PR** above the prompt box. The `/pr-open` command does the same job.
+7. After the pull request exists, select **PR** above the prompt box, or open the item in **My work**. Switch to **Files changed** (or **Changes**) and confirm the diff is only the search fix.
 
-<!-- Screenshot needed: assets/app-pr-diff-review.webp. Capture the pull request diff or Files changed view for the focused search fix. -->
+If **Create PR** is missing, the session may have no changes yet, or you may lack permission to push to the fork. Keep the diff, then open the pull request on GitHub in the browser as a fallback.
 
 #### Prompt for PR Description Help
 
@@ -344,21 +347,31 @@ Confirm that:
 
 ### 6. Ask GitHub Copilot to Fix Comments and Checks
 
-A **guided fix** is simply asking GitHub Copilot to address a specific review comment or failing check, with the diff and validation kept visible.
+A **guided fix** is asking GitHub Copilot to address a specific review comment or failing check, with the diff and validation kept visible.
 
-**Respond to a review comment.** Open the PR conversation comment from [PR scenario 1](../samples/app-course-pr-scenarios.md#pr-scenario-1-review-comment-asks-for-clearer-empty-state-copy), which asks for clearer empty-state copy, then submit:
+These next two pull requests come from the Chapter 00 setup script. They are **not** the search-fix PR you opened in Exercise 5. In **My work**, filter with:
+
+```text
+repo:YOUR-USER/copilot-app-for-beginners is:pr is:open
+```
+
+**Respond to a conversation comment.** Open the open pull request titled **Improve empty-state copy** (the screenshot shows it as #6; your number can differ). The setup script adds a general conversation comment, not a line-level review comment, so start a session from the pull request and submit:
 
 ```text
 Review this PR conversation comment and propose the smallest change that addresses it. Show me the diff and validation plan before I accept the fix.
 ```
 
-![Pull request conversation with the empty-state copy review comment](assets/app-pr-review-comment.webp)
+The seeded comment asks the empty-state message to mention changing the search term, genre, or reading status. The scenario text is also in [PR scenario 1](../samples/app-course-pr-scenarios.md#pr-scenario-1-review-comment-asks-for-clearer-empty-state-copy).
 
-**Fix a failing check.** Open [PR scenario 2](../samples/app-course-pr-scenarios.md#pr-scenario-2-failing-ci-points-to-the-stats-test), which fails the `Book app web` workflow, then submit:
+![Pull request conversation with the empty-state copy comment](assets/app-pr-review-comment.webp)
+
+**Fix a failing check.** Open the open pull request titled **Failing stats check practice** (the screenshot shows it as #7). Official docs put **Fix failing checks** on the check summary. Use that control if you see it. Otherwise start a session and submit:
 
 ```text
 Analyze the failing check. Explain the failure, identify the likely file in samples/book-app-web, propose a minimal fix, and tell me which command should pass afterward.
 ```
+
+The scenario text is in [PR scenario 2](../samples/app-course-pr-scenarios.md#pr-scenario-2-failing-ci-points-to-the-stats-test).
 
 ![Pull request with the failing Book app web check and failure details](assets/app-pr-failing-check.webp)
 
@@ -399,7 +412,9 @@ Use Agent Merge only when the PR is small and well-scoped, you reviewed the diff
 
 Do **not** use it when you don't understand the diff; checks are missing, flaky, or unrelated; the PR touches secrets, auth, permissions, billing, production data, or deployment logic; your org policy disallows it; or you lack merge rights.
 
-If your app exposes `/agent-merge`, treat it as an advanced entry point to that workflow, and run it only in the training fork after you've reviewed the diff, checks, comments, branch protection, and merge rules.
+Official docs enable **agent merge** with the toggle at the top of the pull request view. It runs in the background, survives app restarts, and turns itself off after the pull request merges. The workflow uses an `agent-merge` skill. If your build also lists `/agent-merge`, treat that as an optional extra entry point, not the primary one.
+
+Use agent merge only in the training fork after you've reviewed the diff, checks, comments, branch protection, and merge rules.
 
 > Demo output varies. Treat any response as a checklist, not permission to merge.
 
@@ -435,6 +450,8 @@ Use `/orchestrate` only after you can describe the child-session boundaries your
 ---
 
 ## Troubleshooting
+
+If you are still stuck, see the [Troubleshooting Reference](../appendices/troubleshooting-reference.md).
 
 <details>
 <summary>Development and GitHub workflow issues</summary>
@@ -483,18 +500,23 @@ If two sessions edited the same files, pause one, compare the diffs, and pick on
 
 ![Assignment](../assets/assignment.webp)
 
-Run the full loop end to end on a safe issue, from code to pull request:
+Run the full loop on a UI polish task you haven't already finished.
 
-```text
-Improve the empty-state copy in samples/book-app-web so it is clearer and more accessible. Propose a plan first, make the smallest useful change, run tests, run the build, and tell me what changed. Then draft a pull request summary describing the change and the validation you performed.
-```
+- If you skipped the optional Pick and Polish block, use **Issue 4** and the `practice-card-polish` branch. Read the issue in **My work**, or see [`samples/app-course-issues.md`](../samples/app-course-issues.md#issue-4-polish-book-card-spacing-and-responsive-layout).
+- If you already polished the book cards in that optional block, start a new session from `main` and improve the **filter-row** labels or helper text instead. Do not reopen the card-polish worktree.
+
+Then:
+
+1. Use **Plan** first, then **Interactive** for the smallest useful change.
+2. Validate with `npm test -- --run`, `npm run build`, and a browser preview.
+3. Open a pull request with **Create PR**. Draft a summary that only reports validation you actually saw.
 
 Then check:
 
 1. Did Copilot explain the plan before editing?
-2. Did the diff stay focused?
+2. Did the diff stay on the chosen UI slice, not unrelated files?
 3. Did tests and the build pass?
-4. Did the browser preview show the intended copy?
+4. Did the browser preview show the intended change?
 5. Does the PR summary describe real, verified validation?
 
 ---

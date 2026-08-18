@@ -34,7 +34,7 @@ Capture is semi-automated (a human navigates the app; the CLI has no
 bash "$SK/screenshots.sh" next          # or: next 13   for a specific index
 
 # b) Get the app to that state — sanitized training account, on the SAME macOS
-#    Space as this terminal. Run setup-training-scenarios.sh first for data shots.
+#    Space as this terminal. Run the Node.js setup script first for data shots.
 
 # c) Capture (PNG + WebP into the chapter's assets/). Use the slug from step (a),
 #    or any name you prefer:
@@ -58,7 +58,8 @@ Judge each shot from its description — don't rely on a stored list:
   the sidebar session list) out of frame, or capture from a clean account.
 - **Data shots** (My work, issue/PR details, diffs, failing checks, run history,
   a live session or canvas): need the **training fork** with
-  `.github/scripts/setup-training-scenarios.sh` run, from a sanitized account.
+  `node .github/scripts/setup-training-scenarios.js --yes` run, from a
+  sanitized account.
 - **Policy/build-gated shots** (Agent Merge, cloud automations, canvas authoring):
   capture when available; otherwise leave the placeholder as demo-only.
 

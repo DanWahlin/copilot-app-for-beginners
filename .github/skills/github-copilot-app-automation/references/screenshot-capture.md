@@ -145,9 +145,10 @@ the duration of its timeout, so you can move the window while it waits.
 
 Real captures expose live project names, session titles, prompts, diffs, and
 possibly tokens. Capture from a sanitized training account connected to the
-training fork (with `setup-training-scenarios.sh` run), and review every image
-before committing. See [missing-screenshots.md](missing-screenshots.md) for the
-full shot list and which states need seeded data.
+training fork (with `node .github/scripts/setup-training-scenarios.js --yes`
+run), and review every image before committing. See
+[missing-screenshots.md](missing-screenshots.md) for the full shot list and
+which states need seeded data.
 
 ## Map first
 

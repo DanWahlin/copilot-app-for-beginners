@@ -2,9 +2,9 @@
 
 Use this reference when a learner gets stuck. Start with the related chapter, then check the symptom and next action.
 
-## Chapter 00: Quick Start
+## Chapter 00: Setup
 
-Related chapter: [00 Quick Start](../00-quick-start/)
+Related chapter: [00 Setup](../00-setup/)
 
 | Symptom | Likely cause | Try this |
 |---|---|---|

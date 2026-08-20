@@ -20,7 +20,7 @@ By the end of this chapter, you'll be able to:
 
 ## ✅ Prerequisites
 
-Complete Chapters [00](../00-quick-start/README.md) and [01](../01-tour-the-app/README.md). At this point, you've connected the course repository and understand the difference between chats and project sessions.
+Complete Chapters [00](../00-setup/README.md) and [01](../01-tour-the-app/README.md). At this point, you've connected the course repository and understand the difference between chats and project sessions.
 
 If git worktrees are new, keep [appendices/git-worktrees.md](../appendices/git-worktrees.md) open. You do not create worktrees by hand in this chapter. The app creates them when you start a session in a **new worktree**.
 
@@ -138,7 +138,7 @@ When in doubt, type `/` and use the in-app palette to discover what's available.
 
 ### Branches Used in This Course
 
-Back in [Chapter 00](../00-quick-start/README.md), the setup script added several *practice branches* to your forked repository. As a quick refresher, each practice branch starts from your `main` branch and adds a small intentional change to the sample app in `samples/book-app-web`, usually a bug for you to fix, set up for one specific exercise later in the course. Because that change lives on its own branch, you can inspect or fix it in a safe, realistic way without touching `main` or the working app.
+Back in [Chapter 00](../00-setup/README.md), the setup script added several *practice branches* to your forked repository. As a quick refresher, each practice branch starts from your `main` branch and adds a small intentional change to the sample app in `samples/book-app-web`, usually a bug for you to fix, set up for one specific exercise later in the course. Because that change lives on its own branch, you can inspect or fix it in a safe, realistic way without touching `main` or the working app.
 
 Each exercise names the branch it needs. For reference, here is the full set that you'll see in this course:
 
@@ -161,7 +161,7 @@ Try it out!
 
 There's no need to select anything quite yet. You'll do that in later exercises.
 
-> Don't see the branches? You may have skipped the setup script, or you're on a different clone. Run it now from [Chapter 00](../00-quick-start/README.md#2-fork-clone-and-prepare-the-course-repository), or follow the manual steps in [appendices/training-github-scenarios.md](../appendices/training-github-scenarios.md).
+> Don't see the branches? You may have skipped the setup script, or you're on a different clone. Run it now from [Chapter 00](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository), or follow the manual steps in [appendices/training-github-scenarios.md](../appendices/training-github-scenarios.md).
 
 ---
 
@@ -188,7 +188,7 @@ Perform these steps:
 
    > Note: Replace `YOUR-USER` with your GitHub username. Issue numbers on your fork usually match the course setup, but if they differ, open the issue whose title is about empty-state copy. You can also find the issue text in [`samples/app-course-issues.md`](../samples/app-course-issues.md#issue-3-improve-the-empty-state-copy).
 
-2. Make sure the `practice-empty-state-copy` branch is ready. The setup script from [Chapter 00](../00-quick-start/README.md#2-fork-clone-and-prepare-the-course-repository) created it for you. If you skipped that script, go back and run it now.
+2. Make sure the `practice-empty-state-copy` branch is ready. The setup script from [Chapter 00](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository) created it for you. If you skipped that script, go back and run it now.
 3. In the sidebar, locate the `copilot-app-for-beginners` project and select the **`Create from`** icon next to it.
 
    ![Create from branch](assets/app-create-from-icon.webp)
@@ -260,7 +260,7 @@ The `@` and `#` references narrow context. They help the GitHub Copilot app focu
 
 ### 3. Start from an Issue
 
-Up to this point you've started a session from a branch. This time you'll start a new session directly from a GitHub issue, without leaving the app - a big time saver! Your forked repository already has seeded issues if you ran the setup script in [00 - Quick Start](../00-quick-start/README.md).
+Up to this point you've started a session from a branch. This time you'll start a new session directly from a GitHub issue, without leaving the app - a big time saver! Your forked repository already has seeded issues if you ran the setup script in [00 - Setup](../00-setup/README.md).
 
 Perform these steps:
 

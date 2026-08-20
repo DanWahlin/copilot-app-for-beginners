@@ -28,9 +28,9 @@ By the end of this chapter, you'll be able to:
 
 ## ✅ Prerequisites
 
-Complete Chapters [00](../00-quick-start/README.md), [01](../01-tour-the-app/README.md), and [02](../02-sessions-worktrees-context/README.md). You should have a session for the course repository and know where the Review panel's diff and terminal surfaces live.
+Complete Chapters [00](../00-setup/README.md), [01](../01-tour-the-app/README.md), and [02](../02-sessions-worktrees-context/README.md). You should have a session for the course repository and know where the Review panel's diff and terminal surfaces live.
 
-**Part B** works best with a GitHub-backed fork that has the seeded issues, branches, and PR scenarios. If you skipped the setup script, run it from [Chapter 00](../00-quick-start/README.md#2-fork-clone-and-prepare-the-course-repository). If you can't create PRs, read the steps and follow along with the screenshots.
+**Part B** works best with a GitHub-backed fork that has the seeded issues, branches, and PR scenarios. If you skipped the setup script, run it from [Chapter 00](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository). If you can't create PRs, read the steps and follow along with the screenshots.
 
 ---
 
@@ -118,7 +118,7 @@ In this exercise you'll work on a practice branch that already contains a real b
 
 Perform these steps:
 
-1. Make sure the `practice-unread-count-bug` branch is ready (the [Chapter 00](../00-quick-start/README.md#2-fork-clone-and-prepare-the-course-repository) setup script created it). If you skipped the script, [run it now](../00-quick-start/README.md#2-fork-clone-and-prepare-the-course-repository) - it's safe to rerun and only adds what's missing.
+1. Make sure the `practice-unread-count-bug` branch is ready (the [Chapter 00](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository) setup script created it). If you skipped the script, [run it now](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository) - it's safe to rerun and only adds what's missing.
 2. In the sidebar, select the **Create from** icon next to the `copilot-app-for-beginners` project, choose the **Branches** tab, and select `practice-unread-count-bug`. This starts a session on that branch in a new worktree.
 3. In the composer, set the **Mode** selector to **Plan**, then submit:
 
@@ -302,7 +302,7 @@ If an expected item is missing, check the active qualifier first, then repositor
 
 Starting from an issue attaches its context automatically, so Copilot plans against the real task instead of a pasted summary.
 
-1. Choose Issue 1 (make search case-insensitive). Read it in My work, or see [`samples/app-course-issues.md`](../samples/app-course-issues.md#issue-1-make-search-case-insensitive). This exercise needs the `practice-search-case-bug` branch, which the Chapter 00 setup script created. If you skipped the script, [run it now](../00-quick-start/README.md#2-fork-clone-and-prepare-the-course-repository) - it's safe to rerun and only adds what's missing.
+1. Choose Issue 1 (make search case-insensitive). Read it in My work, or see [`samples/app-course-issues.md`](../samples/app-course-issues.md#issue-1-make-search-case-insensitive). This exercise needs the `practice-search-case-bug` branch, which the Chapter 00 setup script created. If you skipped the script, [run it now](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository) - it's safe to rerun and only adds what's missing.
 2. From the issue, select **New session**.
 
    > **Important**: The search bug only exists on the `practice-search-case-bug` branch. On the `main` branch, search already matches regardless of case, so there would be nothing to fix. The issue names its training branch, and the app may offer to switch the session to it: accept that switch (this is the prompt you declined in Chapter 02, but here you want it). If no prompt appears, set the branch dropdown next to the workspace selector in the composer to `practice-search-case-bug` before you submit.

@@ -21,7 +21,7 @@ By the end of this chapter, you'll be able to:
 
 ## ✅ Prerequisites
 
-Complete [Chapter 00](../00-quick-start/README.md) first. If you jumped straight here, pause and use Chapter 00 to fork and clone the course repository, run the training setup script, and connect the repository in the GitHub Copilot app.
+Complete [Chapter 00](../00-setup/README.md) first. If you jumped straight here, pause and use Chapter 00 to fork and clone the course repository, run the training setup script, and connect the repository in the GitHub Copilot app.
 
 ---
 
@@ -380,7 +380,7 @@ Create a small mode map for the Book App. The goal is to use the app surfaces fr
 
 In the next chapter, you'll solve the "shared working copy" challenge from this chapter: isolated sessions with worktrees, plus focused context with `@`, `#`, and `/`.
 
-**[← Back to Chapter 00](../00-quick-start/README.md)** | **[Continue to Chapter 02 →](../02-sessions-worktrees-context/README.md)**
+**[← Back to Chapter 00](../00-setup/README.md)** | **[Continue to Chapter 02 →](../02-sessions-worktrees-context/README.md)**
 
 ---
 

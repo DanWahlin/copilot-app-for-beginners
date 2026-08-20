@@ -30,7 +30,7 @@ Before starting:
 - Run the Chapter 00 setup script so practice issues and pull requests exist
 - Use `samples/book-app-web` for validation examples
 
-If you skipped the setup script earlier, [run it now](../00-quick-start/README.md#2-fork-clone-and-prepare-the-course-repository) before the first automation exercise. The open-work summary needs real issues or pull requests to inspect.
+If you skipped the setup script earlier, [run it now](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository) before the first automation exercise. The open-work summary needs real issues or pull requests to inspect.
 
 ---
 

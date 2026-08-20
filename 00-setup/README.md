@@ -1,4 +1,4 @@
-![Chapter 00: Quick Start](assets/chapter-header.svg)
+![Chapter 00: Setup](assets/chapter-header.svg)
 
 > **What if your first setup pass ended with a prepared training repo, a read-only chat overview, and a first session you can inspect?**
 

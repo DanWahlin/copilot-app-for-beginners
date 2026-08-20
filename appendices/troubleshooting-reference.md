@@ -14,9 +14,9 @@ Related chapter: [00 Quick Start](../00-quick-start/)
 | Repository does not appear | Repository access or picker filter | Check account access, organization membership, repository permissions, and whether to add a local folder, GitHub repo, or URL |
 | A chat cannot summarize the repo | Repo not connected or context is too broad | Reconnect the project and ask for a small overview of the course repo |
 
-## Chapter 01: First Steps
+## Chapter 01: Tour the App
 
-Related chapter: [01 First Steps](../01-first-steps/)
+Related chapter: [01 Tour the App](../01-tour-the-app/)
 
 | Symptom | Likely cause | Try this |
 |---|---|---|

@@ -20,7 +20,7 @@ By the end of this chapter, you'll be able to:
 
 ## ✅ Prerequisites
 
-Complete Chapters [00](../00-quick-start/README.md) and [01](../01-first-steps/README.md). At this point, you've connected the course repository and understand the difference between chats and project sessions.
+Complete Chapters [00](../00-quick-start/README.md) and [01](../01-tour-the-app/README.md). At this point, you've connected the course repository and understand the difference between chats and project sessions.
 
 If git worktrees are new, keep [appendices/git-worktrees.md](../appendices/git-worktrees.md) open. You do not create worktrees by hand in this chapter. The app creates them when you start a session in a **new worktree**.
 
@@ -426,7 +426,7 @@ Then answer:
 
 In the next chapter, you'll use isolated sessions for real development work. Part A covers the inner loop: review, debug, test, and browser preview. Part B covers the outer loop: My work, issues, pull requests, review comments, and checks.
 
-**[← Back to Chapter 01](../01-first-steps/README.md)** | **[Continue to Chapter 03 →](../03-development-workflows/README.md)**
+**[← Back to Chapter 01](../01-tour-the-app/README.md)** | **[Continue to Chapter 03 →](../03-development-workflows/README.md)**
 
 ---
 

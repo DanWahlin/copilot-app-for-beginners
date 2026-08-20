@@ -28,7 +28,7 @@ By the end of this chapter, you'll be able to:
 
 ## ✅ Prerequisites
 
-Complete Chapters [00](../00-quick-start/README.md), [01](../01-first-steps/README.md), and [02](../02-sessions-worktrees-context/README.md). You should have a session for the course repository and know where the Review panel's diff and terminal surfaces live.
+Complete Chapters [00](../00-quick-start/README.md), [01](../01-tour-the-app/README.md), and [02](../02-sessions-worktrees-context/README.md). You should have a session for the course repository and know where the Review panel's diff and terminal surfaces live.
 
 **Part B** works best with a GitHub-backed fork that has the seeded issues, branches, and PR scenarios. If you skipped the setup script, run it from [Chapter 00](../00-quick-start/README.md#2-fork-clone-and-prepare-the-course-repository). If you can't create PRs, read the steps and follow along with the screenshots.
 

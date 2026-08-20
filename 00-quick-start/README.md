@@ -290,7 +290,7 @@ Success criteria: Your fork shows the seeded issues and branches, and the chat c
 
 In the next chapter, you'll answer a practical question first: why use the GitHub Copilot app if you already use GitHub Copilot in an editor or terminal? Then you'll tour the interface, compare chats with sessions, and learn when to use Interactive, Plan, and Autopilot modes.
 
-**[← Back to course README](../README.md)** | **[Continue to Chapter 01 →](../01-first-steps/README.md)**
+**[← Back to course README](../README.md)** | **[Continue to Chapter 01 →](../01-tour-the-app/README.md)**
 
 ---
 

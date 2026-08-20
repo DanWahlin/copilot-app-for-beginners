@@ -67,7 +67,7 @@ This course focuses on the GitHub Copilot app. Along the way, you'll see how it 
 | Chapter | Title | What learners do |
 |:--:|---|---|
 | 00 | 🚀 [Quick Start](./00-quick-start/README.md) | Prepare the course environment and verify a chat |
-| 01 | 👋 [First Steps](./01-first-steps/README.md) | Learn why you'd use the app, then tour key features: UI, Chats, settings, sessions, modes, and model controls |
+| 01 | 👋 [Tour the App](./01-tour-the-app/README.md) | Learn why you'd use the app, then tour key features: UI, Chats, settings, sessions, modes, and model controls |
 | 02 | 🌳 [Sessions, Worktrees, and Context](./02-sessions-worktrees-context/README.md) | Start isolated sessions and use `@`, `#`, and `/` for context |
 | 03 | ⚡ [Development and GitHub Workflows](./03-development-workflows/README.md) | Review, debug, test, and preview a change, then move it through My work, issues, PRs, review comments, checks, and guided fixes |
 | 04 | 🧰 [Skills, Model Context Protocol (MCP) Servers, and Plugins](./04-skills-mcp-plugins/README.md) | Start with repo-local skills, then learn optional MCP servers, plugins, and agents |

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="260" viewBox="0 0 1000 260" role="img" aria-labelledby="t01 d01"><title id="t01">Chapter 01: First Steps</title><desc id="d01">Studio-themed header for Chapter 01.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="260" viewBox="0 0 1000 260" role="img" aria-labelledby="t01 d01"><title id="t01">Chapter 01: Tour the App</title><desc id="d01">Studio-themed header for Chapter 01.</desc>
 <defs>
 <linearGradient id="bg01" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#111827"/><stop offset="1" stop-color="#303674"/></linearGradient>
 <radialGradient id="gl01" cx="0.86" cy="0.16" r="0.7"><stop offset="0" stop-color="#7a7df3" stop-opacity="0.34"/><stop offset="1" stop-color="#7a7df3" stop-opacity="0"/></radialGradient>
@@ -14,7 +14,7 @@
 <g font-family="Helvetica, Arial, sans-serif">
 <circle cx="96" cy="74" r="6" fill="#fbbf24"/>
 <text x="112" y="80" fill="#c7d2fe" font-size="21" font-weight="700" letter-spacing="3">CHAPTER 01</text>
-<text x="84" y="146" fill="#ffffff" font-size="56" font-weight="800">First Steps</text>
+<text x="84" y="146" fill="#ffffff" font-size="56" font-weight="800">Tour the App</text>
 <text x="86" y="186" fill="#c7d2fe" font-size="15" font-weight="600" letter-spacing="3" opacity="0.62">GITHUB COPILOT APP</text>
 </g>
 </g></svg>

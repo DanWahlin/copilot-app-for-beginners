@@ -1,4 +1,4 @@
-![Chapter 01: First Steps](assets/chapter-header.svg)
+![Chapter 01: Tour the App](assets/chapter-header.svg)
 
 > **What if agent work stopped bouncing you between chat, diffs, terminals, browser tabs, and pull requests?**
 

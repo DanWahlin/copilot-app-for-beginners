@@ -81,8 +81,8 @@ Notes:
 Use descriptive, sortable names:
 
 ```text
-assets/screenshots/01-first-steps-quick-chat.png
-assets/screenshots/01-first-steps-quick-chat.webp
+assets/screenshots/01-tour-the-app-quick-chat.png
+assets/screenshots/01-tour-the-app-quick-chat.webp
 ```
 
 For research artifacts:
@@ -106,14 +106,14 @@ For research artifacts:
 ```bash
 bash .github/skills/github-copilot-app-automation/sample_codes/macos-accessibility/capture-copilot-window.sh \
   assets/screenshots \
-  01-first-steps-session-ui
+  01-tour-the-app-session-ui
 ```
 
 This creates:
 
 ```text
-assets/screenshots/01-first-steps-session-ui.png
-assets/screenshots/01-first-steps-session-ui.webp
+assets/screenshots/01-tour-the-app-session-ui.png
+assets/screenshots/01-tour-the-app-session-ui.webp
 ```
 
 ## Recommended: capture by window id (robust)

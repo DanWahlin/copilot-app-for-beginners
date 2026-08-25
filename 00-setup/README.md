@@ -31,15 +31,18 @@ gh --version
 
 Install anything that is missing before continuing to the setup script step.
 
----
-
-![First 10 minutes in the GitHub Copilot app: install, sign in, fork clone and run the setup script, connect the course repository, ask a first question in Chats, then start a small project session](assets/first-10-minutes-flow.webp)
-
 ## Installation
 
 1. [Download and install the GitHub Copilot app][app-install] for your operating system.
 2. Open the app and select *Sign in to GitHub*.
 3. Sign in with your GitHub account, or enter your GitHub Enterprise Server URL if your organization uses one.
+
+    ![Sign in page](assets/sign-in-to-app.png)
+
+4. Connect your repositories: Select **Continue**
+5. Pick a theme, and select **Finish**
+
+    ![Pick a theme](assets/pick-a-theme.png)
 
 Once signed in, you'll land on an empty home page. The app uses your GitHub identity and repository permissions to surface the work you can access, so your projects and tasks appear here as you continue with setup.
 
@@ -54,39 +57,40 @@ Once signed in, you'll land on an empty home page. The app uses your GitHub iden
 
 2. On the Copilot app, select the **+** button next to **Sessions** to open the **Add project from** dialog. It offers several options for connecting a project.
 
+    ![Add project from dialog](assets/app-add-project.png)
+
     | If you've got... | Use this app option |
     |---|---|
     | A cloned copy on your machine | **Local folder or repository**, then select your local folder |
     | A repository on GitHub | **GitHub repository**, then search for your fork `copilot-app-for-beginners`|
     | A repository URL | **Repository URL**, then paste the fork URL |
 
-    ![Add project from dialog](assets/app-add-project.webp)
-
-Select **GitHub repository** and pick the fork `copilot-app-for-beginners` you just created from the list. You'll see the course repository in the app, and the app sidebar will show the project as available.
+3. Select **GitHub repository** and type `copilot-app-for-beginners` to select the fork you just created from the list. The app will clone the repo and it'll show up in the sidebar
 
 ## Seed the repository with required artifacts
 
 Later chapters in this course rely on practice branches, issues, pull requests, review comments, and failing-check scenarios created by the script. Skip this step only if you plan to add those items manually using the steps in the appendix.
 
-Click on the chat window and press `Shift + 1` to switch to **Shell mode**. Agent sessions open in a **New worktree** by default, but for this lesson, click on **New worktree** and switch to **Local repository**. We'll cover more on worktrees in the next lesson.
+1. Click on the chat window and press `Shift + 1` to switch to **Shell mode**. 
+1. Agent sessions open in a **New worktree** by default, but for this lesson, click on **New worktree** and switch to **Local repository**. We'll cover more on worktrees in the next lesson.
 
-![set up command in shell mode](assets/shell-mode.png)
+    ![set up command in shell mode](assets/shell-mode.png)
 
-Run the test script below.
+1. Run the test script below.
 
-```bash
-node .github/scripts/setup-training-scenarios.js --dry-run
-```
+    ```bash
+    node .github/scripts/setup-training-scenarios.js --dry-run
+    ```
 
-Your command will be executed through the terminal. Confirm that the `Repository:` line in the output shows your fork.
+    Your command will be executed through the terminal. Confirm that the `Repository:` line in the output shows your fork.
 
-Run the setup script
+1. Run the setup script
 
-```bash
-node .github/scripts/setup-training-scenarios.js --yes
-```
+    ```bash
+    node .github/scripts/setup-training-scenarios.js --yes
+    ```
 
-The script creates the GitHub issues, branches, pull requests, comments, and failing-check scenarios used in later chapters. It is safe to rerun because it reuses items that already exist.
+    The script creates the GitHub issues, branches, pull requests, comments, and failing-check scenarios used in later chapters. It is safe to rerun because it reuses items that already exist.
 
 ### Checklist
 

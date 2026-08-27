@@ -67,7 +67,7 @@ Once signed in, you'll land on an empty home page. The app uses your GitHub iden
 
 3. Select **GitHub repository** and type `copilot-app-for-beginners` to select the fork you just created from the list. The app will clone the repo and it'll show up in the sidebar
 
-## Seed the repository with required artifacts
+## Seed the repository
 
 Later chapters in this course rely on practice branches, issues, pull requests, review comments, and failing-check scenarios created by the script. Skip this step only if you plan to add those items manually using the steps in the appendix.
 
@@ -157,9 +157,19 @@ Check:
 2. This course uses `samples/book-app-web` as the main sample app path
 3. Run the setup script so later chapters have practice branches, issues, and pull request scenarios ready
 
-## ➡️ What's Next
+## What's Next
 
-In the next chapter, you'll answer a practical question first: why use the GitHub Copilot app if you already use GitHub Copilot in an editor or terminal? Then you'll tour the interface, compare chats with sessions, and learn when to use Interactive, Plan, and Autopilot modes.
+### The Course Theme: Working in a Recording Studio
+
+Throughout this course, we'll use a recording studio as a recurring analogy for working with the GitHub Copilot app. Each chapter will connect a part of agent-driven development to the familiar process of preparing, recording, reviewing and refining a track.
+
+Before you record anything, you get the studio ready. You sign in for access, plug in your gear, load the song you'll work on and run a quick soundcheck before you commit a single take.
+
+![Setting up the studio analogy for GitHub Copilot app setup](assets/studio-setup-soundcheck.webp)
+
+The setup you just completed is the software equivalent of preparing that studio.
+
+In the next chapter, you'll answer a practical question first: why use the GitHub Copilot app if you already use GitHub Copilot in an editor or terminal? Then you'll tour the interface and learn about the different session types and modes.
 
 **[← Back to course README](../README.md)** | **[Continue to Chapter 01 →](../01-tour-the-app/README.md)**
 

@@ -58,6 +58,10 @@ The app landing view. Start a session, connect a repository, and see **Up next**
 
 A session mode where you and the agent work step by step. The agent waits for your input more often than in Autopilot.
 
+## Inner loop
+
+The local development cycle on your machine: review, debug, test, and preview a change before it goes to GitHub.
+
 ## Local sandbox
 
 A local execution environment with restrictions on file system, network, or system access. It keeps work closer to your machine while limiting what the agent can reach.
@@ -73,6 +77,10 @@ A tool server that uses Model Context Protocol to connect Copilot to external to
 ## My work
 
 The app view that gathers your GitHub issues, pull requests, review requests, and failing checks in one inbox. Official default sections are **All**, **Active**, **Review requests**, and **Done**. It supports search qualifiers such as `repo:` and `is:pr`.
+
+## Outer loop
+
+The GitHub side of the same workflow: find work in My work, start sessions from issues, open pull requests, and ask Copilot to address review comments and failing checks.
 
 ## Pick and Polish
 

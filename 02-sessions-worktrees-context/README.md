@@ -53,7 +53,7 @@ Because each session works in its own worktree, you can run several at once with
 
 ### Where a Session Runs
 
-When you start a session, the composer's **Workspace** selector lets you choose *where* the work happens.
+When you start a session, the **Workspace** selector below the prompt box lets you choose *where* the work happens. 
 
 ![Workspace selector in the GitHub Copilot app](assets/where-sessions-run.png)
 
@@ -82,14 +82,14 @@ Before you run multiple sessions, find the app's session settings you toured in 
 
 ### Context Syntax
 
-The GitHub Copilot app lets you attach context in the composer with `@`, `#` and `/`.
+The GitHub Copilot app lets you attach context in the prompt box with `@`, `#`, and `/`.
 
 | Syntax | Use it for | Example |
 |---|---|---|
 | `@` | Files or folders | `@samples/book-app-web/src` |
 | `#` | Issues or pull requests | `#12` |
 | `/` | Slash commands | `/chronicle standup` |
-| `&` | Other sessions, when the composer offers it | Type `&` and pick a session from the list |
+| `&` | Other sessions, when the prompt box offers it | Type `&` and pick a session from the list |
 
 You'll use `@`, `#`, and `/` in this course. Treat `&` as optional. Use it later if you want one session to see what another session already worked on.
 
@@ -97,7 +97,7 @@ You'll use `@`, `#`, and `/` in this course. Treat `&` as optional. Use it later
 
 ### Slash Commands
 
-Slash commands are shortcuts you type in the composer. They can open app utilities, invoke agent behaviors, inspect usage or trigger installed skills. The safest way to discover what your app supports is to type `/` in the composer and read the palette. Commands can vary by app version, enabled plugins, installed skills, and organization policy.
+Slash commands are shortcuts you type in the prompt box. They can open app utilities, invoke agent behaviors, inspect usage, or trigger installed skills. The safest way to discover what your app supports is to type `/` in the prompt box and read the palette. Commands can vary by app version, enabled plugins, installed skills, and organization policy.
 
 For this chapter, you only need `/chronicle` and `/context`.
 
@@ -305,7 +305,7 @@ Then answer:
 
 ## ➡️ What's Next
 
-In the next chapter, you'll use isolated sessions for real development work. Part A covers the inner loop: review, debug, test, and browser preview. Part B covers the outer loop: My work, issues, pull requests, review comments, and checks.
+In the next chapter, you'll use isolated sessions for real development work. The inner loop covers review, debug, test, and browser preview. The outer loop covers My work, issues, pull requests, review comments, and checks.
 
 **[← Back to Chapter 01](../01-tour-the-app/README.md)** | **[Continue to Chapter 03 →](../03-development-workflows/README.md)**
 

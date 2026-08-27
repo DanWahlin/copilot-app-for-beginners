@@ -1,5 +1,7 @@
 ![Chapter 01: Tour the App](assets/chapter-header.svg)
 
+> **What if you could move from first prompt to pull request without manually piecing together context across multiple tools?**
+
 Now that the app is installed and connected to the course repository, this chapter answers why the desktop app helps if you already use GitHub Copilot in an editor or terminal. Then you'll tour the main navigation, compare chats with project sessions, and see how session modes change how much control you have.
 
 ## Learning Objectives
@@ -12,7 +14,7 @@ By the end of this chapter, you'll be able to:
 - Select models and assign reasoning efforts based on task complexity
 - Optionally try voice dictation
 
-> ⏱️ **Estimated Time**: ~40 minutes (20 min reading + 20 min hands-on)
+> ⏱️ **Estimated Time**: ~30 minutes
 
 ## Prerequisites
 
@@ -77,26 +79,26 @@ The automations tab is your home for recurring agent tasks that can save and eit
 
 ### Sessions
 
-Agent interactions through the GitHub Copilot app are either through **Chat** or a **project session**.
+Agent interactions through the GitHub Copilot app are either through **Chat session** or a **Project session**.
 
 | Use this | When you're trying to... | Creates branch or worktree? |
 |---|---|---|
-| Chat | Ask questions, brainstorm, summarize, orient yourself | No |
+| Chat session | Ask questions, brainstorm, summarize, orient yourself | No |
 | Project session | Plan, inspect, edit, test, or create PR-ready work | Usually yes, depending on session settings |
 
-   ![Chat versus project session](assets/quick-chat-vs-project-session.webp)
-
-### Real-World Analogy: The Producer's Control Room
+### From the Studio: In the Control Room
 
 A producer in the control room doesn't handle every song the same way. Some takes need close direction. Some need the arrangement charted out first. Some quick questions just need a fast answer.
 
+![Producer's control room analogy for GitHub Copilot app session modes](assets/producer-control-room-modes.webp)
+
 The GitHub Copilot app works the same way:
 
-### Quick chat
+### Chat sessions
 
-> A chat is like asking a session musician a quick question.
+> A chat is like asking a musician a quick question.
 
-Chats help you learn without starting a branch. They are a great way to explore and understand your codebase before making changes. Try it:
+Chat sessions help you learn without starting a branch. They are a great way to explore and understand your codebase before making changes. Try it:
 
 - Select the **+** next to **Chats** in the sidebar to start a new quick chat.
 - Click the repository picker and select the `copilot-app-for-beginners` repository
@@ -104,10 +106,13 @@ Chats help you learn without starting a branch. They are a great way to explore 
 - Submit the prompt below:
 
    ```text
-   What would I need to do to add a “favourites” feature to samples/book-app-web?
+   I'm learning the copilot-app-for-beginners course. Give me a beginner-friendly tour of the samples/book-app-web sample before I begin the hands-on exercises. Explain what the app does, the technologies it uses, how its main files are organized, how data flows through it and what the tests cover. Refer to specific file paths and finish with a suggested reading order. Do not change any files
    ```
 
-   Note that no separate branch or git worktree is created to fulfill your prompt, making quick chats ideal for general technical questions not related to your project or brainstorming.
+> [!NOTE]
+> The hands-on exercises throughout the rest of this course focus on `samples/book-app-web`. This tour gives you a mental model of the sample before you begin working with it.
+
+Note that no separate branch or git worktree is created to fulfill your prompt, making quick chats ideal for general technical questions not related to your project or brainstorming.
 
 ### Project sessions
 
@@ -189,46 +194,11 @@ Check your plan, organization policy, project settings, and app version.
 
 1. Keep your editor for deep coding. Open GitHub Copilot app when agent work needs a clearer place to run and review.
 2. From the app, you can open the project in VS Code any time you want the full editor.
-3. The app is organized around work surfaces: Home for starting work, My work for GitHub items, Search, Sessions, Chats, and Automations.
-4. **Chats** are for exploration. **Sessions** are for focused repository work. **Automations** are for repeatable agent runs.
-5. **Interactive**, **Plan**, and **Autopilot** change the level of autonomy.
-6. Model and reasoning choices affect speed, quality, and cost. Use enough capability for the task, but not more than needed.
+3. The app is organized around work surfaces: Home for starting work, My work for GitHub items, Sessions and Automations.
+4. **Chat sessions** are for exploration. **Project sessions** are for focused repository work. **Automations** are for repeatable agent runs.
+5. **Interactive**, **Plan** and **Autopilot** change the level of autonomy.
 
----
-
-## 📝 Assignment
-
-![Assignment](../assets/assignment.webp)
-
-Create a small mode map for the Book App. The goal is to use the app surfaces from this chapter without changing files yet.
-
-1. Open Chats and submit this prompt:
-
-   ```text
-   I'm learning the copilot-app-for-beginners course with samples/book-app-web. Give me a beginner-friendly overview of what the app does, which files look important, and one safe question I should ask before editing code.
-   ```
-
-   Write down one useful thing the chat taught you about the app.
-
-2. Create a Plan-mode session and submit this prompt:
-
-   ```text
-   Plan how you would investigate why the Book App's reading stats might look wrong after filters are applied. Do not edit files. Tell me which files you would inspect and what evidence would prove the behavior.
-   ```
-
-   Write down the first file Copilot would inspect and one validation idea it suggested.
-
-3. Switch to Interactive-mode and submit this prompt:
-
-   ```text
-   Walk me through how search and filters work in samples/book-app-web. Ask me before recommending any code changes, and do not edit files.
-   ```
-
-   Write down one question Copilot asked or one checkpoint where you stayed in control.
-
----
-
-## ➡️ What's Next
+## What's Next
 
 In the next chapter, you'll solve the "shared working copy" challenge from this chapter: isolated sessions with worktrees, plus focused context with `@`, `#`, and `/`.
 

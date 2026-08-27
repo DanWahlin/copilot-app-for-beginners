@@ -216,7 +216,7 @@ You'll compare the session modes by starting from the course project in the side
 
 1. In the left sidebar, find the **copilot-app-for-beginners** project you connected in Chapter 00.
 2. Click the **+** button next to the project name.
-3. When the session composer opens, find the mode dropdown near the prompt box. It will show **Interactive**, **Plan**, or **Autopilot**. Next to it, you'll also see the model and reasoning effort dropdowns.
+3. When the prompt box opens, find the mode dropdown below it. It will show **Interactive**, **Plan**, or **Autopilot**. Next to it, you'll also see the model and reasoning effort dropdowns.
 4. Choose the mode listed below, paste the matching prompt, and run it.
 5. After you review the response, change the dropdown to the next mode and repeat.
 

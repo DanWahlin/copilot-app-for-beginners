@@ -163,7 +163,7 @@ Open or create a session for the course repository.
 4. Locate the **Browser** surface or browser tab if your build exposes it.
 5. Notice where plan output appears in the session when you ask for a plan.
 
-![Review panel open beside a session. This capture is a README planning session. Your session title will differ. What matters is the Plan surface, Changes tab, and composer](assets/app-review-panel.webp)
+![Review panel open beside a session. This capture is a README planning session. Your session title will differ. What matters is the Plan surface, Changes tab, and prompt box](assets/app-review-panel.webp)
 
 #### Expected result
 
@@ -177,7 +177,7 @@ Chat still carries the conversation. The plan, terminal, browser, and diff surfa
 
 ### 2. Create a session canvas
 
-Stay in the same session. Type `/` in the composer and select `/create-canvas` if it appears, or paste the prompt below.
+Stay in the same session. Type `/` in the prompt box and select `/create-canvas` if it appears, or paste the prompt below.
 
 ```text
 /create-canvas Create a session board for a small book-card spacing or responsive-layout improvement in @samples/book-app-web.
@@ -208,7 +208,7 @@ Prefer user scope so this stays on my machine and is not committed.
 Do not edit the book-app-web source files yet.
 ```
 
-![The /create-canvas skill selected in the session composer typeahead](assets/app-create-canvas-command.webp)
+![The /create-canvas skill selected in the prompt box typeahead](assets/app-create-canvas-command.webp)
 
 The canvas should open in the right side panel. If `/create-canvas` is missing or the canvas does not open, ask for the same board as markdown in the session and keep it updated each turn. That fallback is enough to finish the chapter.
 

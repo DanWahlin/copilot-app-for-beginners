@@ -59,7 +59,7 @@ Because each session works in its own worktree, you can run several at once with
 
 ### Where a Session Runs
 
-When you start a session, the composer's **Workspace** selector lets you choose *where* the work happens. 
+When you start a session, the **Workspace** selector below the prompt box lets you choose *where* the work happens. 
 
 ![Workspace selector in the GitHub Copilot app](assets/app-workspace-selector.webp)
 
@@ -89,14 +89,14 @@ Before you run multiple sessions, find the app's session settings you toured in 
 
 ### Context Syntax
 
-The GitHub Copilot app lets you attach context in the composer with `@`, `#`, and `/`.
+The GitHub Copilot app lets you attach context in the prompt box with `@`, `#`, and `/`.
 
 | Syntax | Use it for | Example |
 |---|---|---|
 | `@` | Files or folders | `@samples/book-app-web/src` |
 | `#` | Issues or pull requests | `#12` |
 | `/` | Slash commands | `/chronicle standup` |
-| `&` | Other sessions, when the composer offers it | Type `&` and pick a session from the list |
+| `&` | Other sessions, when the prompt box offers it | Type `&` and pick a session from the list |
 
 You'll use `@`, `#`, and `/` in this course. Treat `&` as optional. Use it later if you want one session to see what another session already worked on.
 
@@ -104,7 +104,7 @@ You'll use `@`, `#`, and `/` in this course. Treat `&` as optional. Use it later
 
 ### Slash Commands
 
-Slash commands are shortcuts you type in the composer. They can open app utilities, invoke agent behaviors, inspect usage, or trigger installed skills. The safest way to discover what your app supports is to type `/` in the composer and read the palette. Commands can vary by app version, enabled plugins, installed skills, and organization policy.
+Slash commands are shortcuts you type in the prompt box. They can open app utilities, invoke agent behaviors, inspect usage, or trigger installed skills. The safest way to discover what your app supports is to type `/` in the prompt box and read the palette. Commands can vary by app version, enabled plugins, installed skills, and organization policy.
 
 For this chapter, you only need `/chronicle` and `/context`. Additional commands can be found in the collapsible section below.
 
@@ -194,7 +194,7 @@ Perform these steps:
    ![Create from branch](assets/app-create-from-icon.webp)
 
 4. In the dialog, select the **Branches** tab, then choose `practice-empty-state-copy`. This starts a new session based on that branch and creates a new worktree.
-5. In the session composer, set the **Mode** selector to **Plan**.
+5. Below the prompt box, set the **Mode** selector to **Plan**.
 6. Submit the following prompt which includes details from the issue:
 
    ```text
@@ -235,15 +235,15 @@ Now you'll narrow the session's focus using an `@` file reference or a `#` PR or
 Perform these steps:
 
 1. Start a new session in the `copilot-app-for-beginners` project.
-2. In the session composer, submit this prompt:
+2. In the prompt box, submit this prompt:
 
    ```text
    Use @samples/book-app-web/src to focus on the React app code. Which files are most likely involved in the empty-state copy?
    ```
 
-3. Switch to Plan mode in the composer. Although this session wasn't started from an existing issue or PR, you can use the `#` reference to access them.
-4. Type `#` into the composer. Notice that all of the issues and PRs associated with the repository appear.
-5. Select one of the issues from the list. You should see something like `#1` (depending on the issue you selected) appear in the composer.
+3. Switch to Plan mode below the prompt box. Although this session wasn't started from an existing issue or PR, you can use the `#` reference to access them.
+4. Type `#` into the prompt box. Notice that all of the issues and PRs associated with the repository appear.
+5. Select one of the issues from the list. You should see something like `#1` (depending on the issue you selected) appear in the prompt box.
 6. Add a short instruction such as `Propose a plan only. Do not edit files.` then submit.
 
    > Note: Depending on the issue you selected, the app may offer to switch the session to that issue's training branch. For this exercise, decline the switch (press Escape) and stay where you are. The goal is to practice `#` context, not to finish the issue. In Chapter 03 you'll accept that same prompt when an exercise needs the bug that lives on a training branch. Stay in Plan mode and do not approve edits yet.
@@ -323,12 +323,12 @@ nothing to commit, working tree clean
 
 ### 5. Use a Slash Command to Recap the Session
 
-Slash commands are shortcuts you run in the composer. Here you'll use `/chronicle` to get a quick recap of what the session has done so far. Adding the `standup` argument formats that recap as a short, standup meeting-style summary.
+Slash commands are shortcuts you run in the prompt box. Here you'll use `/chronicle` to get a quick recap of what the session has done so far. Adding the `standup` argument formats that recap as a short, standup meeting-style summary.
 
 Perform these steps:
 
 1. Make sure you're in the `practice-empty-state-copy` session.
-2. In the session composer, submit the following slash command:
+2. In the prompt box, submit the following slash command:
 
    ```text
    /chronicle standup
@@ -424,7 +424,7 @@ Then answer:
 
 ## ➡️ What's Next
 
-In the next chapter, you'll use isolated sessions for real development work. Part A covers the inner loop: review, debug, test, and browser preview. Part B covers the outer loop: My work, issues, pull requests, review comments, and checks.
+In the next chapter, you'll use isolated sessions for real development work. The inner loop covers review, debug, test, and browser preview. The outer loop covers My work, issues, pull requests, review comments, and checks.
 
 **[← Back to Chapter 01](../01-tour-the-app/README.md)** | **[Continue to Chapter 03 →](../03-development-workflows/README.md)**
 

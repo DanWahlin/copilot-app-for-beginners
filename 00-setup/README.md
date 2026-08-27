@@ -202,7 +202,7 @@ A chat is useful for exploration because it does not create a session branch or 
 
 This is a quick smoke test so you can see where project sessions live. Chapter 01 covers session modes in more depth.
 
-Create a new project session in Interactive mode by selecting the **+** next to `copilot-app-for-beginners` in the sidebar. In the session composer, choose **Interactive** from the mode selector and submit the following prompt.
+Create a new project session in Interactive mode by selecting the **+** next to `copilot-app-for-beginners` in the sidebar. Below the prompt box, choose **Interactive** from the mode selector and submit the following prompt.
 
 ```text
 Explain the app structure and suggest one beginner-friendly improvement. Do not edit files yet.

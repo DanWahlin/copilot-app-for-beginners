@@ -1,459 +1,408 @@
 ![Chapter 03: Development and GitHub Workflows](assets/chapter-header.svg)
 
-> **What if one supervised workflow carried a change from first edit all the way to a merge-ready pull request?**
+> **What if one supervised workflow carried a change from the first edit to a merge-ready pull request?**
 
-The previous chapters provided a tour of the app and introduced isolated sessions. This chapter puts them to work. The GitHub Copilot app is strongest when you use it as a loop.
+The previous chapters introduced the app, project sessions, worktrees, and context. This chapter puts them together as two connected loops:
 
-- The **inner loop** is the work on your machine: review, debug, test, and preview a change in `samples/book-app-web`.
-- The **outer loop** is the work on GitHub: use **My work** as an inbox, start sessions from issues, open and review pull requests, and ask GitHub Copilot to fix review comments and failing checks.
+- The **inner loop** happens on your machine: understand the task, change the code, inspect the diff, run tests, and preview the result.
+- The **outer loop** happens on GitHub: start from an issue, open a pull request, respond to review feedback, and confirm checks pass.
 
-Both loops live in the same app, so you supervise the whole path without piecing the story together across tools.
+The GitHub Copilot app connects both loops, but you remain responsible for reviewing the evidence and deciding what ships.
 
-## 🎯 Learning Objectives
+## Learning Objectives
 
 By the end of this chapter, you'll be able to:
 
-- Review, debug, and fix a bug using repository instructions, the Review panel, tests, and browser preview as evidence
-- Add tests, refactor behind them, and use rubber duck to critique work before you ship it
-- Use **My work** as an inbox, start a session from an issue, and open a pull request from the app
-- Ask GitHub Copilot to address review comments and failing checks, and explain why Agent Merge still needs human judgment
+- Use the Workspace panel, tests, build output, and browser preview to validate a local change
+- Add a regression test and ask the rubber duck agent to critique your work
+- Use **My work** to move from an issue to a pull request
+- Ask GitHub Copilot to address review comments and failing checks
+- Explain where human judgment fits in both loops
 
-> ⏱️ **Estimated Time**: ~90 minutes 
+> ⏱️ **Estimated Time**: ~75 minutes
 
----
+## Prerequisites
 
-## ✅ Prerequisites
+Complete Chapters [00](../00-setup/README.md), [01](../01-tour-the-app/README.md), and [02](../02-sessions-worktrees-context/README.md).
 
-You should already be able to open a session for this course repository and find the Review panel's **Changes** (diff) and **Terminal** tabs. If that isn't true yet, finish [Chapter 02](../02-sessions-worktrees-context/README.md) first.
+This chapter uses the practice branches, issues, and pull requests created by the [Chapter 00 setup script](../00-setup/README.md#seed-the-repository). If you skipped that step, run the script now. If you can't create pull requests, you can still read the outer-loop steps and follow the screenshots.
 
-The **outer loop** needs a GitHub-backed fork with the seeded issues, branches, and PR scenarios. If you skipped the setup script, [run it now](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository). If you can't create PRs, read the steps and follow along with the screenshots.
+## From the Studio: From Take to Final Mix
 
----
+A musician doesn't keep the first take just because it's finished. They record, listen, adjust, and record again. That's the **inner loop**: make a change, then inspect the evidence.
 
-## 🧩 Real-World Analogy: From Take to Final Mix
+<img src="assets/record-playback-retake-loop.webp" alt="Record, play back, and re-take analogy for the development loop" width="600" />
 
-A good musician doesn't keep the first take just because it's finished. They record a take, play it back, listen for anything off, and re-record until it's right. That's the **inner loop**: lay down the change, then listen back to the evidence (diff, tests, terminal, browser).
+A finished take still needs to move through production. The producer tracks the brief, feedback, quality checks, and final approval. That's the **outer loop**: use issues and pull requests to move validated work through GitHub.
 
-<img src="assets/record-playback-retake-loop.webp" alt="Record, play back, re-take analogy for the development loop" width="600" />
+<img src="assets/producer-review-desk-github.webp" alt="Producer review desk analogy for GitHub issues and pull requests" width="600" />
 
-But a take isn't an album. A producer's review desk tracks briefs, approvals, notes for the players, quality checks, and the final call on what ships. That's the **outer loop**: My work in GitHub Copilot app shows what needs attention, and pull requests carry the change through review and checks before it's merged.
+## Core Concept: Trust the Evidence
 
-<img src="assets/producer-review-desk-github.webp" alt="Producer's review desk analogy for GitHub issues and pull requests" width="600" />
+A confident response from Copilot isn't the same as validated software. Use these surfaces to decide whether a change is ready:
 
-Before you run those loops, hold onto one idea.
+| Evidence | Where to find it | What to check |
+|---|---|---|
+| Diff | Workspace panel **Changes** tab | The change is focused and understandable |
+| Tests and build | Workspace panel **Terminal** tab | The relevant tests and build complete successfully |
+| Running app | Workspace panel browser tab | The behavior works as expected |
+| GitHub checks | Pull request in **My work** | Continuous integration (CI) agrees with your local results |
 
-## Core Concepts
+<img src="assets/development-loop.webp" alt="Inner loop on your machine: understand, change, validate, and review. Outer loop on GitHub: issue, pull request, feedback, and checks. Human judgment applies to both." width="600" />
 
-This chapter has one idea to hold onto: **a confident chat response isn't validated software.** After Copilot proposes a change, inspect **evidence** before deciding to keep it.
+## Confirm the Sample App Is Ready
 
-| Evidence | Where you look |
-|---|---|
-| Diff | Review panel **Changes** tab: the visible set of code changes |
-| Tests and build | Session **terminal** output for `npm test -- --run` and `npm run build`. Copilot may run those commands. You still read the result. |
-| Running app | Session **browser** preview, or automated UI tests that prove the same behavior |
-
-Inner loop exercises use this evidence on your machine. Outer loop exercises use the same standard on GitHub issues, pull requests, and checks.
-
-<img src="assets/development-loop.webp" alt="Inner loop on your machine: Plan, Change, Evidence. Outer loop on GitHub: Issue, PR, Checks. Human review applies to both." width="600"/>
-
-You'll inspect that evidence throughout the chapter. First, load the project instructions and prove the sample app is already green.
-
-## Confirm the Sample App Builds
-
-This repo already includes `.github/copilot-instructions.md` to provide context about the project to Copilot app. Open it and confirm it covers `samples/book-app-web`, the React, TypeScript, Vite, and Vitest stack, small beginner-readable changes, and how to validate with tests. That file is what Copilot loads for this project. Keep it lean.
+The repository includes `.github/copilot-instructions.md`, which gives Copilot project-specific guidance. It describes the sample app, its beginner-friendly conventions, and its validation commands.
 
 <details>
 <summary>Optional: How Copilot gets context</summary>
 
-Copilot doesn't work from your prompt alone. It also uses settings, instructions, and the files in the repo. Extra context isn't better context. Keep each layer lean.
+Copilot doesn't work from your prompt alone. It also uses settings, instructions, and repository files. More context isn't always better, so keep each layer focused.
 
-<img src="assets/context-layers.webp" alt="Four context layers: prompt, settings, instructions, and repo files. Keep each layer lean." width="600"/>
+<img src="assets/context-layers.webp" alt="Four context layers: prompt, settings, instructions, and repo files. Keep each layer focused." width="600" />
 
-Copilot's context is a stack:
+| Context layer | What it includes |
+|---|---|
+| Prompt | What you ask in the current turn, including files, folders, issues, or pull requests attached with `@` and `#` |
+| Settings | Your app-wide session instructions and project-specific notes |
+| Instructions | Shared repository guidance such as `.github/copilot-instructions.md` or `AGENTS.md` |
+| Repo files | The code, tests, documentation, and other files Copilot can access |
 
-- **Prompt**: what you send this turn. Attach only the files, folders, issues, or PRs that matter, using `@` and `#` from Chapter 02.
-- **Settings**: your personal defaults in the app. **Settings → Sessions** holds app-wide instructions. **Settings → Projects**, then the repository name, holds notes for projects you work with. Keep these short.
-- **Instructions**: the committed `.github/copilot-instructions.md` file. That's the git-reviewable project guidance GitHub Copilot can load automatically. Use it for rules the whole team should share as they work with a repo. Keep it short, too. Some repositories put the same kind of guidance in `AGENTS.md`. The GitHub Copilot app supports both files.
-- **Repo files**: the sample app in `samples/book-app-web`. Copilot can only use what it can see.
+Attach only the context that helps with the current task. Focused context makes it easier for Copilot to understand your goal and follow the repository's conventions.
 
 </details>
 
-The Review panel's **Terminal** tab is a terminal inside the session. Use it to prove the sample app already tests and builds, without leaving the app.
-
-> Note: Select the **New session** (**+**) icon when you need a blank session. Select the **Create from** icon when the exercise starts from a branch, issue, or pull request.
->
-> <img src="assets/app-new-session-vs-create-from.webp" alt="New session vs Create from" width="300"/>
-
-1. In the sidebar, create a new session for the `copilot-app-for-beginners` project.
-2. Below the prompt box, set the **Mode** selector to **Interactive**, then submit the following prompt:
+1. Create a new session for the `copilot-app-for-beginners` project.
+1. Set the mode to **Interactive**, then submit:
 
    ```text
-   Summarize the @samples/book-app-web project, including its framework, language, test framework, and build tool. Then tell me the commands to install dependencies, run tests, and build the app.
+   Summarize the @samples/book-app-web test framework and build tool that are used to validate changes. Include the commands to run tests and build the app.
    ```
-3. Open the **Review panel** with the toggle in the upper-right corner of the app. That's where the session's terminal, diff, and browser surfaces live.
-4. Select the **Terminal** tab. If no terminal exists yet, press **+** to start one. You can also select **View → Toggle Terminal**.
-5. Run these commands from the repository root:
+
+1. Select **View ➡ Toggle Review Panel** or the **Toggle panel** icon in the upper-right corner.
+1. Select **Terminal**. If it isn't open, select **+**, then **Terminal**.
+
+1. Run:
 
    ```bash
    cd samples/book-app-web
    npm install
    npm test -- --run
+   ```
+
+The **Terminal** should show four passing tests:
+
+![Workspace panel with Changes, Terminal, and the Book App Web browser tab](assets/app-workspace-panel.webp)
+
+1. Run:
+
+   ```bash
    npm run build
    ```
 
-You'll see dependencies install, tests run, and a build complete. Tests and builds are evidence. A confident chat response isn't.
+The tests and build should pass before you introduce any changes. This gives you a known-good baseline.
 
-> Note: Each practice-branch exercise below opens its **own worktree** (a separate folder), so you'll run `npm install` again the first time you use that worktree's terminal.
+> [!NOTE]
+> Each practice branch opens in a separate worktree. Run `npm install` the first time you use a new worktree because dependencies aren't shared automatically.
 
-You now have project instructions, a passing test and build, and the Review panel surfaces. The inner loop starts from that baseline.
+## Inner Loop: Develop and Validate on Your Machine
 
----
+The inner loop is:
 
-## Hands-On Exercises
-
-In these exercises, you'll:
-
-- **Inner loop:** review, debug, test, refactor, and preview a change with the evidence visible
-- **Outer loop:** find work in My work, start from an issue, open a pull request, and ask the GitHub Copilot app to fix comments and checks
-
-> **Minimum path:** Inner loop exercises 1–3, then outer loop exercises 4–6. That's enough to finish the chapter. Pick and Polish is extra UI practice.
-
-> **Commands you'll type often:** `npm test -- --run` runs the Vitest suite once and exits. The extra `--` passes `--run` through npm to Vitest. Without it, Vitest can stay open in watch mode.
-
-**Inner loop: Develop and validate in a session.** Review, fix, test, and preview a change while the evidence stays visible.
+1. Understand the task.
+2. Make a focused change.
+3. Inspect the diff.
+4. Run tests and the build.
+5. Preview the behavior.
+6. Repeat if the evidence reveals a problem.
 
 ### 1. Review and Fix a Bug
 
-In this exercise you'll work on a practice branch that already contains a real bug so the review has something to find and the fix is meaningful. You'll review in **Plan** mode, then switch to **Interactive** to apply the fix while staying in control.
+The `practice-unread-count-bug` branch contains a regression where reading statistics ignore active filters.
 
-Perform these steps:
+In Chapter 02, you attached an issue to practice giving Copilot focused context. Here you'll use that same skill as the starting point for a complete inner loop: plan the fix, change the code, inspect the diff, run the tests, and preview the result.
 
-1. Make sure the `practice-unread-count-bug` branch is ready (the [Chapter 00](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository) setup script created it). If you skipped the script, [run it now](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository) - it's safe to rerun and only adds what's missing.
-2. In the sidebar, select the **Create from** icon next to the `copilot-app-for-beginners` project, choose the **Branches** tab, and select `practice-unread-count-bug`. This starts a session on that branch in a new worktree.
-3. Below the prompt box, set the **Mode** selector to **Plan**, then submit:
-
-   ```text
-   Review @samples/book-app-web/src for issues related to filtering, unread counts, and reading statistics. Create a short checklist grouped by high, medium, and low risk. Do not edit files yet.
-   ```
-
-4. Read the review, then switch the **Mode** selector to **Interactive** and submit:
+1. Select **Create from** next to the course project.
+1. Choose **Branches**, then select `practice-unread-count-bug`. The app starts a session in a new worktree.
+1. In the prompt box, type `#2`, then select **Keep unread stats correct when filters are active** to attach the seeded issue. If your issue has a different number, type `#` and select it by title.
+1. Set the mode to **Plan**, add the following instruction after the attached issue, then submit:
 
    ```text
-   Fix the unread count when filters are active in samples/book-app-web. Keep the change small, explain the root cause, and run the relevant tests.
+   Use the attached issue as the source of truth. Review @samples/book-app-web/src, identify the root cause, and create a short fix and validation plan.
    ```
 
-5. Open the **Changes** tab in the Review panel. That **diff** is the visible set of proposed edits. Read it, then select **Keep** on each change you want to apply. Applying writes the edits to this worktree.
+1. Review the plan. It should connect the displayed statistics to the books currently shown after filters are applied.
+1. Switch to **Interactive**, then submit:
 
-#### Expected Output
+   ```text
+   Implement the plan. Keep the fix small, explain the root cause, and run the relevant tests.
+   ```
 
-Copilot should produce a specific, testable review, then make a focused fix, explain the cause, and run or suggest a test command.
+1. Open the **Changes** tab and inspect the diff. Confirm that the change is focused on the filtered-book data flow. If it isn't, ask Copilot to revise it before continuing.
 
-> Demo output varies. Focus on whether the review is specific and whether the fix is small and explained.
+### Validate the Fix
 
-#### Success Check
-
-1. In the session terminal, install this worktree's dependencies (a new worktree starts without them) and run the tests:
+1. Review the session's terminal output. If Copilot already ran these commands after the fix, you don't need to run them again. Otherwise, run:
 
    ```bash
    cd samples/book-app-web
    npm install
-   npm test -- --run
-   ```
-
-   Passing tests are your evidence that the fix works.
-
-2. To see the change in the running app, start the dev server:
-
-   ```bash
-   npm run dev -- --host 127.0.0.1 --port 5173
-   ```
-
-   This keeps running so the browser can preview the app. Leave it open, then press `Ctrl+C` when finished.
-
-3. Open the session **browser** preview so you can confirm the fix in the running app: in the **Review panel**, select the browser/preview surface (next to **Terminal** and **Changes**), then enter:
-
-   ```text
-   http://127.0.0.1:5173
-   ```
-
-   Apply a filter and confirm the unread count stays correct while the filter is active.
-
----
-
-### 2. Lock the Fix in with Tests
-
-Tests lock in the fix so it can't silently regress. Ask GitHub Copilot to add a test that fails on the old behavior and passes on your fix.
-
-1. Stay in the same **Interactive** session on the `practice-unread-count-bug` branch.
-2. Submit:
-
-   ```text
-   Add or update tests for the unread count behavior so the bug would fail before the fix and pass after the fix. Keep the tests focused on samples/book-app-web.
-   ```
-
-3. Review the new or updated test files in the **Changes** tab before you approve them.
-4. In the session terminal, confirm both commands complete:
-
-   ```bash
-   cd samples/book-app-web
    npm test -- --run
    npm run build
    ```
 
-#### Success Check
+1. Start the development server:
 
-Both `npm test -- --run` and `npm run build` complete cleanly, and the new test targets the unread-count behavior so it would have failed before your fix.
+   ```bash
+   npm run dev
+   ```
+
+1. In the Workspace panel, select **+**, then **Browser**. Enter the **Local** URL shown in the terminal and press `Enter`.
+
+1. Set the reading-status filter to **Unread**. Confirm that the unread count matches the visible book cards.
+1. Return to **Terminal** and press `Ctrl+C` to stop the development server. This shortcut is Control+C on macOS, Windows, and Linux.
+
+You've completed one inner-loop cycle: plan, change, inspect, test, build, and preview.
+
+### 2. Add a Regression Test
+
+A regression test proves the bug would fail before the fix and pass afterward.
+
+1. Stay in the same **Interactive** session.
+1. Submit:
+
+   ```text
+   Add or update a focused test for the unread count when filters are active. The test should fail with the original bug and pass with the fix.
+   ```
+
+1. Inspect the test change in the **Changes** tab. Confirm that it checks the visible filtered results rather than weakening an existing expectation.
+1. Run:
+
+   ```bash
+   npm test -- --run
+   npm run build
+   ```
+
+Both commands should complete successfully.
 
 <details>
-<summary>Optional: Refactor safely behind the tests</summary>
+<summary>Optional: Refactor Behind the Tests</summary>
 
-With a green baseline, a refactor is safe: if tests pass before and after, the behavior held. The `filterBooks` function in `samples/book-app-web/src/App.tsx` combines the search, genre, and status checks inline, which makes it a good extract-function candidate.
-
-In the same Interactive session, submit:
+The `filterBooks` function in `samples/book-app-web/src/App.tsx` combines several checks. With the tests passing, you can practice a behavior-preserving refactor:
 
 ```text
-Refactor filterBooks in @samples/book-app-web/src/App.tsx to extract the search, genre, and status checks into small, clearly named helper functions. Do not change behavior, keep the signature the same, then run the tests to prove the behavior is unchanged.
+Refactor filterBooks in @samples/book-app-web/src/App.tsx to extract the search, genre, and status checks into small, clearly named helper functions. Keep its signature and behavior unchanged, then run the tests.
 ```
 
-If a test fails after the refactor, the change altered behavior. Revert or adjust until tests pass again without editing the test expectations.
+Inspect the diff and rerun the tests. If a test fails, adjust the implementation rather than changing the expected behavior.
 
 </details>
 
----
+### 3. Ask for a Second Opinion
 
-### 3. Rubber Duck Before You Ship
+The rubber duck agent acts as a constructive critic. It can identify missing evidence or assumptions before you open a pull request.
 
-Before you open a pull request, ask a critic agent to poke holes in your work. The `/rubber-duck` command reviews your current plan, diff, or tests.
-
-1. Stay in the same session, which now has your fix and tests.
-2. In the prompt box, type `/` to open the slash-command palette, then submit:
+1. Stay in the session containing your fix and test.
+1. Type `/` to open the slash-command palette, then submit:
 
    ```text
-   /rubber-duck Critique the plan, diff, tests, and browser validation for this session. What should I double-check before creating a pull request?
+   /rubber-duck Critique this session's diff, tests, and browser validation. What should I double-check before creating a pull request?
    ```
 
-   > The rubber duck agent runs on a different model from your session and is currently available only when the main agent uses a Claude or GPT model. If `/rubber-duck` isn't available, switch the session's model to a Claude or GPT option, or submit the same prompt without the slash command.
+1. Compare the critique with the evidence you gathered. Address any relevant gap before continuing.
 
-#### Expected Output
-
-Copilot should point out review areas, missing validation, or confidence checks.
-
-> Demo output varies. Use the critique to improve your review, not to skip it.
+> [!NOTE]
+> The rubber duck agent is available when the main session uses a Claude or GPT model. If the command is unavailable, switch to one of those models or submit the same request without the slash command.
 
 <details>
-<summary>Intermediate: Pick and Polish for UI work</summary>
+<summary>Optional: Use Pick &amp; Polish for a UI Change</summary>
 
-Pick and Polish is the course name for a visible UI iteration loop: preview the running app, ask Copilot to improve a specific area, then review the diff and validate.
+**Pick & Polish** lets you select an element in the app's browser preview and attach it directly to your next prompt. Copilot receives the selected element as context, so you can ask for a focused UI change without describing where the element is in the code.
 
-![Pick and Polish UI iteration workflow](assets/pick-and-polish.webp)
-
-1. Start a session from the `practice-card-polish` branch (**Create from** → **Branches**).
-2. In the session terminal, install dependencies and start the app:
+1. Start a new session from the `practice-card-polish` branch.
+1. In the session terminal, run:
 
    ```bash
    cd samples/book-app-web
    npm install
-   npm run dev -- --host 127.0.0.1 --port 5173
+   npm run dev
    ```
 
-3. Open the integrated browser preview at `http://127.0.0.1:5173`.
-4. In **Interactive** mode, submit:
+1. In the Workspace panel, select **+**, then **Browser**. Enter the **Local** URL shown in the terminal and press `Enter`.
+1. In the browser toolbar, select **Pick & Polish**.
+1. Move your pointer over the app. Pick & Polish highlights elements as you move across the page.
+1. Select the empty background area of one book card so the whole card is highlighted. An `article.book-card` attachment appears in the prompt box, and Pick & Polish turns off.
+
+![Pick & Polish with an article.book-card attachment in the prompt box](assets/app-pick-and-polish.webp)
+
+1. With the element still attached, submit:
 
    ```text
-   Polish the book card UI in samples/book-app-web for spacing, visual hierarchy, accessible copy, and responsive behavior. Keep the design consistent with the existing app and show me the diff before I accept it.
+   Improve this book card's spacing and visual hierarchy while keeping the existing design and accessible text. Make the smallest useful change.
    ```
 
-5. Preview the result, review the diff in the **Changes** tab, apply the changes, and run the tests before you treat the work as done.
+1. Preview the result. If you want another focused change, select **Pick & Polish** again, choose the element, and submit another short instruction.
+1. Inspect the diff. Ask Copilot to revise or remove anything that isn't part of the focused card change.
+1. Return to **Terminal** and press `Ctrl+C` to stop the development server, then run `npm test -- --run` and `npm run build`.
 
-Remember: visual polish can change accessibility and behavior. Always finish with diff review, tests, build, and browser validation.
+The attachment in the prompt box is the important part of this workflow. It shows that Copilot received context from the rendered page, not only from your written description. Visual changes can still affect behavior and accessibility, so finish with the same diff, test, build, and browser evidence as any other change.
 
 </details>
 
----
+## Outer Loop: Move the Work Through GitHub
 
-**Outer loop: Move work through GitHub.** You already validated a change end to end. Now take a fresh, GitHub-tracked issue through My work, a session, a pull request, and a guided fix for comments and checks.
+The outer loop is:
 
-![Issue to pull request workflow](assets/issue-to-merged-pr.webp)
+1. Start from a GitHub issue.
+2. Implement and validate the change in a session.
+3. Open and review a pull request.
+4. Respond to feedback and failing checks.
+5. Merge only when the diff, local evidence, and GitHub checks agree.
+
+![Issue-to-merge workflow with a session, diff, approval gates, pull request, checks, and merge](assets/issue-to-merged-pr.webp)
+
+The diagram shows the main path toward a merge. Feedback or a failed check can send the work back to the session for another focused change and validation cycle.
 
 ### 4. Find Work in My work
 
-Open **My work**, your in-app inbox for GitHub issues, pull requests, review requests, and checks. Official docs organize it into default sections: **All**, **Active**, **Review requests**, and **Done**. You can add sections later. Stay on **All** for this exercise.
+**My work** is the app's inbox for issues, pull requests, review requests, and checks.
 
-1. Open My work and find issues assigned to you, pull requests you authored, review requests, and PRs with failing checks.
-2. Narrow the view with search qualifiers:
-
-   ```text
-   repo:your-org-or-user/copilot-app-for-beginners is:issue is:open
-   ```
+1. Open **My work** and stay on **All**.
+1. Filter to your fork:
 
    ```text
-   repo:your-org-or-user/copilot-app-for-beginners is:pr is:open
+   repo:YOUR-OWNER/copilot-app-for-beginners
    ```
 
-![My work filtered with a repository qualifier showing course issues](assets/app-my-work-filtered.webp)
+![My work filtered to the course repository, showing its issues and pull requests](assets/app-my-work-filtered.webp)
 
-#### Expected Output
+This view shows both issues and pull requests from the course repository. Add another qualifier when you want to narrow the list:
 
-My work shows repository-backed issue and pull request rows. After you apply a qualifier, the visible rows should belong to your course fork and match the selected type.
+- Open issues:
 
-#### Success Check
+  ```text
+  repo:YOUR-OWNER/copilot-app-for-beginners is:issue is:open
+  ```
 
-Confirm that:
+- Open pull requests:
 
-1. The issue query shows open issues from your course fork.
-2. The PR query shows open pull requests from your course fork.
-3. Opening a row shows its title, repository, number, and current status.
+  ```text
+  repo:YOUR-OWNER/copilot-app-for-beginners is:pr is:open
+  ```
 
-If an expected item is missing, check the active qualifier first, then repository access, permissions, and organization policy.
+Confirm that opening an item shows its title, repository, number, and current status. If an expected item is missing, check the filter, repository access, and organization policy.
 
----
+Replace `YOUR-OWNER` with the username or organization that owns your fork.
 
 ### 5. Start from an Issue and Open a Pull Request
 
-Starting from an issue attaches its context automatically, so Copilot plans against the real task instead of a pasted summary.
+Issue 1 asks you to make search case-insensitive. The intentional bug exists only on the `practice-search-case-bug` branch.
 
-1. Choose Issue 1 (make search case-insensitive). Read it in My work, or see [`samples/app-course-issues.md`](../samples/app-course-issues.md#issue-1-make-search-case-insensitive). This exercise needs the `practice-search-case-bug` branch, which the Chapter 00 setup script created. If you skipped the script, [run it now](../00-setup/README.md#2-fork-clone-and-prepare-the-course-repository) - it's safe to rerun and only adds what's missing.
-2. From the issue, select **New session**.
-
-   > **Important**: The search bug only exists on the `practice-search-case-bug` branch. On the `main` branch, search already matches regardless of case, so there would be nothing to fix. The issue names its training branch, and the app may offer to switch the session to it: accept that switch (that's the prompt you declined in Chapter 02, but here you want it). If no prompt appears, set the branch dropdown next to the workspace selector below the prompt box to `practice-search-case-bug` before you submit.
-
-3. Set the mode to **Plan** and submit:
-
-   ```text
-   Use this issue as the source of truth. Plan a small fix in samples/book-app-web, list the files you expect to change, and name the tests or browser checks that should prove the issue is fixed. Do not edit until I approve the plan.
-   ```
+1. In **My work**, open **Make search case-insensitive**. If needed, review the scenario in [`samples/app-course-issues.md`](../samples/app-course-issues.md#issue-1-make-search-case-insensitive).
 
 ![Issue 1 detail view with the New session control](assets/app-issue-new-session.webp)
 
-4. Approve the plan, switch to **Interactive**, apply and validate the fix (tests + browser) as you did in the inner loop.
-5. Before opening a pull request, review the **Changes** tab and confirm the session only changed files needed for the search fix.
-6. Open a pull request from this session. Look for **Create PR** above the prompt box. The `/pr-open` command does the same job.
-7. After the pull request exists, select **PR** above the prompt box, or open the item in **My work**. Switch to **Files changed** (or **Changes**) and confirm the diff is only the search fix.
+1. Select **New session**. The issue context is attached automatically.
+1. Use the branch selector below the prompt box to choose `practice-search-case-bug`.
+1. Set the mode to **Plan**, then submit:
 
-If **Create PR** is missing, the session may have no changes yet, or you may lack permission to push to the fork. Keep the diff, then open the pull request on GitHub in the browser as a fallback.
+   ```text
+   Use this issue as the source of truth. Create a small implementation and validation plan. Name the files you expect to change and the tests or browser checks that should prove the fix. Don't edit files yet.
+   ```
 
-#### Prompt for PR Description Help
+1. Review the plan, switch to **Interactive**, and ask Copilot to implement it.
+1. Follow the inner loop:
+   - Inspect the diff.
+   - Run `npm install` if this worktree doesn't have dependencies.
+   - Run `npm test -- --run` and `npm run build`.
+   - Start the app and confirm that searches such as `hobbit` and `HOBBIT` return the same result.
+1. Confirm that the **Changes** tab contains only the focused search fix and its test.
+1. Ask Copilot for help with the description:
 
-```text
-Draft a pull request summary for this session. Include what changed, why it changed, and validation performed. Do not claim checks passed unless you saw the terminal or CI output.
-```
+   ```text
+   Draft a pull request summary for this session. Include what changed, why it changed, and the validation performed. Don't claim a check passed unless it appears in the terminal or CI output.
+   ```
 
-> Demo output varies. Always review PR text before publishing it.
+1. Review the draft, then select **Create PR** above the prompt box. Edit the title and description before publishing the pull request.
+1. Open the pull request in **My work**, select **Changes**, and inspect the final diff. GitHub's documentation calls this tab **Files changed**.
 
-#### Expected Output
+Your local evidence should show that the behavior works. The pull request now gives reviewers and CI a chance to check the same change on GitHub.
 
-Before editing, the plan names the likely source and test files and identifies case-insensitive search as the target behavior. After you approve it, the pull request contains the focused fix and its regression test.
+### 6. Address Review Comments and Failing Checks
 
-#### Success Check
+The setup script created two separate pull requests for this exercise. They aren't the search-fix pull request you just opened.
 
-Confirm that:
-
-1. Searching with different letter casing returns the same matching books in the browser.
-2. `npm test -- --run` and `npm run build` complete successfully in this worktree.
-3. The PR's changed-files view contains only the focused implementation and test changes.
-4. The PR description lists the commands and browser check you actually performed.
-
----
-
-### 6. Ask GitHub Copilot to Fix Comments and Checks
-
-A **guided fix** is asking GitHub Copilot to address a specific review comment or failing check, with the diff and validation kept visible.
-
-These next two pull requests come from the Chapter 00 setup script. They're **not** the search-fix PR you opened in Exercise 5. In **My work**, filter with:
+Filter **My work** again:
 
 ```text
-repo:YOUR-USER/copilot-app-for-beginners is:pr is:open
+repo:YOUR-OWNER/copilot-app-for-beginners is:pr is:open
 ```
 
-**Respond to a conversation comment.** Open the open pull request titled **Improve empty-state copy** (the screenshot shows it as #6; your number can differ). The setup script adds a general conversation comment, not a line-level review comment, so start a session from the pull request and submit:
+#### Respond to a Review Comment
 
-```text
-Review this PR conversation comment and propose the smallest change that addresses it. Show me the diff and validation plan before I accept the fix.
-```
-
-The seeded comment asks the empty-state message to mention changing the search term, genre, or reading status. The scenario text is also in [PR scenario 1](../samples/app-course-pr-scenarios.md#pr-scenario-1-review-comment-asks-for-clearer-empty-state-copy).
+1. Open the pull request titled **Improve empty-state copy**.
+1. Find the conversation comment asking for more helpful guidance.
 
 ![Pull request conversation with the empty-state copy comment](assets/app-pr-review-comment.webp)
 
-**Fix a failing check.** A **CI check** (continuous integration check) is an automated validation run on your pull request, often from GitHub Actions. Open the open pull request titled **Failing stats check practice** (the screenshot shows it as #7). Official docs put **Fix failing checks** on the check summary. Use that control if you see it. Otherwise start a session and submit:
+1. If a **Fix** control appears on the comment, select it. Otherwise, start a session from the pull request.
+1. Ask Copilot:
 
-```text
-Analyze the failing check. Explain the failure, identify the likely file in samples/book-app-web, propose a minimal fix, and tell me which command should pass afterward.
-```
+   ```text
+   Address this PR conversation comment with the smallest useful change. Show me the diff and validation plan before I accept the fix.
+   ```
 
-The scenario text is in [PR scenario 2](../samples/app-course-pr-scenarios.md#pr-scenario-2-failing-ci-points-to-the-stats-test).
+1. Inspect the diff and confirm that the revised message addresses the complete comment.
+1. Ask Copilot to commit and push the change, then return to the pull request and confirm the update.
 
-![Pull request with the failing Book app web check and failure details](assets/app-pr-failing-check.webp)
+#### Fix a Failing Check
 
-When the failure is related to the sample app, confirm it locally before marking the PR ready:
+A **CI check** is an automated validation run on a pull request, often through GitHub Actions.
 
-```bash
-cd samples/book-app-web
-npm test -- --run
-npm run build
-```
+1. Open the pull request titled **Failing stats check practice**.
+1. Review the failed **Book app web** check.
 
-> Don't mark a PR ready until local validation and CI evidence agree.
+![Failing stats check practice pull request showing the failed Book app web validation check](assets/app-pr-failing-check.webp)
 
-#### Expected Output
+1. Select **Fix failing checks** if it's available. Otherwise, start a session from the pull request and submit:
 
-For the review comment, Copilot should propose copy that mentions changing the search term, genre, or reading status. For the failing check, it should connect the failure in `src/tests/stats.test.tsx` to the favorite-count regression without changing the test expectation.
+   ```text
+   Analyze the failing check. Explain the root cause, identify the likely file in samples/book-app-web, and propose the smallest fix. Don't weaken the failing test.
+   ```
 
-#### Success Check
+1. Confirm that the fix restores favorite counting for both read and unread favorites.
+1. Validate locally:
 
-Confirm that:
+   ```bash
+   cd samples/book-app-web
+   npm install
+   npm test -- --run
+   npm run build
+   ```
 
-1. The revised empty state addresses the complete review comment, not only part of it.
-2. The stats fix restores favorite-count behavior without weakening or rewriting the failing expectation.
-3. Local tests and the build pass.
-4. The `Book app web` check reruns successfully.
-5. The final diff contains no unrelated files.
+1. Inspect the final diff, then ask Copilot to commit and push the fix.
+1. Return to the pull request and confirm that the **Book app web** check reruns successfully.
+
+Don't mark a pull request ready until the diff is focused and the local and GitHub evidence agree.
 
 <details>
 <summary>Advanced (optional): Agent Merge</summary>
 
-Skip this section on a first pass if the outer loop already felt like enough.
+Agent Merge can help carry a pull request through review comments, checks, and merge requirements. It runs in the background and merges only when GitHub allows it.
 
-Agent Merge is an advanced finishing workflow that can help carry a pull request through review comments, checks, and merge requirements. It's not a substitute for understanding the work.
+For this course, use it only when:
+
+- The pull request is small and well scoped.
+- You understand and reviewed the diff.
+- Required checks are meaningful and passing.
+- Review comments and repository merge rules are understood.
+- Your organization allows the feature.
+
+Don't use it for changes involving secrets, authentication, permissions, billing, production data, or deployment logic unless your team has explicitly approved that workflow.
+
+Agent Merge is a finishing aid, not a replacement for human review.
 
 ![Human judgment stays in the loop](assets/human-judgment-loop.webp)
-
-Use Agent Merge only when the PR is small and well-scoped, you reviewed the diff, required checks are meaningful, review comments are understood, branch protection and merge rules are clear, and the repository is safe for training or your team approved the workflow.
-
-Don't use it when you don't understand the diff, checks are missing, flaky, or unrelated, the PR touches secrets, auth, permissions, billing, production data, or deployment logic, your org policy disallows it, or you lack merge rights.
-
-Official docs enable **agent merge** with the toggle at the top of the pull request view. It runs in the background, survives app restarts, and turns itself off after the pull request merges. The workflow uses an `agent-merge` skill. If your build also lists `/agent-merge`, treat that as an optional extra entry point, not the primary one.
-
-Use agent merge only in the training fork after you've reviewed the diff, checks, comments, branch protection, and merge rules.
-
-> Demo output varies. Treat any response as a checklist, not permission to merge.
-
-</details>
-
-<details>
-<summary>Advanced (optional): Parallel sessions and /orchestrate</summary>
-
-Skip this section unless you want a preview of multi-session work. The required Chapter 03 path is complete without it.
-
-Once you're comfortable with a single session, you can run several at once, each isolated in its own worktree (see [Chapter 02](../02-sessions-worktrees-context/README.md#running-multiple-sessions-in-parallel)). Parallel sessions save time, but they collide if two of them edit the same files.
-
-![Parallel sessions without collisions](assets/parallel-sessions-without-collisions.webp)
-
-Delegate to parallel sessions only when the tasks are genuinely independent. For example, one session fixes a bug while another drafts documentation. Keep them safe with clear boundaries:
-
-1. Separate files or clearly separate responsibilities.
-2. Separate branches or worktrees.
-3. Clear session names.
-4. Distinct validation steps.
-5. Human review before combining the work.
-
-The `/orchestrate` command, when available, lets the agent coordinate this by delegating to child sessions instead of doing everything inline. Use it with explicit pause points: start the feature session in **Plan** mode and approve its file scope, start a second session only for tests or docs, pause before either session edits overlapping files, validate each worktree separately, then compare the diffs before combining.
-
-```text
-/orchestrate Split this work into two independent child sessions: one may inspect and fix the bug, and one may draft documentation notes. Do not let either child session edit files until I approve the scopes.
-```
-
-Use `/orchestrate` only after you can describe the child-session boundaries yourself. If it isn't available, create separate sessions manually and keep the same pause points. If two sessions touch the same files, expect conflicts. Pause one, review diffs, and decide which branch is the source of truth.
 
 </details>
 
@@ -464,74 +413,58 @@ Use `/orchestrate` only after you can describe the child-session boundaries your
 If you're still stuck, see the [Troubleshooting Reference](../appendices/troubleshooting-reference.md).
 
 <details>
-<summary>Development and GitHub workflow issues</summary>
+<summary>Development and GitHub workflow problems</summary>
 
 ### Browser Preview Doesn't Update
 
-Check that the dev server is running in the correct worktree, the browser points to the correct port, hot reload is active, and you're not viewing a different session's app.
+Confirm that the development server is running in the current session's worktree and that the browser is using the **Local** URL shown in the terminal.
 
 ### Tests Fail Only in One Session
 
-Compare dependency install status, branch contents, environment variables, generated files, and whether another session changed the same files.
+Confirm that dependencies are installed in that worktree and that the session is using the expected practice branch.
 
-### I Can't See an Issue or PR
+### I Can't See an Issue or Pull Request
 
-Check filters and search qualifiers, repository selection, your permissions, and organization policy.
+Check the active **My work** filter, repository access, permissions, and organization policy.
 
-### A Check Fails Only Locally or Only in CI
+### Local Results and CI Don't Agree
 
-Compare Node versions, dependency install state, environment variables, and generated files between your worktree and the CI runner.
+Compare the Node.js version, dependency installation, branch contents, environment variables, and generated files.
 
-### A PR Is Still Blocked After the Fix
+### A Pull Request Is Still Blocked
 
-Confirm required checks re-ran, review comments are resolved, and branch protection or merge rules aren't waiting on an approval you can't give yourself.
-
-### Parallel Sessions Collide or Duplicate Work
-
-If two sessions edited the same files, pause one, compare the diffs, and pick one branch as the source of truth before combining. Delegate to parallel sessions only when the tasks are genuinely independent.
+Confirm that required checks reran, review comments are resolved, and branch protection or merge rules aren't waiting for another approval.
 
 </details>
 
 ---
 
-## 🔑 Key Takeaways
+## Key Takeaways
 
-1. Use the app as a loop: ask, plan, change, test, preview, review, iterate.
-2. The Review panel's diff, terminal, and browser surfaces make agent work inspectable.
-3. A passing agent response isn't validated software. Tests and builds are the required evidence.
-4. Tests are the guardrail that makes refactors safe.
-5. My work is your issue and pull request inbox; start sessions straight from GitHub context.
-6. Asking GitHub Copilot to fix review comments and failing checks keeps that work small and visible.
-7. Agent Merge is a finishing aid, not a replacement for human judgment.
+1. The inner loop happens on your machine: understand, change, inspect, test, build, and preview.
+2. The outer loop happens on GitHub: issue, pull request, feedback, checks, and merge.
+3. The Workspace panel keeps the local diff, terminal output, and browser preview visible.
+4. Tests protect behavior and make refactoring safer.
+5. **My work** connects GitHub issues and pull requests to project sessions.
+6. A change is ready only when the diff, local validation, GitHub checks, and human review agree.
 
----
-
-## 📝 Assignment
+## Assignment
 
 ![Assignment](../assets/assignment.webp)
 
-Run the full loop on a UI polish task you haven't already finished.
+Run both loops on a small UI task:
 
-- If you skipped the optional Pick and Polish block, use **Issue 4** and the `practice-card-polish` branch. Read the issue in **My work**, or see [`samples/app-course-issues.md`](../samples/app-course-issues.md#issue-4-polish-book-card-spacing-and-responsive-layout).
-- If you already polished the book cards in that optional block, start a new session from `main` and improve the **filter-row** labels or helper text instead. Don't reopen the card-polish worktree.
+1. Choose a task:
+   - If you skipped **Pick & Polish**, open Issue 4, **Polish book card spacing and responsive layout**, and start a session on the `practice-card-polish` branch.
+   - If you completed it, start a new session from `main` and improve the filter-row labels or helper text instead.
+1. Use **Plan** mode to define one small UI improvement, then switch to **Interactive** to implement it.
+1. Inspect the diff and confirm that it stays focused on the selected UI area.
+1. Run `npm test -- --run` and `npm run build`.
+1. Preview the app at desktop and mobile widths.
+1. Open a pull request with a summary that reports only the validation you performed.
+1. Review the pull request in **My work** and confirm its checks pass.
 
-Then:
-
-1. Use **Plan** first, then **Interactive** for the smallest useful change.
-2. Validate with `npm test -- --run`, `npm run build`, and a browser preview.
-3. Open a pull request with **Create PR**. Draft a summary that only reports validation you actually saw.
-
-Then check:
-
-1. Did Copilot explain the plan before editing?
-2. Did the diff stay on the chosen UI slice, not unrelated files?
-3. Did tests and the build pass?
-4. Did the browser preview show the intended change?
-5. Does the PR summary describe real, verified validation?
-
----
-
-## ➡️ What's Next
+## What's Next
 
 In the next chapter, you'll extend the app with reusable expertise and optional tool integrations: skills, Model Context Protocol (MCP) servers, and plugins.
 
@@ -541,16 +474,14 @@ In the next chapter, you'll extend the app with reusable expertise and optional 
 
 ## Source References
 
-- [GitHub Copilot app GA changelog][ga-changelog]
-- [GitHub Copilot app product blog][app-blog]
 - [Working with agent sessions][agent-sessions]
 - [Managing issues and pull requests][issues-prs]
 - [About the rubber duck agent][rubber-duck]
-- [Working with canvas extensions][canvas-docs]
+- [GitHub Copilot app changelog][app-changelog]
+- [GitHub Copilot app product blog][app-blog]
 
-[ga-changelog]: https://github.blog/changelog/2026-06-17-github-copilot-app-generally-available/
-[app-blog]: https://github.blog/news-insights/product-news/github-copilot-app-the-agent-native-desktop-experience/
 [agent-sessions]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/agent-sessions
 [issues-prs]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/managing-issues-and-pull-requests
 [rubber-duck]: https://docs.github.com/en/copilot/concepts/agents/copilot-cli/rubber-duck
-[canvas-docs]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/working-with-canvas-extensions
+[app-changelog]: https://github.com/github/app/blob/main/changelog.md
+[app-blog]: https://github.blog/news-insights/product-news/github-copilot-app-the-agent-native-desktop-experience/

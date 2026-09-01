@@ -642,6 +642,19 @@ function main() {
     workflow.state === "active"
   );
 
+  if (!bookAppWorkflowActive) {
+    const actionsUrl = `https://github.com/${repo}/actions`;
+    if (dryRun) {
+      log(
+        `[dry-run] GitHub Actions is not active. Enable workflows at ${actionsUrl} before running with --yes.`,
+      );
+    } else {
+      throw new Error(
+        `The Book app web workflow is not active. Open ${actionsUrl}, enable workflows for the fork, then rerun the setup script.`,
+      );
+    }
+  }
+
   let setupError = null;
   try {
     if (repoView.hasIssuesEnabled === false) {
@@ -686,7 +699,7 @@ Training branch: \`practice-search-case-bug\`
 
 Repro:
 1. Open \`samples/book-app-web\`.
-2. Run \`npm run dev -- --host 127.0.0.1 --port 5173\`.
+2. Run \`npm run dev\`.
 3. Search for \`hobbit\`.
 
 Expected result: \`The Hobbit\` appears in the results.
@@ -862,15 +875,9 @@ Course use:
     "- Open the GitHub Copilot app and connect this fork/training repository.",
   );
   log("- Confirm the seeded issues and PRs appear in My work.");
-  if (bookAppWorkflowActive) {
-    log(
-      "- Wait for the failing-check PR workflow to finish before using that lesson.",
-    );
-  } else {
-    log(
-      "- GitHub Actions is not active for this fork. Open its Actions tab on GitHub and enable workflows before the failing-check lesson.",
-    );
-  }
+  log(
+    "- Wait for the failing-check PR workflow to finish before using that lesson.",
+  );
 }
 
 try {

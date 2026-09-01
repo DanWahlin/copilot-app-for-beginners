@@ -82,9 +82,9 @@ The app view that gathers your GitHub issues, pull requests, review requests, an
 
 The GitHub side of the same workflow: find work in My work, start sessions from issues, open pull requests, and ask Copilot to address review comments and failing checks.
 
-## Pick and Polish
+## Pick & Polish
 
-A UI workflow where you pick or describe a visible part of the app, ask Copilot to improve polish, then preview and validate the result. It is useful for spacing, hierarchy, copy, contrast, and responsive layout.
+A browser-preview feature in the GitHub Copilot app. Select **Pick & Polish**, choose a rendered page element, and the app attaches that element to the prompt as context for a focused UI change.
 
 ## Plan mode
 
@@ -106,10 +106,6 @@ A risk where untrusted text, such as an issue title or body, tries to steer the 
 
 A setting that controls how much thinking the model spends on a task. Higher effort can help complex work, but may be slower or more expensive.
 
-## Review panel
-
-The session side panel for diffs, terminal, browser preview, and plan surfaces.
-
 ## Rubber duck
 
 A built-in critic agent, invoked with `/rubber-duck`, that reviews a plan, diff, tests, or design and points out weaknesses before you accept the work.
@@ -121,6 +117,10 @@ A GitHub Copilot app workspace where an agent can plan, edit, run commands, insp
 ## Skill
 
 Reusable guidance that helps the agent handle a specific kind of task. In this course, repo-local skills are the beginner-friendly way to add focused expertise.
+
+## Workspace panel
+
+The session side panel for diffs, terminal, browser preview, and other work surfaces. Open it with **Toggle panel** in the upper-right corner.
 
 ## Worktree
 

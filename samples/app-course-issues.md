@@ -28,7 +28,7 @@ Create a branch named `practice-search-case-bug`, then introduce the regression 
 ### Repro steps
 
 1. Open `samples/book-app-web`.
-2. Run `npm run dev -- --host 127.0.0.1 --port 5173`.
+2. Run `npm run dev`.
 3. Search for `hobbit`.
 
 ### Expected result

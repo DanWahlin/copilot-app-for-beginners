@@ -71,6 +71,10 @@ Once signed in, you'll land on an empty home page. The app uses your GitHub iden
 
 Later chapters in this course rely on practice branches, issues, pull requests, review comments, and failing-check scenarios created by the script. Skip this step only if you plan to add those items manually using the steps in the appendix.
 
+1. Open the **Actions** tab in your fork on GitHub.com. New forks disable workflows by default. If you see **Workflows aren't being run on this forked repository**, select **I understand my workflows, go ahead and enable them**.
+
+    Enable workflows before running the setup script so the seeded failing-check pull request starts its GitHub Actions check.
+
 1. Click on the chat window and press `Shift + 1` to switch to **Shell mode**. 
 1. Agent sessions open in a **New worktree** by default, but for this lesson, click on **New worktree** and switch to **Local repository**. We'll cover more on worktrees in the next lesson.
 
@@ -92,11 +96,19 @@ Later chapters in this course rely on practice branches, issues, pull requests, 
 
     The script creates the GitHub issues, branches, pull requests, comments, and failing-check scenarios used in later chapters. It is safe to rerun because it reuses items that already exist.
 
+    > [!NOTE]
+    > If your fork belongs to an organization instead of your personal account, the script treats it as a shared repository and stops before making changes. If you're authorized to seed that organization repository, add the explicit safeguard:
+    >
+    > ```bash
+    > node .github/scripts/setup-training-scenarios.js --yes --allow-shared-repository
+    > ```
+
 ### Checklist
 
 - [ ] A fork of this course
 - [ ] 5 open issues on the repository with applied labels
 - [ ] 3 open pull requests
+- [ ] A failing **Book app web** check on the **Failing stats check practice** pull request
 
 > [!NOTE]
 > If the issues are not created after running the script, navigate to your repository on GitHub.com, **Settings** and **enable issues** under **Features**. Then rerun the script.

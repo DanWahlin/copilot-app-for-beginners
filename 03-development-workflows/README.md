@@ -212,7 +212,7 @@ The rubber duck agent acts as a constructive critic. It can identify missing evi
 1. Compare the critique with the evidence you gathered. Address any relevant gap before continuing.
 
 > [!NOTE]
-> The rubber duck agent is available when the main session uses a Claude or GPT model. If the command is unavailable, switch to one of those models or submit the same request without the slash command.
+> The rubber duck agent is available when the main session uses a Claude or GPT model. If the command is unavailable, switch to one of those models or submit the same request without the slash command. 
 
 <details>
 <summary>Optional: Use Pick &amp; Polish for a UI Change</summary>
@@ -225,13 +225,15 @@ The rubber duck agent acts as a constructive critic. It can identify missing evi
    ```bash
    cd samples/book-app-web
    npm install
+   npm run build
    npm run dev
    ```
 
-1. In the Workspace panel, select **+**, then **Browser**. Enter the **Local** URL shown in the terminal and press `Enter`.
-1. In the browser toolbar, select **Pick & Polish**.
+1. In the Workspace panel, select **+**, then **Browser** (if it's not already open). Enter the **Local** URL shown in the terminal and press `Enter`.
+1. In the browser toolbar, select **Pick & Polish**. This is step 1 in the following image.
 1. Move your pointer over the app. Pick & Polish highlights elements as you move across the page.
-1. Select the empty background area of one book card so the whole card is highlighted. An `article.book-card` attachment appears in the prompt box, and Pick & Polish turns off.
+1. Select the empty background area of one book card so the whole card is highlighted (step 2 in the image). 
+1. An `article.book-card` attachment appears in the prompt box (step 3 in the image), and Pick & Polish turns off.
 
 ![Pick & Polish with an article.book-card attachment in the prompt box](assets/app-pick-and-polish.webp)
 
@@ -255,9 +257,10 @@ The outer loop is:
 
 1. Start from a GitHub issue.
 2. Implement and validate the change in a session.
-3. Open and review a pull request.
-4. Respond to feedback and failing checks.
-5. Merge only when the diff, local evidence, and GitHub checks agree.
+3. Review the diffs and evidence.
+4. Open and review a pull request.
+5. Respond to feedback and failing checks.
+6. Merge only when the diff, local evidence, and GitHub checks agree.
 
 ![Issue-to-merge workflow with a session, diff, approval gates, pull request, checks, and merge](assets/issue-to-merged-pr.webp)
 
@@ -268,7 +271,7 @@ The diagram shows the main path toward a merge. Feedback or a failed check can s
 **My work** is the app's inbox for issues, pull requests, review requests, and checks.
 
 1. Open **My work** and stay on **All**.
-1. Filter to your fork:
+1. Filter your fork by typing `repo:` into the searchbox and then selecting your repository:
 
    ```text
    repo:YOUR-OWNER/copilot-app-for-beginners
@@ -276,7 +279,11 @@ The diagram shows the main path toward a merge. Feedback or a failed check can s
 
 ![My work filtered to the course repository, showing its issues and pull requests](assets/app-my-work-filtered.webp)
 
-This view shows both issues and pull requests from the course repository. Add another qualifier when you want to narrow the list:
+Alternatively, you can select `All repositories` at the top of the **My work** panel, then select your repository from the list.
+
+<img src="assets/app-filter-repo.webp" alt="My work repository list showing the course repository" width="300" />
+
+This view shows both issues and pull requests from the course repository. Add another qualifier when you want to narrow the list even further:
 
 - Open issues:
 
@@ -294,28 +301,31 @@ Confirm that opening an item shows its title, repository, number, and current st
 
 Replace `YOUR-OWNER` with the username or organization that owns your fork.
 
-### 5. Start from an Issue and Open a Pull Request
+### 5. Identify an Issue and Open a Pull Request
 
-Issue 1 asks you to make search case-insensitive. The intentional bug exists only on the `practice-search-case-bug` branch.
+Issue 1 asks you to make search in the book app case-insensitive. The intentional bug exists only on the `practice-search-case-bug` branch.
 
-1. In **My work**, open **Make search case-insensitive**. If needed, review the scenario in [`samples/app-course-issues.md`](../samples/app-course-issues.md#issue-1-make-search-case-insensitive).
+1. In **My work**, open the **Make search case-insensitive** issue and review the details. If needed, review the scenario in [`samples/app-course-issues.md`](../samples/app-course-issues.md#issue-1-make-search-case-insensitive).
+
+> [!NOTE]
+> You may recall that in a previous chapter you attached an issue to a session using the #[issue-number] syntax. Here, you'll attach the issue to a session again and create a pull request based on that session.
 
 ![Issue 1 detail view with the New session control](assets/app-issue-new-session.webp)
 
-1. Select **New session**. The issue context is attached automatically.
-1. Use the branch selector below the prompt box to choose `practice-search-case-bug`.
-1. Set the mode to **Plan**, then submit:
+1. Select **Create from** next to your project in the sidebar and select the `practice-search-case-bug` branch.
+1. Set the mode to **Plan**, then submit the following promp. Notice that it includes the issue you previously reviewed:
 
    ```text
-   Use this issue as the source of truth. Create a small implementation and validation plan. Name the files you expect to change and the tests or browser checks that should prove the fix. Don't edit files yet.
+   Use issue #1 as the source of truth. Create a small implementation and validation plan. Name the files you expect to change and the tests or browser checks that should prove the fix. Don't edit files yet.
    ```
 
 1. Review the plan, switch to **Interactive**, and ask Copilot to implement it.
 1. Follow the inner loop:
-   - Inspect the diff.
-   - Run `npm install` if this worktree doesn't have dependencies.
-   - Run `npm test -- --run` and `npm run build`.
-   - Start the app and confirm that searches such as `hobbit` and `HOBBIT` return the same result.
+   - Inspect the diff in the **Review panel**.
+   - Open the terminal and run `npm install`.
+   - Run `npm test -- --run`.
+   - Run `npm run build`.
+   - Start the app with `npm run dev` and confirm that searches such as `hobbit` and `HOBBIT` return the same result.
 1. Confirm that the **Changes** tab contains only the focused search fix and its test.
 1. Ask Copilot for help with the description:
 
@@ -323,8 +333,9 @@ Issue 1 asks you to make search case-insensitive. The intentional bug exists onl
    Draft a pull request summary for this session. Include what changed, why it changed, and the validation performed. Don't claim a check passed unless it appears in the terminal or CI output.
    ```
 
-1. Review the draft, then select **Create PR** above the prompt box. Edit the title and description before publishing the pull request.
-1. Open the pull request in **My work**, select **Changes**, and inspect the final diff. GitHub's documentation calls this tab **Files changed**.
+1. Review the draft, then select **Create PR** at the top of the Copilot app interface. Once the PR is created you can select it above the prompt box to view details. 
+1. In a real-world situation you can merge the PR (assuming it's ready to merge) by selecting **Ready to merge** at the top of the Copilot app interface. For this exercise, merging is unnecessary because the corrected search behavior is already in  main .
+1. In addition to viewing the PR in the project session, you can also view it in **My work** and inspect the final diff.
 
 Your local evidence should show that the behavior works. The pull request now gives reviewers and CI a chance to check the same change on GitHub.
 
@@ -345,7 +356,7 @@ repo:YOUR-OWNER/copilot-app-for-beginners is:pr is:open
 
 ![Pull request conversation with the empty-state copy comment](assets/app-pr-review-comment.webp)
 
-1. If a **Fix** control appears on the comment, select it. Otherwise, start a session from the pull request.
+1. If a **Fix** control appears on the comment, select it. Otherwise, start a new session from the pull request as you did earlier.
 1. Ask Copilot:
 
    ```text
@@ -378,6 +389,7 @@ A **CI check** is an automated validation run on a pull request, often through G
    npm install
    npm test -- --run
    npm run build
+   npm run dev
    ```
 
 1. Inspect the final diff, then ask Copilot to commit and push the fix.

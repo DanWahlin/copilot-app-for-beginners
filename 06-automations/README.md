@@ -17,7 +17,7 @@ By the end of this chapter, you'll be able to:
 - Understand scheduled automations as an intermediate next step
 - Recognize cloud and issue-triggered automations as advanced workflows
 
-> ⏱️ **Estimated Time**: ~50 minutes (20 min reading + 30 min hands-on)
+> ⏱️ **Estimated Time**: ~50 minutes
 
 ---
 

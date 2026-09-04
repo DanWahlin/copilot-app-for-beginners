@@ -112,14 +112,36 @@ Those panels stay tied to the live session. In this chapter, you'll add one more
 
 ![Chat versus canvas work surfaces](assets/chat-vs-canvas.webp)
 
-## Exercise: Create a feature workbench
+## Canvas Example: Repository Issues Canvas
+
+Before building your own canvas, try one from the community. [Awesome GitHub Copilot][awesome-copilot] is a curated collection of agents, instructions, skills, and canvas extensions you can install into the GitHub Copilot app. The [Repository Issues Kanban][issues-kanban] is a good first canvas to explore — it pulls repository issues into a kanban board you can triage and track inside a session.
+
+![Repository Issues Kanban preview](assets/repo-issues-kanban.png)
+
+1. From the canvas page, select **+ Install in GitHub Copilot app** button to install it in your GitHub Copilot app.
+
+    - Click **Allow** when prompted to install the plugin.
+    - Click **Install** to install if from the awesome-copilot marketplace, `accessibility-kanban@awesome-copilot`
+    - Ensure the plugin is listed under your installed and enabled plugins.
+
+1. Start a new session for the course repository, and submit the prompt `Restart canvas extensions`. This will reload the extensions and pick up the newly installed one.
+1. Navigate to **View** > **Toggle Review Panel** > **+** > **Extensions>** and select the **Accessibility Kanban** extension.
+
+    ![Accessibility Kanban extension selection](assets/open-repo-issues-canvas.png)
+
+1. The board loads issues from the current repository and organizes them by status.
+1. Drag an issue between columns and notice how the canvas keeps state visible without scrolling through chat.
+
+Take a minute to move items around. This is the interaction model you will build on in the exercise below.
+
+## Exercise: Create a feature workbench canvas
 
 You will build a reusable canvas that manages the local development inner loop for a new book-app feature. It keeps the feature proposal, plan, implementation and evidence linked to the same session.
 
 ![Session plan and validation board](assets/session-plan-validation-board.webp)
 
-> [!NOTE]
-> This board is useful only when it stays linked to evidence from the same session. Checking a validation box because the chat sounded confident is not enough.
+> [!TIP]
+> Use a powerful model when creating a canvas — the initial generation benefits from stronger reasoning. Once the canvas is working, switch to a smaller, faster model for iterative tweaks.
 
 1. In the current session, type `/` in the prompt box and select `/create-canvas`, **then** paste the prompt below:
 
@@ -173,7 +195,9 @@ You will build a reusable canvas that manages the local development inner loop f
 
 1. Select **Run baseline** on the canvas. This ensures that the initial state of the application is recorded before making any changes.
 
-    Confirm that the canvas records the individual Vitest test total and build result from terminal output. Expand the working section in the chat to confirm that the right test commands were executed and that the evidence matches the reported results.
+    Confirm that the canvas records the individual Vitest test total and build result from terminal output. Expand the working section in the chat to confirm that the right test commands were executed and that the evidence matches the reported results. 
+    
+    The board is useful only when it stays linked to evidence from the same session. Checking a validation box because the chat sounded confident is not enough.
 
     ![Screenshot of the baseline evidence](assets/baseline.png)
 
@@ -239,6 +263,8 @@ If you are still stuck, see the [Troubleshooting Reference](../appendices/troubl
 
 1. A canvas gives the session a visible, shared board in the side panel.
 2. Create that board with `/create-canvas` and a short description.
+3. Community canvases from [Awesome GitHub Copilot][awesome-copilot] let you install and try the interaction model before building your own.
+4. Evidence on the board should come from actual terminal or browser output, not from chat inference.
 
 ---
 
@@ -277,3 +303,5 @@ In the next chapter, you'll turn repeatable prompts into automations. You'll sta
 [customize-app]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/customize-github-copilot-app
 [app-changelog]: https://github.blog/changelog/2026-06-17-github-copilot-app-generally-available/
 [app-blog]: https://github.blog/news-insights/product-news/github-copilot-app-the-agent-native-desktop-experience/
+[awesome-copilot]: https://awesome-copilot.github.com/
+[issues-kanban]: https://awesome-copilot.github.com/extension/accessibility-kanban/

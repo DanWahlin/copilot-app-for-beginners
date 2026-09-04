@@ -1,60 +1,52 @@
 ![Chapter 05: Canvases](assets/chapter-header.svg)
 
-> **What if the agent's work was not trapped in a chat transcript?**
+> **What if you and the agent shared a real-time progress board instead of a buried chat thread?**
 
-Chat works well for instruction and ambiguity. Once a GitHub Copilot session is doing real work, a long chat thread becomes hard to scan. You need a place where the work itself is visible.
+Chat works well for instruction and ambiguity. Once a GitHub Copilot session is doing real work, a long chat thread becomes hard to scan. You need a visible workspace for human-agent collaboration.
 
 That place is a **canvas**.
 
-A canvas is a shared board in the side panel. You create it with `/create-canvas` and say what you want on it. Chat is still for questions. The board is where you and Copilot keep the plan, checks, and next decision visible.
+A canvas is a shared board in the side panel. You create it with `/create-canvas` and describe the board you want, the app builds it from your prompt and keeps it in sync with both you and the agent.
 
-This chapter asks `/create-canvas` for a **session board**: plan steps, validation checks, and notes. You don't pick a canvas type. The app builds one from your prompt.
+This chapter asks `/create-canvas` for a **session board**: plan steps, validation checks, and notes.
 
-| Term | Meaning in this course | Required? |
-|---|---|---|
-| Built-in work surfaces | Plan output, terminal, browser, and the Review panel already in a session | Yes |
-| Session canvas | The board `/create-canvas` opens in the side panel for this session | Yes |
-| Chat fallback | The same board returned as markdown in the session if a canvas does not open | Fallback only |
+If `/create-canvas` is missing or the canvas does not open, keep the same board as markdown in the session and continue.
 
-In this chapter you'll:
-
-1. Recognize built-in work surfaces you already use: plan, browser, and terminal
-2. Run `/create-canvas` and ask for a session board for `samples/book-app-web`
-3. Update that canvas only when terminal or browser evidence exists
-
-If `/create-canvas` is missing or the canvas does not open, keep the same board as markdown in the session and continue. Skip the generated extension files for now.
-
-## 🎯 Learning Objectives
+## Learning Objectives
 
 By the end of this chapter, you'll be able to:
 
 - Explain why canvases exist and when a long chat thread gets in the way
-- Identify built-in work surfaces such as plan, browser, and terminal
 - Create a session canvas with `/create-canvas`
 - Keep plan state and validation evidence visible on that canvas
 - Explain the difference between chat history and shared canvas state
-- Fall back to markdown in the session if a canvas does not open
 
-> ⏱️ **Estimated Time**: ~50 minutes (15 min reading + 35 min hands-on)
-
----
-
-## ✅ Prerequisites
-
-Before starting:
-
-- Complete Chapter 04
-- Open the course repository in the GitHub Copilot app
-- Use `samples/book-app-web` as the sample app path
-- Know how to open the Review panel terminal and browser surfaces from Chapter 03
-
-The prepared concept folder at `.github/extensions/release-checklist` is optional fallback material, not the main exercise.
+> ⏱️ **Estimated Time**: ~40 minutes
 
 ---
 
-## 🧩 Real-World Analogy: The Band's Arrangement Board
+## Prerequisites
 
-Imagine a band planning a song. They could argue every part in a long group chat, but a shared arrangement board works better:
+1. Complete Chapters [00](../00-setup/README.md) and [01](../01-tour-the-app/README.md) for the necessary setup and understanding of the app.
+1. Confirm the sample app is ready.
+
+    - Open or create a session for the course repository in a new worktree. 
+    - Run the following commands to confirm the sample app is ready:
+
+        ```bash
+        cd samples/book-app-web
+        npm install
+        npm test -- --run
+        npm run build
+        ```
+
+All tests and the build should pass before you start the exercise.
+
+---
+
+## From the Studio: The Band's Arrangement Board
+
+Imagine a band planning a song. They could argue their options in a long group chat, where decisions get buried, or they could use a shared arrangement board to keep everything visible and organized.
 
 ![Arrangement board analogy for canvases](assets/arrangement-board-canvas.webp)
 
@@ -67,13 +59,19 @@ Imagine a band planning a song. They could argue every part in a long group chat
 
 A canvas is the app's arrangement board for human-agent work.
 
+| Term | Meaning in this course |
+|---|---|
+| Built-in work surfaces | Plan output, terminal, browser, and the Review panel you've already seen in a session |
+| Session canvas | The board `/create-canvas` opens in the side panel for this session |
+| Chat fallback | The same board returned as markdown in the session if a canvas does not open |
+
 ---
 
 ## Core Concepts
 
 ### A canvas is a shared control panel
 
-GitHub documents custom canvases as **bidirectional** work surfaces: both sides can change the same board.
+Canvases are documented as **bidirectional** work surfaces: both sides (user and agent) can change the same board.
 
 Simple example:
 
@@ -85,221 +83,117 @@ A custom canvas can include:
 
 - visible state
 - UI controls
-- agent-callable capabilities (actions the agent can run on that board, such as updating a checklist item)
+- agent-callable actions, such as updating a checklist item
 - artifacts such as plans, checklists, dashboards, browser previews, terminals, or documents
 
 ![Human and agent shared canvas surface](assets/human-agent-shared-surface.webp)
 
 ### Built-in work surfaces come first
 
-You already used these panels in earlier chapters. They come with the session. You don't create them with `/create-canvas`:
+You already used these panels in earlier chapters. They come with the session. You don't create them.
 
 | Built-in work surface | What you inspect |
 |---|---|
-| Plan | Steps, options, and pause points before implementation |
+| Plan | Execution plan and a checklist of steps before implementation |
 | Terminal | Install, test, and build evidence |
 | Browser | Running app behavior |
-| Diff / Review panel | What changed and what still needs review |
+| Changes / Review panel | What changed and what still needs review |
 
-Those panels stay tied to the live session. In Exercise 2 you'll add one more surface with `/create-canvas`: the session board.
+Those panels stay tied to the live session. In this chapter, you'll add one more surface: the session board.
 
 ### When to use a canvas
 
 | Use chat when... | Use a canvas when... |
 |---|---|
 | You need a quick answer | You need visible state |
-| The task is short | The task has multiple steps |
+| The task is short | The task has multiple recurring steps |
 | The result can be text | The result needs controls or inspection |
 | You don't need to revisit it | You want a reusable work surface for the session |
 
 ![Chat versus canvas work surfaces](assets/chat-vs-canvas.webp)
 
-### The beginner example: `/create-canvas` plus a session board
+## Exercise: Create a feature workbench
 
-Type `/create-canvas`, then describe the board. The docs show sample prompts, like a kanban board or a planning board. Here you'll ask for a **session board** for one change. Save it in **user scope** (`~/.copilot/extensions`) so the generated files stay on your machine and don't land in the course fork.
-
-The board should include:
-
-```text
-Plan
-- [ ] Understand book-card layout
-- [ ] Propose a small change
-- [ ] Pause for approval
-- [ ] Implement
-- [ ] Validate
-
-Validation evidence
-- [ ] npm test -- --run
-- [ ] npm run build
-- [ ] browser preview
-
-Session notes
-- current mode
-- next human decision
-- what blocked last turn
-```
+You will build a reusable canvas that manages the local development inner loop for a new book-app feature. It keeps the feature proposal, plan, implementation and evidence linked to the same session.
 
 ![Session plan and validation board](assets/session-plan-validation-board.webp)
 
-That board is useful only when it stays linked to evidence from the same session. Checking a validation box because the chat sounded confident is not enough.
+> [!NOTE]
+> This board is useful only when it stays linked to evidence from the same session. Checking a validation box because the chat sounded confident is not enough.
 
----
+1. In the current session, type `/` in the prompt box and select `/create-canvas`, **then** paste the prompt below:
 
-## Hands-On Exercises
+    <details>
+    <summary>Feature Workbench canvas prompt</summary>
 
-In these exercises, you'll:
+    ```text
+    Create a reusable, user-scoped Feature Workbench canvas for the local dev inner loop in @samples/book-app-web. Simple, compact, beginner-readable. No GitHub writes, no source edits while building it.
 
-- Find built-in work surfaces in the app
-- Create a session canvas with `/create-canvas`
-- Update that canvas only when evidence exists
+    Every button = agent-callable action (loading/success/error state, saves agent response). No local-only UI.
 
-### 1. Find the built-in work surfaces
+    Top: horizontal progress rail = Propose -> Plan -> Baseline -> Implement -> Validate. No Approve stage — approval happens in the chat's Plan tab. Green = evidence-backed done, neutral = current, red = failed/blocked.
 
-Open or create a session for the course repository.
+    Feature proposal: text input + one Generate plan button. Switches session to plan mode, fires prompt without waiting ("Working..." status), agent inspects code + writes plan as usual, presents for approval in Plan tab (never call exit_plan_mode/ask_user elsewhere). Don't render plan text on canvas — just a small status pill (Working/Review/Approved/Changes requested) polled from exit_plan_mode events. No edit/approve controls on the canvas itself.
 
-1. Set mode to **Plan** or **Interactive**.
-2. Open the **Review panel** in the upper-right corner of the app.
-3. Locate the **Terminal** tab. Create a terminal if needed.
-4. Locate the **Browser** surface or browser tab if your build exposes it.
-5. Notice where plan output appears in the session when you ask for a plan.
+    Checklist: baseline test, baseline build, implement approved plan, review diff, browser validation (when required), screenshots (when required), final test, final build.
 
-![Review panel open beside a session. This capture is a README planning session. Your session title will differ. What matters is the Plan surface, Changes tab, and prompt box](assets/app-review-panel.webp)
+    Actions in order: Run baseline (test+build, record totals) -> Implement (approved plan only) -> Browser validation (start/reuse dev server, exercise feature, before/after screenshots) -> Run final checks (test+build) -> Refresh evidence. These 4 must never use plan mode/exit_plan_mode/ask_user (unattended), give each a multi-minute timeout not the ~60s default.
 
-#### Expected result
+    Evidence: read-only, agent-posted only, no learner notes. Dense one-liners: baseline pass/fail pill, final pass/fail pill + total delta, browser summary + screenshot count, diff summary (files changed), blockers. Truncate long text. Green only if tests pass and final total >= baseline. Before any evidence: "Run a check or capture browser evidence to record it here."
 
-You can point to at least two built-in work surfaces that make session work inspectable without scrolling the full chat.
+    Only mark checklist/rail items from recorded evidence, never chat inference. Dense layout, no big empty textareas, no duplicate buttons, user scope.
+    ```
+    </details>
 
-#### How it works
+    ![The /create-canvas skill selected in the prompt box typeahead](assets/app-create-canvas-command.webp)
 
-Chat still carries the conversation. The plan, terminal, browser, and diff surfaces carry the work. Next you will run `/create-canvas` so the session board has its own surface in the side panel.
+1. The canvas should open in the right side panel once the agent is done building it.
 
----
+    >[!IMPORTANT]
+    > LLMs are non-deterministic, and so the prompt will produce different outputs on different runs. If you don't get the expected result, try running the prompt again and/or follow the prompt with additional clarifying instructions.
 
-### 2. Create a session canvas
+    ![Screenshot of the feature workbench canvas](assets/app-create-canvas-screenshot.png)
 
-Stay in the same session. Type `/` in the prompt box and select `/create-canvas` if it appears, or paste the prompt below.
+1. In **Feature proposal**, paste the following, then select **Generate plan**:
 
-```text
-/create-canvas Create a session board for a small book-card spacing or responsive-layout improvement in @samples/book-app-web.
+    ```text
+    Add a Clear filters control that resets search, genre, and reading status to their default values. Show it only when at least one filter is active.
+    ```
 
-Use this structure:
+    This will:
+    - Switch the session mode to **Plan**,
+    - Drop a kick-off prompt asking the agent to create an implementation plan for the proposed feature
+    - Update the stage on the canvas to reflect current **Propose** stage and the status to **Working ...**
 
-Plan
-- [ ] Understand current book-card layout
-- [ ] Propose one small beginner-safe spacing or responsive improvement
-- [ ] Pause for my approval before editing files
-- [ ] Implement the approved change
-- [ ] Validate
+        ![Screenshot of the proposed plan](assets/propose.png)
 
-Validation evidence
-- [ ] cd samples/book-app-web && npm test -- --run
-- [ ] cd samples/book-app-web && npm run build
-- [ ] browser preview on 127.0.0.1:5173
+1. Review the visible plan in the **Plan tab**, switch back to the canvas tab and then select option **2. Exit plan mode and I will prompt myself** in the chat. The canvas will update to **Plan** stage and status of the proposed feature show **Approved**
 
-Session notes
-- current mode
-- next human decision
-- blockers
+    ![Screenshot of the approved plan](assets/plan.png)
 
-People should be able to check and uncheck plan and validation items and edit session notes.
-The agent should update those items only from terminal or browser evidence in this session.
-Keep the first version simple. No GitHub write actions.
-Prefer user scope so this stays on my machine and is not committed.
-Do not edit the book-app-web source files yet.
-```
+1. Select **Run baseline** on the canvas. This ensures that the initial state of the application is recorded before making any changes.
 
-![The /create-canvas skill selected in the prompt box typeahead](assets/app-create-canvas-command.webp)
+    Confirm that the canvas records the individual Vitest test total and build result from terminal output. Expand the working section in the chat to confirm that the right test commands were executed and that the evidence matches the reported results.
 
-The canvas should open in the right side panel. If `/create-canvas` is missing or the canvas does not open, ask for the same board as markdown in the session and keep it updated each turn. That fallback is enough to finish the chapter.
+    ![Screenshot of the baseline evidence](assets/baseline.png)
 
-#### Expected output
+    Once done, the **Baseline** stage should show as completed on the canvas, baseline test and build items should be crossed off/ marked as done on the checklist and evidence captures the number of tests executed.
 
-- A canvas in the side panel, or the same board as markdown in chat
-- Plan steps, validation checks, and session notes
-- A clear pause before file edits
-- No `samples/book-app-web` file changes yet
+1. Select **Implement** to build the feature according to the generated plan.
 
-Demo output varies. What matters is that the board is scannable and tied to this session.
+    See the **Changes** tab to review the modifications and confirm it is limited to the approved feature. The canvas will update to reflect the current **Implement** stage, check off items related to implementation on the checklist and include Diff changes as part of the evidence.
 
-#### Pause point
+    ![Screenshot of the changes tab](assets/implement.png)
 
-Before any implementation:
+1. Select **Browser validation** to have the agent perform a visual check in the browser. You can manually test the feature by interacting with the application and observing the visual changes. In the browser, apply a filter and confirm **Clear filters** appears.
 
-1. Is the proposed change small?
-2. Is the pause point explicit?
-3. Are validation commands exact?
-4. Can you tell the next human decision from the board, without rereading the whole chat?
+    ![Screenshot of the browser validation](assets/browser-validation.png)
 
----
+1. Select **Run final checks** to ensure that all tests pass - no breaking changes have been introduced.
 
-### 3. Update the board with real evidence
+    ![Screenshot of the final checks](assets/validate.png)
 
-Now collect evidence and update the board. Prefer the session terminal and browser surfaces.
-
-```bash
-cd samples/book-app-web
-npm install
-npm test -- --run
-npm run build
-```
-
-For browser validation:
-
-```bash
-cd samples/book-app-web
-npm run dev -- --host 127.0.0.1 --port 5173
-```
-
-Prompt GitHub Copilot:
-
-```text
-Update the session board for samples/book-app-web.
-If the canvas is open, update that surface.
-If not, return the full board as markdown.
-Mark only the steps that have evidence from terminal or browser output in this session.
-Do not invent passing results.
-```
-
-The updated board should match the plan + validation graphic earlier in this chapter. Check off only items you can prove from this session's terminal or browser.
-
-#### Expected output
-
-- Terminal output shows install, test, and build evidence
-- Browser preview runs at `127.0.0.1:5173` when you start it
-- Board state matches what you actually verified
-- Unchecked items stay unchecked until evidence exists
-
-#### Why this matters
-
-A confident chat sentence is not validation. The board should change only when the terminal, browser, or diff gives you proof.
-
----
-
-<details>
-<summary>Optional fallback: release checklist concept</summary>
-
-If you want a second shape to compare, open:
-
-```text
-.github/extensions/release-checklist/README.md
-```
-
-That folder is a design concept, not a loadable extension. It is useful as a release-oriented checklist after you have a pull request. Prefer the session canvas from Exercise 2 because it stays tied to live plan, terminal, and browser evidence.
-
-</details>
-
-<details>
-<summary>Intermediate: Markdown workboards that launch and track sessions</summary>
-
-After one session board feels natural, you can run `/create-canvas` again for a board that lists issues and pull requests and tracks session status. Official docs show that kind of planning board as another example prompt.
-
-Example stretch prompt:
-
-```text
-/create-canvas Create a workboard for this repository that lists open issues and pull requests, lets me choose one item, and tracks the session status for that item. Prefer user scope. No GitHub write actions.
-```
-
-</details>
+You've seen how the workbench reflects what actually happened in the session, not because a chat response sounds confident. Copilot can update the canvas after an action gathers evidence, but you decide whether that evidence is sufficient.
 
 <details>
 <summary>Advanced: Where canvas files live</summary>
@@ -341,34 +235,30 @@ If you are still stuck, see the [Troubleshooting Reference](../appendices/troubl
 
 ---
 
-## 🔑 Key Takeaways
+## Key Takeaways
 
-1. Chat is for questions. A canvas is the board in the side panel.
+1. A canvas gives the session a visible, shared board in the side panel.
 2. Create that board with `/create-canvas` and a short description.
-3. Use the built-in plan, browser, terminal, and diff panels first.
-4. This chapter's board tracks the plan, the checks you ran, and the next decision.
-5. Only check off items you can prove from this session.
-6. If a canvas does not open, keep the same board as markdown in the session.
 
 ---
 
-## 📝 Assignment
+## Assignment
 
 ![Assignment](../assets/assignment.webp)
 
-Run one small session with `/create-canvas`:
+Extend the Feature Workbench canvas into a full production flow: assess, plan, implement, validate, then carry the change through an issue and a pull request with Copilot review.
 
-1. Use `/create-canvas` to create a session board for one beginner-safe **stats-label** improvement in `samples/book-app-web`. Do not reuse empty-state copy, book-card polish, or a filter-row change you already shipped in Chapter 03.
-2. Prefer user scope. Keep a pause point before file edits.
-3. Run `npm test -- --run` and `npm run build`.
-4. Update the canvas (or the markdown fallback) only after evidence exists.
-5. Ask GitHub Copilot to summarize what remains unchecked and what the next human decision is.
+Pick one small, beginner-safe improvement in `samples/book-app-web` that you have not already shipped in an earlier chapter.
 
-Success criteria: You can point to the canvas in the side panel, or say why you used the markdown fallback. You can also tell the next decision from the board without rereading the whole chat.
+1. Add an **Assess** stage after **Propose** to evaluate the feature proposal against the app's current behavior
+1. Add steps to create a pull request linking to the created issue and request Copilot review.
+1. Run the workbench end to end: assess the proposal, plan, implement, validate, then create an issue, open a pull request, and request Copilot review.
+
+Success criteria: The canvas shows evidence-backed progress from assessment through an open pull request with Copilot review requested, and you can tell the next decision from the board without rereading the whole chat.
 
 ---
 
-## ➡️ What's Next
+## What's Next
 
 In the next chapter, you'll turn repeatable prompts into automations. You'll start with a manual open-work summary before trying schedules or cloud workflows.
 
@@ -378,7 +268,12 @@ In the next chapter, you'll turn repeatable prompts into automations. You'll sta
 
 ## Source References
 
-- [Working with canvas extensions](https://docs.github.com/en/copilot/how-tos/github-copilot-app/working-with-canvas-extensions)
-- [Customizing the GitHub Copilot app](https://docs.github.com/en/copilot/how-tos/github-copilot-app/customize-github-copilot-app)
-- [GitHub Copilot app generally available](https://github.blog/changelog/2026-06-17-github-copilot-app-generally-available/)
-- [GitHub Copilot app product blog](https://github.blog/news-insights/product-news/github-copilot-app-the-agent-native-desktop-experience/)
+- [Working with canvas extensions][canvas-extensions]
+- [Customizing the GitHub Copilot app][customize-app]
+- [GitHub Copilot app generally available][app-changelog]
+- [GitHub Copilot app product blog][app-blog]
+
+[canvas-extensions]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/working-with-canvas-extensions
+[customize-app]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/customize-github-copilot-app
+[app-changelog]: https://github.blog/changelog/2026-06-17-github-copilot-app-generally-available/
+[app-blog]: https://github.blog/news-insights/product-news/github-copilot-app-the-agent-native-desktop-experience/

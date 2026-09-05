@@ -40,7 +40,7 @@ The sidebar control next to a project name that starts a session from a branch, 
 
 ## Custom agent
 
-A specialized agent configuration for a role or workflow, such as review, documentation, testing, or security. Custom agents are an advanced topic in this beginner course.
+A specialized agent configuration for a role or workflow, such as review, documentation, testing, or security. In the GitHub Copilot app, choose one with `/agent` or the agent picker when your build shows it. Custom agents are an advanced topic in this beginner course.
 
 ## Diff
 
@@ -72,7 +72,7 @@ The AI system used for a response or session. Different models may vary in speed
 
 ## Model Context Protocol (MCP) server
 
-A tool server that uses Model Context Protocol to connect Copilot to external tools and data. MCP servers are useful, but they can add permissions, credentials, and complexity.
+A tool server that uses Model Context Protocol to connect Copilot to external tools and data. MCP servers are useful, but they can add permissions, credentials, and complexity. In the GitHub Copilot app, manage them from the sidebar **Customize** tab.
 
 ## My work
 
@@ -92,7 +92,7 @@ A session mode where the agent proposes a plan first. You review and approve bef
 
 ## Plugin
 
-A packaged extension that can add capabilities to the GitHub Copilot app. Plugins may include custom agents, skills, hooks, MCP server configurations, or LSP server configurations. Canvas extensions are a separate extension type. Enable only what a workflow needs.
+A packaged extension that can add capabilities to the GitHub Copilot app. Plugins may include custom agents, skills, hooks, MCP server configurations, or LSP server configurations. Canvas extensions are a separate extension type. Enable only what a workflow needs. In the app, browse and install them from the sidebar **Customize** tab.
 
 ## PR
 
@@ -116,7 +116,7 @@ A GitHub Copilot app workspace where an agent can plan, edit, run commands, insp
 
 ## Skill
 
-Reusable guidance that helps the agent handle a specific kind of task. In this course, repo-local skills are the beginner-friendly way to add focused expertise.
+Reusable guidance that helps the agent handle a specific kind of task. In this course, repo-local skills are the beginner-friendly way to add focused expertise. In the GitHub Copilot app, find them under **Customize → Skills**.
 
 ## Workspace panel
 

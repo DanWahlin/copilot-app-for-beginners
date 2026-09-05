@@ -1,83 +1,58 @@
 ![Chapter 04: Skills, Model Context Protocol Servers, and Plugins](assets/chapter-header.svg)
 
-> **What if GitHub Copilot could reuse your team's review checklist without gaining any new external access?**
+> **What if GitHub Copilot could follow your team's review checklist every time, without any new setup or access?**
 
-Chapter 03 put you through a full supervised loop: change, evidence, issue, pull request. This chapter adds the next layer: reusable expertise.
+Chapter 03 took a change from the first edit to a pull request. Along the way, you typed the same reminders more than once: keep the change small, run the tests, check the app in the browser. A [skill](../GLOSSARY.md#skill) stores that kind of guidance in the repository so Copilot can reuse it.
 
-**Today's required path is skills.** Model Context Protocol (MCP) servers, plugins, and custom agents are only a map for later.
+This chapter is hands-on with one repo-local skill. It also gives you a map of three other ways to extend the app: [Model Context Protocol (MCP)](../GLOSSARY.md#model-context-protocol-mcp-server) servers, [plugins](../GLOSSARY.md#plugin), and [custom agents](../GLOSSARY.md#custom-agent). You'll learn what each one adds and when to reach for it. You won't install any of them.
 
-In the GitHub Copilot app, the safest extension point is a **repo-local skill**. A skill is a folder of guidance GitHub Copilot can load when a task matches. It keeps the beginner path local, reviewable in git, and free of new credentials.
-
-MCP servers, plugins, model providers, and custom agents are useful too. They also add setup, permissions, or policy decisions. Those stay optional in collapsible sections so you can learn the map without leaving the beginner path.
-
-## 🎯 Learning Objectives
+## Learning Objectives
 
 By the end of this chapter, you'll be able to:
 
-- Explain when skills help more than a one-off prompt
-- Inspect the repo-local `book-app-reviewer` skill included with the course
-- Use a skill-guided review prompt in a GitHub Copilot app session
-- Discover skills with `/skills` or the slash palette when your app supports it
-- Explain the difference between reusable expertise and external tool access
-- Choose least-context and least-tool setups
-- Locate optional MCP server, plugin, model provider, and custom agent settings without depending on them
+- Explain how a skill differs from a one-off prompt and from repository instructions
+- Find a skill in the **Customize** tab and use it to compare a generic review with a skill-guided review of `samples/book-app-web`
+- Describe when an MCP server, a plugin, or a custom agent fits better than a skill
 
-> ⏱️ **Estimated Time**: ~55 minutes (20 min reading + 35 min hands-on)
+> ⏱️ **Estimated Time**: ~30 minutes
 
----
+## Prerequisites
 
-## ✅ Prerequisites
+Complete [Chapter 03](../03-development-workflows/README.md). Open the course repository in the GitHub Copilot app and use `samples/book-app-web` for the prompts.
 
-Before starting:
+## From the Studio: A Song Chart for the Session
 
-- Complete Chapter 03
-- Open the course repository in the GitHub Copilot app
-- Use `samples/book-app-web` for all hands-on prompts
-- Keep the beginner path repo-local
-
----
-
-## 🧩 Real-World Analogy: A Song Chart for the Session
-
-Imagine a session band. The players are skilled, but the bandleader still hands out a chart for each song:
+The players already know their instruments. The bandleader still hands out a chart so everyone plays *this* song the same way.
 
 ![Song chart analogy for Copilot skills](assets/song-chart-skills.webp)
 
-| Chart note | Why it helps |
-|---|---|
-| Key and tempo | Everyone stays in sync |
-| Song structure | No one gets lost |
-| Dynamics marked | A consistent feel |
-| Final run-through | Validation before the take |
-
-A skill is like that chart. It does not hand the player a new instrument. It reminds them how this band wants the song played.
-
----
+A skill is that chart. It doesn't give Copilot a new instrument. It reminds Copilot how this repository wants a repeated task done.
 
 ## Core Concepts
 
-### Skills first
+### What a skill is
 
-Skills package task-specific instructions in a folder with a `SKILL.md` file. GitHub documents them as agent skills: folders of instructions, scripts, and resources that GitHub Copilot can load when they are relevant.
+A skill is a folder that contains a `SKILL.md` file with task-specific instructions. Copilot loads the skill when a task matches its description or when you name it in a prompt.
 
-| Extension type | Beginner meaning | Required for this chapter? |
+Skills are one of four ways to extend the GitHub Copilot app:
+
+| Extension | What it adds | In this chapter |
 |---|---|---|
-| Skills | Reusable expertise and checklists | Yes |
-| MCP servers | External tools or live data | No |
-| Plugins | Bundled capabilities that may include tools, skills, or agents | No |
-| Custom agents | Specialized roles selected with `/agent` | No |
+| Skill | Reusable guidance for one kind of task | Hands-on |
+| MCP server | A connection to an external tool or live data source | Read about it |
+| Plugin | A package that can bundle skills, agents, and MCP servers | Read about it |
+| Custom agent | A specialized role you choose with `/agent` | Read about it |
 
 ![Extending the GitHub Copilot app](assets/extending-copilot-app.webp)
 
-![Skills settings. Your list will be shorter than this capture. Look for Project skills and `book-app-reviewer`, not every skill on someone else's machine](assets/app-settings-skills.webp)
+All four are managed from the sidebar **Customize** tab. That tab also lists **Extensions** and **Canvas**. Canvases are the topic of Chapter 05, and the other extensions are outside this course.
 
-You can manage skills in app **Settings → Skills**. Skills already configured for your repositories or Copilot CLI are also available in the GitHub Copilot app.
+> [!TIP]
+> A skill changes how Copilot approaches a task. It doesn't give Copilot access to anything new. That's why it's the safest place to start.
 
-> 💡 **Tip**: A skill changes how GitHub Copilot approaches work. It does not automatically give GitHub Copilot access to new external systems.
+### Where the course skill lives
 
-### Where repo-local skills live
-
-Use this structure:
+The course includes a skill named `book-app-reviewer`:
 
 ```text
 .github/
@@ -86,264 +61,199 @@ Use this structure:
         └── SKILL.md
 ```
 
-Repo-local skills are ideal for this course because:
+The file starts with a short metadata block between two `---` lines, called YAML frontmatter. Copilot reads the `name` and `description` there to decide when the skill applies:
 
-- they are version controlled
-- teammates can review them
-- they do not require API keys
-- they keep the beginner path predictable
+```markdown
+---
+name: book-app-reviewer
+description: Review changes in samples/book-app-web for accessibility, responsive layout, tests/build validation, and small beginner-safe changes.
+---
+```
 
-### Skill versus one-off prompt
+The rest of the file is a checklist: keep the stack unchanged, run the tests and build, check accessibility and responsive layout, and keep changes small.
 
-| One-off prompt | Skill |
-|---|---|
-| Good for a single task | Good for a repeated checklist |
-| Easy to forget later | Lives in the repository |
-| Hard for a team to share | Reviewable in pull requests |
-| Easy to drift between sessions | Same guidance each time |
+Because the skill lives in `.github/skills`, it's version-controlled, reviewable in a pull request, and free of API keys. Skills can live in other locations too, including personal skill folders on your machine. See [About agent skills][agent-skills] for the full list.
+
+### Skill versus instructions versus a one-off prompt
+
+Chapter 03 showed that Copilot reads more than your prompt. This repository's `.github/copilot-instructions.md` file holds always-on house rules: the stack, the validation commands, and the reminder to keep changes small. A skill adds guidance for *one kind of task* on top of those rules.
+
+| | Lives where | When it applies | Best for |
+|---|---|---|---|
+| One-off prompt | The current session | When you type it | A one-time request |
+| Repository instructions | `.github/copilot-instructions.md` | Always, for this project | Stable project rules |
+| Skill | `.github/skills/<name>/SKILL.md` | When the task matches, or when you name it | A repeated checklist |
 
 ![One-off prompt versus skill](assets/skill-vs-one-off-prompt.webp)
 
----
+Instructions are the house rules. A skill is the chart for one kind of song.
 
-## Hands-On Exercises
+## Exercise: Compare a Generic Review with a Skill-Guided Review
 
-In these exercises, you'll:
+You'll confirm the skill is available, then send the same review request twice in two separate places: once in a chat without the skill, and once in a project session with it. Keeping the requests identical apart from the skill name is what makes the comparison fair. Don't edit any files in `samples/book-app-web`.
 
-- Inspect the `book-app-reviewer` skill
-- Compare a generic review with a skill-guided review
-- Use the skill before making a real change
+1. In the sidebar, select **Customize**, then **Skills**. Filter to **Project** and search for `book-app-reviewer`. Confirm it's listed and enabled. The filters show where each skill comes from: **Personal** skills live on your machine, **Project** skills live in the repository, and **Built-in** skills ship with the app. If you clear the search, you'll also see a few project skills the course authors use for screenshots and diagrams. Ignore those.
 
-### 1. Inspect the `book-app-reviewer` skill
+   ![Customize Skills, Project filter, searching for book-app-reviewer](assets/app-customize-skills.webp)
 
-This repository already includes the skill:
+1. Open `.github/skills/book-app-reviewer/SKILL.md` in your editor and read the **Review focus** list. It has six items. You'll ask Copilot which of them it applied. If you'd rather stay in the app, attach the file with `@` in a chat and ask Copilot to show you the list.
 
-```text
-.github/skills/book-app-reviewer/SKILL.md
-```
+1. Select the **+** next to **Chats**, pick the `copilot-app-for-beginners` repository, and send the generic review request:
 
-Open that file and confirm it includes guidance for:
+   ```text
+   Review @samples/book-app-web/src for one small accessibility improvement to the results area (the "books shown" heading and the empty state). Don't edit files yet.
+   ```
 
-- accessibility
-- responsive layout
-- testing and validation commands
-- safe, focused changes
+   Note what the reply focuses on and whether it mentions tests or the browser.
 
-If your app shows `/skills` in the slash command palette, use it as an optional discovery step:
+1. Select **Create from** next to the course project and start a new worktree session from `main`. Set the mode to **Plan**, then send the same request with the skill named:
 
-```text
-/skills list
-```
+   ```text
+   Use the book-app-reviewer skill. Review @samples/book-app-web/src for one small accessibility improvement to the results area (the "books shown" heading and the empty state). Don't edit files yet.
+   ```
 
-The output should show skills GitHub Copilot can find from built-in, user, plugin, or project locations. If `/skills` is not available, continue by inspecting the repo-local skill file directly.
+1. In the same session, ask:
 
-If you'd like to rebuild it manually for practice, copy the existing file to a scratch folder first. Do not overwrite the course copy during the beginner path.
+   ```text
+   Which items from the book-app-reviewer skill's Review focus list did you apply?
+   ```
 
-#### Expected result
+   **Expected Output:** The plan should reflect the checklist in `SKILL.md`. Look for:
 
-You now know what the skill tells GitHub Copilot to care about before it reviews `samples/book-app-web`.
+   - A single small change in `src/App.tsx`, `src/styles/app.css`, or a test file
+   - Accessibility language from the skill, such as labels, region names, keyboard-friendly controls, or useful empty states
+   - The validation commands `npm test -- --run` and `npm run build`
+   - A list of the checklist items Copilot applied
 
-#### How it works
+   The generic reply may cover some of these. The skill-guided reply should cover them consistently, every time you use it.
 
-GitHub Copilot can use the skill when your prompt matches the skill description. You can also refer to the skill by name in your prompt.
+1. Review the plan and stop there. You can implement it later if you want. For this chapter, seeing the skill shape the plan is the goal.
 
-Some installed skills also appear as direct slash commands, such as `/skill-name`. Those commands vary by environment, so treat the slash palette as the source of truth.
+> [!NOTE]
+> Skills don't always attach automatically. If a reply looks generic even after you name the skill, ask which checklist items it considered. Output also varies by model and app version, and commands such as `/skills` and `/agent` vary by build. Type `/` in the prompt box to see what yours offers. A different plan isn't a failed exercise.
 
-> 💡 **Tip**: Skills do not always attach automatically. If the reply looks generic, name `book-app-reviewer` in the prompt and ask which checklist items from the skill it considered. That is normal, not a failed exercise.
+> [!TIP]
+> `/skills` lists the skills a session can use, and `/skills reload` picks up edits without starting a new session. Installed skills can also appear as slash commands, such as `/book-app-reviewer`.
 
----
+## The Rest of the Map: MCP Servers, Plugins, and Custom Agents
 
-### 2. Compare a generic review and a skill-guided review
+You don't need to install anything in this section. The goal is to recognize each extension so you know what to reach for later.
 
-Open a new Plan or Interactive session in the app. Try a generic prompt first:
+### MCP servers
 
-```text
-Review @samples/book-app-web for one beginner-friendly improvement. Do not edit files yet.
-```
+An MCP server connects Copilot to a tool or data source outside the repository, such as a documentation service, a design tool, or a browser automation tool. Open **Customize**, then **MCP** to browse featured servers and see any that are already configured. Your **Installed** list may be empty. That's fine.
 
-Then try a skill-guided prompt:
+![Customize MCP, with featured servers and any servers already installed](assets/app-customize-mcp.webp)
 
-```text
-Use the book-app-reviewer skill to review @samples/book-app-web for one small accessibility or responsive layout improvement. Do not edit files yet.
-```
+Reach for an MCP server when a task needs live data or a tool that isn't in the repository. For GitHub issues and pull requests, the app's built-in GitHub integration already covers that. MCP servers often need authentication, and your organization may control which ones are allowed.
 
-Demo output varies. Look for differences in focus, not exact wording.
+### Plugins
 
-#### Expected output
+A plugin is an installable package that can bundle skills, custom agents, MCP servers, and other capabilities. Open **Customize**, then **Plugins** to browse them. Each installed plugin has a toggle so you can disable it without uninstalling it.
 
-The skill-guided response should be more likely to mention accessibility, responsive layout, tests, validation commands, and safe change boundaries.
+![Customize Plugins, with install controls and an installed plugin you can disable](assets/app-customize-plugins.webp)
 
-#### How it works
+Reach for a plugin when someone has already packaged the skills and tools for a platform you use, such as a cloud provider.
 
-The prompt and skill description point at the same concerns, so GitHub Copilot has a clearer reason to use the skill.
+### Custom agents
 
----
+A custom agent is a specialized role with its own instructions and tool access, such as a dedicated reviewer or documentation writer. Choose one with `/agent` or the agent picker in the prompt box.
 
-### 3. Use the skill before a real change
+Custom agents are an advanced topic. A skill gives the default agent a checklist. A custom agent replaces the default agent with a different role. In this course, the `book-app-reviewer` skill covers the review role, so you won't need one.
 
-Ask GitHub Copilot to plan a small improvement. Use book-card layout this time, not empty-state copy:
+### Give the agent only what it needs
 
-```text
-Using the book-app-reviewer skill, create a plan to improve book-card spacing or responsive layout in @samples/book-app-web. Keep the change small and include validation commands. Do not edit files yet.
-```
-
-Pause and inspect the plan before allowing implementation.
-
-#### Expected result
-
-The plan should include:
-
-- the likely files to inspect, such as `BookCard.tsx` or `app.css`
-- a small spacing, hierarchy, or responsive-layout improvement
-- validation with:
-  - `cd samples/book-app-web`
-  - `npm test -- --run`
-  - `npm run build`
-
-Demo output varies.
-
-#### Pause point
-
-Before you allow any file edits, confirm:
-
-1. The change is small enough for a beginner course chapter.
-2. The skill's accessibility or responsive-layout guidance is visible in the plan.
-3. Validation commands are present.
-4. You still want the change.
-
----
-
-<details>
-<summary>Intermediate: MCP servers are optional external tool access</summary>
-
-MCP servers connect GitHub Copilot to tools or live data, such as documentation sources or internal services. Any MCP servers configured for your repositories or Copilot CLI are available in the GitHub Copilot app. You can also manage them under **Settings → MCP Servers**.
-
-They can help a lot, but authentication and organization policy can vary.
-
-Beginner rule:
-
-| Question | Recommendation |
-|---|---|
-| Do I need external live data? | If no, use repo files and skills first |
-| Do I need GitHub issue or PR data? | Use built-in GitHub integration when available |
-| Do I need third-party docs or tools? | Add only the MCP server required for the task |
+More tools and context aren't automatically better. Every added tool is one more thing for Copilot to consider and one more thing for you to supervise. Start with repository context and a skill. Add an MCP server or plugin only when a task needs it, and disable what you don't use.
 
 ![Give the agent only what it needs](assets/least-tool-principle.webp)
-
-![MCP servers settings showing configured servers grouped by source](assets/app-settings-mcp-servers.webp)
-
-If an MCP server does not work, check authentication, environment variables, enabled status, and whether the session needs to restart.
-
-</details>
-
-<details>
-<summary>Intermediate: Plugins, model providers, and model strategy</summary>
-
-Plugins are installable packages that can add skills, hooks (small automated reactions to app events), custom agents, or other capabilities. Browse them under **Settings → Plugins**.
-
-Model providers can affect which models are available to sessions. Do not require plugin installation for this chapter. Learn where the controls are and how to disable capabilities you do not need.
-
-Beginner model strategy:
-
-| Task | Suggested approach |
-|---|---|
-| Quick explanation | Use a faster model and lower reasoning |
-| Planning a code change | Use enough reasoning to compare options |
-| Debugging failing tests | Use a stronger model if the failure is subtle |
-| Large multi-file change | Keep context tight before increasing model capability |
-
-![Plugins settings with install, manage, and enable/disable controls](assets/app-settings-plugins.webp)
-
-Least-tool principle:
-
-1. Start with repository context and a skill.
-2. Add an MCP server only when the task needs external data.
-3. Enable plugins intentionally.
-4. Remove or disable capabilities that create noise.
-
-</details>
-
-<details>
-<summary>Advanced: Custom agents, `/agent`, and built-in skills</summary>
-
-Custom agents are specialized roles. In a session, type `/agent` to choose one. They are useful when you repeatedly need a persona such as security reviewer, documentation writer, or release manager.
-
-Use `/agent` only after you're able to explain why a role is better than a skill for the task.
-
-If `/agent` is available, the picker lists built-in, custom, plugin, or user agents. Skip it unless you can say why a role is better than the `book-app-reviewer` skill for this task.
-
-| Use a skill when... | Use a custom agent when... |
-|---|---|
-| You need a repeatable checklist | You need a specialist persona |
-| The normal agent can do the work | The workflow needs a different role |
-| You want repo-local, lightweight guidance | You need reusable behavior across many tasks |
-
-The GitHub Copilot app also ships built-in skills. Treat them as optional tools you discover when a task needs them, not as required setup for this chapter. One worth knowing about: `/security-review` scans a session's changes for vulnerabilities and reports findings with severity, making it a security-focused sibling to the `/rubber-duck` critique you used in Chapter 03. Official references:
-
-- [About agent skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
-- [Built-in skills for the GitHub Copilot app](https://docs.github.com/en/copilot/reference/github-copilot-app-reference/built-in-skills)
-
-</details>
 
 ---
 
 ## Troubleshooting
 
-If you are still stuck, see the [Troubleshooting Reference](../appendices/troubleshooting-reference.md).
+If you're still stuck, see the [Troubleshooting Reference](../appendices/troubleshooting-reference.md).
 
 <details>
-<summary>Skills and extension issues</summary>
+<summary>Skill and extension problems</summary>
 
-| Problem | What to check |
-|---|---|
-| Skill does not seem to apply | Skill path, `SKILL.md` filename, description keywords, session restart |
-| GitHub Copilot gives generic advice | Mention `book-app-reviewer` and `@samples/book-app-web` explicitly |
-| MCP server fails | Authentication, environment variables, enabled status, app reload |
-| Plugin feature not visible | Plugin enabled state, project scope, app version |
-| Too many irrelevant suggestions | Disable unused tools and keep prompt context narrower |
+### The Skill Doesn't Seem to Apply
+
+Confirm the file is at `.github/skills/book-app-reviewer/SKILL.md`, name the skill in your prompt, and start a new session if you edited the file.
+
+### Copilot Gives Generic Advice
+
+Mention `book-app-reviewer` and `@samples/book-app-web/src` explicitly, then ask which checklist items it considered.
+
+### I Can't Find Skills, MCP, or Plugins in Settings
+
+They're in the sidebar **Customize** tab. If your build shows a **Customize** entry inside Settings, it only points to the sidebar tab.
+
+### An MCP Server or Plugin Isn't Working
+
+Check its enabled toggle in **Customize**, any authentication it requires, and your organization's policy. Start a new session after making changes.
 
 </details>
 
 ---
 
-## 🔑 Key Takeaways
+## Key Takeaways
 
-1. Start extension work with repo-local skills.
-2. A skill provides reusable expertise, not automatic external access.
-3. Skills already configured for repositories or Copilot CLI are available in the GitHub Copilot app.
-4. MCP servers and plugins are optional because they may require credentials or policy decisions.
-5. Custom agents are advanced role-based workflows.
-6. Give the agent only the tools and context it needs.
+1. A skill is reusable guidance for one kind of task. It changes how Copilot works, not what it can access.
+2. Repository instructions are always-on house rules. A skill is a checklist that applies when the task matches or when you name it.
+3. Skills, MCP servers, and plugins are managed from the sidebar **Customize** tab.
+4. Start with repository context and a skill. Add MCP servers, plugins, or custom agents only when a task needs them.
 
----
-
-## 📝 Assignment
+## Assignment
 
 ![Assignment](../assets/assignment.webp)
 
-Improve the `book-app-reviewer` skill on a branch. Do not commit it unless you intend to contribute the change.
+Improve the `book-app-reviewer` skill on a branch, then use it.
 
-1. Add one rule about book-card spacing or visual hierarchy.
-2. Add one rule about validating responsive layout in the browser.
-3. Ask GitHub Copilot to review the skill for clarity.
-4. Use the skill in a Plan-mode prompt against `@samples/book-app-web`.
+1. In the sidebar, select **Create from** for the course project and start a new worktree session from `main`.
+1. Set the mode to **Interactive** and submit:
 
-Success criteria: You're able to explain why the required exercise uses a repo-local skill instead of MCP, plugins, or custom agents.
+   ```text
+   Edit @.github/skills/book-app-reviewer/SKILL.md. Add two items to the Review focus list: headings must follow a logical order under a single h1, and every icon or image must have a text alternative. Keep the rest of the file unchanged.
+   ```
 
----
+1. Inspect the diff in the **Changes** tab, then submit:
 
-## ➡️ What's Next
+   ```text
+   Review @.github/skills/book-app-reviewer/SKILL.md for clarity. Is each item specific enough that a beginner would know what to check? Suggest wording changes only.
+   ```
 
-In the next chapter, you'll use canvases as shared control panels for a session. Start with built-in plan, browser, and terminal surfaces, then run `/create-canvas` for a session board on `samples/book-app-web`.
+1. Ask Copilot to apply the wording changes you agree with, then inspect the diff again.
+1. Run `/skills reload` so the session picks up the edited skill. If that command is missing, start a new session from this session's branch instead.
+1. Set the mode to **Plan** and submit:
 
-**[← Back to Chapter 03](../03-development-workflows/README.md)** | **[Next: Canvases →](../05-canvases/README.md)**
+   ```text
+   Use the book-app-reviewer skill to review @samples/book-app-web/src for one small heading or text-alternative improvement. Create a short plan and list which checklist items you applied. Don't edit files yet.
+   ```
+
+Success criteria: The plan cites at least one of the two rules you added (the book cards currently use the same heading level as the results heading, so expect that to come up), and you can explain why this chapter uses a repo-local skill instead of an MCP server, a plugin, or a custom agent.
+
+Archive the session when you're done. Don't open a pull request unless you intend to contribute the change.
+
+## What's Next
+
+In the next chapter, you'll use canvases as a shared board for a session. You'll start with the built-in plan, terminal, and browser surfaces from Chapter 03, then run `/create-canvas` to keep the plan, checks, and next decision visible for work on `samples/book-app-web`.
+
+**[← Back to Chapter 03](../03-development-workflows/README.md)** | **[Continue to Chapter 05 →](../05-canvases/README.md)**
 
 ---
 
 ## Source References
 
-- [Customizing the GitHub Copilot app](https://docs.github.com/en/copilot/how-tos/github-copilot-app/customize-github-copilot-app)
-- [About agent skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
-- [Built-in skills for the GitHub Copilot app](https://docs.github.com/en/copilot/reference/github-copilot-app-reference/built-in-skills)
-- [About GitHub Copilot plugins](https://docs.github.com/en/copilot/concepts/agents/about-plugins)
-- [GitHub Copilot app product blog](https://github.blog/news-insights/product-news/github-copilot-app-the-agent-native-desktop-experience/)
+- [Customizing the GitHub Copilot app][customizing]
+- [About agent skills][agent-skills]
+- [Built-in skills for the GitHub Copilot app][built-in-skills]
+- [About GitHub Copilot plugins][plugins]
+- [Slash commands for the GitHub Copilot app][slash-commands]
+- [GitHub Copilot app product blog][app-blog]
+
+[customizing]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/customize-github-copilot-app
+[agent-skills]: https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
+[built-in-skills]: https://docs.github.com/en/copilot/reference/github-copilot-app-reference/built-in-skills
+[plugins]: https://docs.github.com/en/copilot/concepts/agents/about-plugins
+[slash-commands]: https://docs.github.com/en/copilot/reference/github-copilot-app-reference/slash-commands
+[app-blog]: https://github.blog/news-insights/product-news/github-copilot-app-the-agent-native-desktop-experience/

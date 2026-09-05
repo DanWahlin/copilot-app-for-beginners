@@ -38,6 +38,8 @@ Related chapter: [02 Sessions, Worktrees, and Context](../02-sessions-worktrees-
 | Web server fails to start | Port already in use | Stop the unused server or run the second session on another port, such as `5174` |
 | Session differs from main checkout | Dependencies, branch contents, environment, or generated files differ | Run install and validation commands in the session worktree |
 | Context is noisy | Too many files or broad prompts | Use focused `@` file or folder references and smaller tasks |
+| Responses include too much unrelated detail | App-wide instructions or context are noisy | Keep **Settings → Sessions** app instructions short and attach only relevant files |
+| Branch names are hard to recognize | Branch prefix is not configured | Set a project or app branch prefix that identifies GitHub Copilot app sessions |
 
 ## Chapter 03: Development and GitHub Workflows
 
@@ -64,13 +66,10 @@ Related chapter: [04 Skills, Model Context Protocol (MCP) Servers, and Plugins](
 | Symptom | Likely cause | Try this |
 |---|---|---|
 | Copilot ignores project style | Instructions are missing or too broad | Put stable project guidance in `.github/copilot-instructions.md` |
-| Responses include too much unrelated detail | App-wide instructions or context are noisy | Keep **Settings → Sessions** app instructions short and attach only relevant files |
-| Branch names are hard to recognize | Branch prefix is not configured | Set a project or app branch prefix that identifies GitHub Copilot app sessions |
-| Screenshot exposes settings | Credentials or org details are visible | Retake the screenshot with private fields cropped or hidden |
-| Provider setup fails | Credential, endpoint, policy, or billing issue | Treat provider setup as intermediate and verify settings outside the beginner path |
-| Skill does not seem to apply | Skill location, metadata, or prompt mismatch | Check `.github/skills/.../SKILL.md` and prompt for the skill's purpose |
-| MCP server fails | Authentication, environment variable, or policy issue | Check enabled state, credentials, required variables, and app restart or reload requirements |
-| Plugin capability is missing | Plugin disabled or not scoped to the session | Check plugin settings and restart the session if needed |
+| Skill does not seem to apply | Skill location, metadata, or prompt mismatch | Check `.github/skills/.../SKILL.md` and prompt for the skill's purpose. In the app, open **Customize → Skills** and filter to **Project** |
+| Cannot find Skills, MCP, or Plugins in Settings | Customization moved to the sidebar | Open the sidebar **Customize** tab. Settings → Customize only points there |
+| MCP server fails | Authentication, environment variable, or policy issue | Check **Customize → MCP**, credentials, required variables, and app restart or reload requirements |
+| Plugin capability is missing | Plugin disabled or not scoped to the session | Check **Customize → Plugins** and restart the session if needed |
 | Custom agent is confusing | Advanced concept introduced too early | Return to repo-local skills first, then explain agents as optional specialization |
 | Agent has too many tools | Toolset adds noise and risk | Disable tools not needed for the task |
 

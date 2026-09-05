@@ -77,6 +77,10 @@ The automations tab is your home for recurring agent tasks that can save and eit
 
 ![Automations page](assets/automations-page.png)
 
+### Customize
+
+This is where you manage the ways to extend the app: skills, Model Context Protocol (MCP) servers, plugins, and extensions. You don't need any of them yet. Chapter 04 covers skills hands-on and explains when the others fit.
+
 ### Sessions
 
 Agent interactions through the GitHub Copilot app are either through **Chat session** or a **Project session**.
@@ -145,9 +149,6 @@ Here's a summary of the key settings areas:
 | Sessions | - Archive/ delete your agent sessions <br> - Set verbosity level <br> - Specify instructions to be applied across all sessions <br> - Set new branch prefix, <br> - Session lifecycle settings <br> - set **app-wide instructions** that apply to every session across projects |
 | Accessibility | - Display zoom, keyboard shortcuts <br> - Notifications & Announcements |
 | Voice dictation | - Microphone settings <br> - Keyboard shortcut setup for activation <br> - Transcription models |
-| Skills | - Add, disable or remove skills to extend the app's capabilities |
-| MCP servers | - Add, disable or remove Model Context Protocol (MCP) servers to connect the app to external tools or data |
-| Plugins | - Add, disable or remove plugins to extend the app's capabilities |
 | Model providers | Configure custom models from other providers using your own API keys |
 
 
@@ -194,7 +195,7 @@ Check your plan, organization policy, project settings, and app version.
 
 1. Keep your editor for deep coding. Open GitHub Copilot app when agent work needs a clearer place to run and review.
 2. From the app, you can open the project in VS Code any time you want the full editor.
-3. The app is organized around work surfaces: Home for starting work, My work for GitHub items, Sessions and Automations.
+3. The app is organized around work surfaces: Home for starting work, My work for GitHub items, Sessions, Automations, and Customize for extending the app.
 4. **Chat sessions** are for exploration. **Project sessions** are for focused repository work. **Automations** are for repeatable agent runs.
 5. **Interactive**, **Plan** and **Autopilot** change the level of autonomy.
 

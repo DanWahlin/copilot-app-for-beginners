@@ -138,7 +138,7 @@ You can add skills and MCP servers separately, or install them as part of a **pl
 Choose a maintained plugin that provides the capability you need. Read its contents, not only the marketplace description. Some plugins start processes, call services, or run hooks, which are commands triggered by agent events.
 
 > [!TIP]
-> Browse the [Awesome Copilot plugin directory][awesome-plugins] to find community plugins. Review a plugin's source, included capabilities, and required access before you install it.
+> **Optional exploration:** After you complete this chapter's exercise, browse the [Awesome Copilot plugin directory][awesome-plugins] to find other community plugins. Use `modern-web-guidance` for this exercise. Before you install another plugin, review its source, included capabilities, and required access.
 
 ### Exercise: Plan a CSS Improvement with Modern Web Guidance
 

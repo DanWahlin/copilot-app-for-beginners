@@ -46,7 +46,7 @@ These features solve different problems. You don't need a custom agent for every
 Find skills in the sidebar **Customize** tab. Select custom agents with `/agent` or the agent picker in the prompt box.
 
 > [!TIP]
-> Browse the Awesome Copilot directories for examples of community-created [agents][awesome-agents] and [skills][awesome-skills]. Review an agent's tools and a skill's instructions before you add or use it.
+> **Optional exploration:** After you complete this chapter's exercises, browse the Awesome Copilot directories for examples of community-created [agents][awesome-agents] and [skills][awesome-skills]. Use `book-app-reviewer` and `book-app-explainer` for this chapter. Before you add or use another customization, review the agent's tools or the skill's instructions.
 
 ### Skill versus instructions versus a one-off prompt
 

@@ -25,18 +25,17 @@ You will check the tool versions in the Copilot app's **Terminal** tab after con
 ## Installation
 
 1. [Download and install the GitHub Copilot app][app-install] for your operating system.
-2. Open the app and select *Sign in to GitHub*.
-3. Sign in with your GitHub account, or enter your GitHub Enterprise Server URL if your organization uses one.
-<img src="assets/sign-in-to-app.webp" alt="Sign-in to app" width="800">
+2. Open the app and select **Sign in to GitHub**.
+3. Sign in with your GitHub account.
 
-4. Connect your repositories: Select **Continue**
-5. Pick a theme, and select **Finish**
-<img src="assets/pick-a-theme.webp" alt="Sign-in to app" width="800">
+    <img src="assets/sign-in-to-app.webp" alt="Sign in to the Copilot app" width="800">
 
-Once signed in, you'll land on an empty home page. The app uses your GitHub identity and repository permissions to surface the work you can access, so your projects and tasks appear here as you continue with setup.
+4. At **Connect your repositories**, select **Continue**.
+5. Pick a theme and select **Finish**.
 
-> [!TIP]
-> If a repository or issue is missing on the app, the first thing to check is account access and organization policy.
+    <img src="assets/pick-a-theme.webp" alt="Choose an app theme" width="800">
+
+The app opens its home page. Next, connect your copy of the course repository.
 
 ![GitHub Copilot app First Look](../assets/github-copilot-app.webp)
 
@@ -45,19 +44,25 @@ Once signed in, you'll land on an empty home page. The app uses your GitHub iden
 > [!NOTE]
 > If the Copilot app reports that Git is missing when you connect your repository, [install Git](https://git-scm.com/install), then retry the connection.
 
-1. Fork this [course's repository on GitHub][fork-repo-link]
+1. [Fork the course repository on GitHub][fork-repo-link]. A fork is your own copy of the repository on GitHub.
 
-2. On the Copilot app, select the **+** button next to **Sessions** to open the **Add project from** dialog. It offers several options for connecting a project.
+2. In the Copilot app, select **+** next to **Projects**, then select **Add GitHub repository**.
 
-    ![Add project from dialog](assets/app-add-project.webp)
+    ![Add a GitHub repository from the Projects menu](assets/app-add-project.webp)
 
-    | If you've got... | Use this app option |
-    |---|---|
-    | A cloned copy on your machine | **Local folder or repository**, then select your local folder |
-    | A repository on GitHub | **GitHub repository**, then search for your fork `copilot-app-for-beginners`|
-    | A repository URL | **Repository URL**, then paste the fork URL |
+3. Search for `copilot-app-for-beginners` and select your fork. The app downloads a local copy (clones it) and adds the project to the sidebar.
 
-3. Select **GitHub repository** and type `copilot-app-for-beginners` to select the fork you just created from the list. The app will clone the repo and it'll show up in the sidebar
+<details>
+<summary>Other ways to connect a repository</summary>
+
+Select **+** next to **Projects**, then choose the option that matches what you have:
+
+| If you have... | Select |
+|---|---|
+| A local copy of your fork | **Open folder**, then select the folder |
+| Your fork's repository URL | **Clone repository**, then paste the URL |
+
+</details>
 
 ## Check your tools in Terminal
 
@@ -70,7 +75,7 @@ Once signed in, you'll land on an empty home page. The app uses your GitHub iden
 
     This uses your existing local clone for setup. You will learn about worktrees in Chapter 02.
 
-<img src="assets/local-repository-workspace-selector.webp" alt="Local repository workspace selector" width="800">
+    <img src="assets/local-repository-workspace-selector.webp" alt="Local repository workspace selector" width="800">
 
 1. Select **View** > **Toggle Review Panel** to open the side panel if it is not already visible.
 
@@ -89,29 +94,31 @@ Once signed in, you'll land on an empty home page. The app uses your GitHub iden
 
     Install only the tools that are missing, using the links in [Prerequisites](#prerequisites), then run the checks again.
 
-1. The setup script uses GitHub CLI to create the training items on GitHub. Check its sign-in separately from the Copilot app sign-in. In the same **Terminal** tab, run:
+1. The setup script uses GitHub CLI, which has a separate sign-in. Confirm that it uses the account you used to create your fork:
 
     ```bash
     gh auth status
     ```
 
-    Confirm that the active account is the one you used to fork the course repository. If you are not signed in, run:
+    If you are not signed in to that account, run:
 
     ```bash
     gh auth login
     ```
 
-    Select **GitHub.com**, then **Login with a web browser** when asked how to sign in. Use the same account you used to create the fork. After sign-in, run `gh auth status` again and confirm that this account is active before you continue.
+    Select **GitHub.com**, then **Login with a web browser**. After sign-in, run `gh auth status` again and confirm the active account before you continue.
 
-## Seed the repository
+<a id="seed-the-repository"></a>
 
-Later chapters in this course rely on practice branches, issues, pull requests, a conversation comment, and a failing-check scenario created by the script. Skip this step only if you plan to add those items manually using the [Training GitHub Scenarios appendix](../appendices/training-github-scenarios.md#manual-fallback-create-the-labels).
+## Add the course practice items
+
+Run the setup script to create the practice items used in later chapters.
 
 1. Open the **Actions** tab in your fork on GitHub.com. New forks disable workflows by default. If you see **Workflows aren't being run on this forked repository**, select **I understand my workflows, go ahead and enable them**.
 
-    Enable workflows before running the setup script so the seeded failing-check pull request starts its GitHub Actions check.
+    Enable workflows so GitHub can run automated checks for the practice exercises.
 
-1. Return to the same **Terminal** tab in the Copilot app. From the root folder of your cloned fork, run the following command to preview the setup without creating training items:
+1. Return to the same **Terminal** tab in the Copilot app. Run this command from the repository root, the folder containing `.github` and `samples`, to preview the setup without creating practice items:
 
     ```bash
     node .github/scripts/setup-training-scenarios.js --dry-run
@@ -125,14 +132,7 @@ Later chapters in this course rely on practice branches, issues, pull requests, 
     node .github/scripts/setup-training-scenarios.js --yes
     ```
 
-    The script creates the GitHub issues, branches, pull requests, comments, and failing-check scenarios used in later chapters. It is safe to rerun because it reuses items that already exist.
-
-    > [!NOTE]
-    > If your fork belongs to an organization instead of your personal account, the script treats it as a shared repository and stops before making changes. If you're authorized to seed that organization repository, add the explicit safeguard:
-    >
-    > ```bash
-    > node .github/scripts/setup-training-scenarios.js --yes --allow-shared-repository
-    > ```
+    Wait for the terminal to show `Setup complete.`
 
 ### Checklist
 
@@ -144,14 +144,9 @@ After setup, you should have:
 - [ ] [Practice branches](../appendices/training-github-scenarios.md#manual-fallback-create-practice-branches)
 - [ ] [Training pull requests](../appendices/training-github-scenarios.md#manual-fallback-create-pull-request-scenarios)
 
-> [!NOTE]
-> If the issues are not created after running the script, navigate to your repository on GitHub.com, **Settings** and **enable issues** under **Features**. Then rerun the script.
-> 
-> If you were unable to run the script, you can complete the manual steps in [appendices/training-github-scenarios.md](../appendices/training-github-scenarios.md) before Chapters 02 and 03.
-
 ### Your first prompt
 
-Wait for the setup script to finish, then return to the prompt box in the project session. Submit the following request to the Copilot app, not to Terminal:
+Return to the prompt box in the project session. Submit this request to the Copilot app, not to Terminal:
 
 ```text
 Give me an overview of the copilot-app-for-beginners course repository. Focus on the learning path and the samples/book-app-web folder.
@@ -174,7 +169,7 @@ Check:
 - You're using the expected GitHub account
 - You have a Copilot plan, or you continued with your own model provider
 - Your organization left the **GitHub Copilot app** policy enabled (separate from the Copilot CLI policy)
-- You entered the correct GitHub Enterprise Server URL if required
+- If your organization uses `*.ghe.com`, you selected **Sign in to GitHub Enterprise Cloud**
 
 ### I Cannot See the Repository
 
@@ -182,7 +177,7 @@ Check:
 
 - You've got access to the repository on GitHub
 - You selected the correct account or organization
-- You tried the local folder option if the repository is already cloned
+- You tried **Open folder** if the repository is already cloned
 
 ### A Chat Cannot Explain the Repository
 
@@ -191,6 +186,20 @@ Check:
 - The correct repository is connected
 - The prompt mentions `copilot-app-for-beginners`
 - The app has permission to read the project folder
+
+### The Script Stops for an Organization Fork
+
+The script stops before changing a repository owned by an organization. Use this command only if you are authorized to set up that organization fork and have confirmed that the `Repository:` line shows the correct target:
+
+```bash
+node .github/scripts/setup-training-scenarios.js --yes --allow-shared-repository
+```
+
+### Practice Items Were Not Created
+
+If issues are missing, open your fork on GitHub.com. Under **Settings** > **Features**, enable **Issues**, then rerun the script.
+
+If you cannot run the script, complete the [manual setup steps in the Training GitHub Scenarios appendix](../appendices/training-github-scenarios.md#manual-fallback-create-the-labels) before Chapter 02.
 
 </details>
 

@@ -11,7 +11,7 @@ By the end of this chapter, you'll be able to:
 - Explain why you should use the GitHub Copilot app compared to using Copilot in an editor or Copilot CLI in the terminal
 - Understand key app features and settings
 - Explain the session modes - Interactive, Plan and Autopilot
-- Select models and assign reasoning efforts based on task complexity
+- Select a model and reasoning effort based on task complexity
 - Optionally try voice dictation
 
 > ⏱️ **Estimated Time**: ~30 minutes
@@ -136,6 +136,38 @@ You use a project session when your agent needs to touch code and deliver an art
 | Plan | "Plan first, execute when ready" <br> Copilot creates a plan before executing | The initial approach and project details matter |
 | Autopilot | "End-to-end execution without interruption" <br> Copilot works independently | Tasks that are well defined and have clear outcomes |
 
+### Models and reasoning effort
+
+The session mode controls how independently the agent works. The model and reasoning settings control how it processes your request.
+
+| Control | What it changes |
+|---|---|
+| **Model** | The AI model that handles your request. Models differ in capabilities, speed, and usage cost. |
+| **Reasoning effort** | How much reasoning a supported model uses to work through a task. Higher effort can help with complex problems, but can take longer. |
+
+The model control is below the prompt box, next to the mode selector. It shows **Auto** or a model name. Open it to find **Model** and **Effort**. Some app versions show separate model and reasoning controls.
+
+With **Auto**, the Copilot app chooses a model for your task. This is different from **Autopilot**, which controls how independently the agent works.
+
+For a repository tour or a short explanation, keep **Auto** or the current model and its default reasoning effort. For a difficult bug or a change across several files, consider a model suited to complex coding and a higher effort level. Higher effort does not guarantee a correct answer.
+
+You do not need a specific model for this course. Available models and effort levels vary. Some models do not offer an effort setting.
+
+#### Try the controls
+
+1. Open the project session you used in Chapter 00. Select **Interactive** mode below the prompt box.
+2. Open the model control. If you choose a model yourself, use **Model** to view the choices and select one. For this exercise, you can keep **Auto** or your current model.
+3. If **Effort** or a separate reasoning control is available, open it and review the levels. Keep the default for this simple question.
+4. Submit this prompt:
+
+    ```text
+    In samples/book-app-web, explain how filterBooks searches book titles and authors. Does letter case affect the results? Refer to the relevant file. Do not change any files.
+    ```
+
+**Expected Output:** The Copilot app should explain that search matches titles and authors without depending on letter case. It should refer to `samples/book-app-web/src/App.tsx` and leave the files unchanged.
+
+You can change the model and reasoning effort during a session without changing its mode.
+
 ### Settings
 
 ![App settings](assets/app-settings.webp)
@@ -151,6 +183,7 @@ Here's a summary of the key settings areas:
 | Voice dictation | - Microphone settings <br> - Keyboard shortcut setup for activation <br> - Transcription models |
 | Model providers | Configure custom models from other providers using your own API keys |
 
+**Model providers** connects the app to additional providers. It does not replace the model picker below the prompt box. You do not need to configure a provider for this exercise if a model is already available.
 
 ### Voice Dictation (optional)
 
@@ -198,6 +231,7 @@ Check your plan, organization policy, project settings, and app version.
 3. The app is organized around work surfaces: Home for starting work, My work for GitHub items, Sessions, Automations, and Customize for extending the app.
 4. **Chat sessions** are for exploration. **Project sessions** are for focused repository work. **Automations** are for repeatable agent runs.
 5. **Interactive**, **Plan** and **Autopilot** change the level of autonomy.
+6. Choose the model and reasoning effort below the prompt box. Keep the defaults for simple tasks; consider higher effort for complex work.
 
 ## What's Next
 
@@ -211,12 +245,14 @@ In the next chapter, you'll solve the "shared working copy" challenge from this 
 
 - [Getting started with the GitHub Copilot app][getting-started]
 - [Working with agent sessions][agent-sessions]
+- [Choosing a model and reasoning effort][model-selection]
 - [GitHub Copilot app changelog][app-changelog]
 - [Voice input documentation (Copilot CLI, which the app is built on)][voice-input]
 - [AI models reference][ai-models]
 
 [getting-started]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/getting-started
 [agent-sessions]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/agent-sessions
+[model-selection]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/agent-sessions#choosing-a-model
 [app-changelog]: https://github.com/github/app/blob/main/changelog.md
 [voice-input]: https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/voice-input
 [ai-models]: https://docs.github.com/en/copilot/reference/ai-models

@@ -146,6 +146,9 @@ The `modern-web-guidance` plugin from [GoogleChrome/modern-web-guidance][modern-
 
 The skill uses `npx` to download and run its documentation tool. Node.js and internet access are required. Review the [skill instructions][modern-web-skill] and any command approval before use.
 
+> [!NOTE]
+> Enterprise-managed settings can restrict which plugins and marketplaces are available in the GitHub Copilot app. If you cannot install `modern-web-guidance` or access the `awesome-copilot` marketplace, read the example and expected output, record the exercise as blocked, and continue. Do not change company-managed settings to complete the exercise.
+
 1. Select **Customize**, then **Plugins**.
 2. Search for `modern-web-guidance`. Use the marketplace filter to select `awesome-copilot`. If that marketplace is missing and your policy permits it, use the gear icon beside the filter to add `github/awesome-copilot`.
 

@@ -8,11 +8,9 @@ Chat works well for instruction and ambiguity. Once a GitHub Copilot session is 
 
 That place is a **canvas**.
 
-A canvas is a shared board in the side panel. You create it with `/create-canvas` and describe the board you want, the app builds it from your prompt and keeps it in sync with both you and the agent.
+A canvas is a shared board in the side panel. You create it with `/create-canvas` and describe the board you want. The app builds it from your prompt and keeps it in sync with you and the agent.
 
 This chapter asks `/create-canvas` for a **session board**: plan steps, validation checks, and notes.
-
-If `/create-canvas` is missing or the canvas does not open, keep the same board as markdown in the session and continue.
 
 ## Learning Objectives
 
@@ -21,16 +19,15 @@ By the end of this chapter, you'll be able to:
 - Explain why canvases exist and when a long chat thread gets in the way
 - Create a session canvas with `/create-canvas`
 - Keep plan state and validation evidence visible on that canvas
-- Explain the difference between chat history and shared canvas state
+- Explain the difference between chat history and a canvas that keeps current information visible and editable
 
-> ⏱️ **Estimated Time**: ~40 minutes
+> ⏱️ **Estimated Time**: ~70-90 minutes
 
 ---
 
 ## Prerequisites
 
-1. Complete [Chapter 05](../05-mcp-plugins/README.md) for the plugin installation workflow and the earlier chapters for sessions, worktrees, and the local development loop. You don't need to merge earlier practice changes or keep Context7 or Modern Web Guidance enabled.
-1. The community-canvas example requires permission to install a plugin. If policy blocks installation, read that example and continue to the generated-canvas exercise. If canvas creation is also unavailable, use the Markdown fallback described above.
+1. Exercise 1 installs a community plugin. Enterprise-managed settings can restrict which plugins and marketplaces are available in the GitHub Copilot app. If you cannot install the plugin, read Exercise 1 and continue to Exercise 2.
 1. Confirm the sample app is ready.
 
     - Use **Create from** > **Branches** > `main` to start a new worktree session for the course repository. Select **Interactive** mode and **Default agent**.
@@ -43,7 +40,15 @@ By the end of this chapter, you'll be able to:
         npm run build
         ```
 
-All tests and the build should pass before you start the exercise.
+Confirm these results before you start the exercise:
+
+| Command | Expected result |
+|---|---|
+| `npm install` | Installation completes without an error |
+| `npm test -- --run` | Vitest reports that all test files and tests passed |
+| `npm run build` | TypeScript and Vite complete the build without an error |
+
+Note the test file and test totals. Your canvas will use these values as its baseline.
 
 ---
 
@@ -55,7 +60,7 @@ Imagine a band planning a song. They could argue their options in a long group c
 
 | Group chat | Arrangement board |
 |---|---|
-| Good for discussion | Good for shared state |
+| Good for discussion | Good for information that you and the agent both update |
 | Hard to scan later | Easy to inspect at a glance |
 | Mostly linear | Can show sections, parts, previews, and controls |
 | Updates are buried | Updates are visible |
@@ -66,7 +71,6 @@ A canvas is the app's arrangement board for human-agent work.
 |---|---|
 | Built-in work surfaces | Plan output, terminal, browser, and the Review panel you've already seen in a session |
 | Session canvas | The board `/create-canvas` opens in the side panel for this session |
-| Chat fallback | The same board returned as markdown in the session if a canvas does not open |
 
 ---
 
@@ -90,6 +94,22 @@ A custom canvas can include:
 - artifacts such as plans, checklists, dashboards, browser previews, terminals, or documents
 
 ![Human and agent shared canvas surface](assets/human-agent-shared-surface.webp)
+
+<details>
+<summary>Terms used in the exercises</summary>
+
+| Term | Meaning |
+|---|---|
+| Agent-callable action | A canvas control that can ask the agent to do work, such as running tests |
+| User scope | The canvas is available to you across projects and is not committed to this repository |
+| Local-only UI | A control that changes only what you see and does not tell the agent about the change |
+| Event | A recorded state change, such as a plan being approved |
+| Polling | Checking at intervals for a state change |
+| Timeout | The maximum time an action can run before it stops |
+
+You do not need to write extension code in this chapter. These terms help you understand the detailed prompt in a later exercise and diagnose a generated canvas.
+
+</details>
 
 ### Built-in work surfaces come first
 
@@ -115,36 +135,65 @@ Those panels stay tied to the live session. In this chapter, you'll add one more
 
 ![Chat versus canvas work surfaces](assets/chat-vs-canvas.webp)
 
-## Canvas Example: Repository Issues Canvas
+## Exercise 1: Try Your First Canvas
 
-Before building your own canvas, try one from the community. [Awesome GitHub Copilot][awesome-copilot] is a curated collection of agents, instructions, skills, and canvas extensions you can install into the GitHub Copilot app. The [Repository Issues Kanban][issues-kanban] is a good first canvas to explore — it pulls repository issues into a kanban board you can triage and track inside a session.
+Before building your own canvas, try one from the community. [Awesome GitHub Copilot][awesome-copilot] is a curated collection of agents, instructions, skills, and canvas extensions you can install into the GitHub Copilot app. The [Repository Issues Kanban][issues-kanban] is a good first canvas to explore. It pulls repository issues into a kanban board you can triage and track inside a session.
 
-![Repository Issues Kanban preview](assets/repo-issues-kanban.png)
+![Repository Issues Kanban preview](assets/repo-issues-kanban.webp)
 
-1. From the canvas page, select **+ Install in GitHub Copilot app** button to install it in your GitHub Copilot app.
+1. From the canvas page, select **+ Install in GitHub Copilot app** to install it in your GitHub Copilot app.
 
     - Click **Allow** when prompted to install the plugin.
-    - Click **Install** to install if from the awesome-copilot marketplace, `accessibility-kanban@awesome-copilot`
+    - Click **Install** to install it from the Awesome Copilot marketplace. The package name is `accessibility-kanban@awesome-copilot`.
     - Ensure the plugin is listed under your installed and enabled plugins.
 
 1. Return to the worktree session you prepared in the prerequisites and submit the prompt `Restart canvas extensions`. This will reload the extensions and pick up the newly installed one.
-1. Navigate to **View** > **Toggle Review Panel** > **+** > **Extensions>** and select the **Accessibility Kanban** extension.
+1. Navigate to **View** > **Toggle Review Panel** > **+** > **Extensions** and select **Repository Issues Kanban**. The package is named `accessibility-kanban`, but **Repository Issues Kanban** is the name shown in the app.
 
-    ![Accessibility Kanban extension selection](assets/open-repo-issues-canvas.png)
+    ![Repository Issues Kanban extension selection](assets/open-repo-issues-canvas.webp)
 
 1. The board loads issues from the current repository and organizes them by status.
 1. Drag an issue between columns and notice how the canvas keeps state visible without scrolling through chat.
 
-Take a minute to move items around. This is the interaction model you will build on in the exercise below.
+Take a minute to move items around. This is the interaction model you will build on in Exercise 2.
 
-## Exercise: Create a feature workbench canvas
+## Exercise 2: Create a session board
+
+Start with a small canvas that works like a shared checklist. You and the agent can both see and update the same feature proposal, checklist, and notes. This exercise lets you practice those basic interactions before Exercise 3 adds buttons that ask the agent to run development tasks.
+
+![You and the agent update the same Session Board](assets/session-board-collaboration.webp)
+
+1. In the current session, type `/` in the prompt box and select `/create-canvas`, then paste this prompt:
+
+    ```text
+    Create a simple, user-scoped Session Board canvas.
+
+    Include:
+    - A Feature proposal text field
+    - A checklist with Plan, Implement, and Validate
+    - A Notes section with Next decision and Blocker fields
+
+    Let both the user and the agent update the checklist and notes. Keep the layout compact and beginner-readable. Do not edit repository files, run commands, or write to GitHub while creating the canvas.
+    ```
+
+1. When the canvas opens, confirm that it has the proposal, checklist, and notes sections.
+1. Enter a short feature proposal.
+1. Mark **Plan** complete and add a next decision.
+1. Ask the agent to summarize the current board state. Confirm that its answer matches your updates.
+1. Open **Changes** and confirm that creating the user-scoped canvas did not change repository files.
+
+**Expected result:** The feature proposal, checklist, and notes remain visible on the board. You and the agent can both read and update them, but the board does not run tests or edit the app.
+
+## Exercise 3: Create a Feature Workbench
 
 You will build a reusable canvas that manages the local development inner loop for a new book-app feature. It keeps the feature proposal, plan, implementation and evidence linked to the same session.
 
 ![Session plan and validation board](assets/session-plan-validation-board.webp)
 
+Exercise 2 showed how you and the agent can read and update the same proposal, checklist, and notes. Now you will add canvas buttons that ask the agent to run development tasks and record the results.
+
 > [!TIP]
-> Use a powerful model when creating a canvas — the initial generation benefits from stronger reasoning. Once the canvas is working, switch to a smaller, faster model for iterative tweaks.
+> Use the most capable model available to you when you create the canvas. The first generation needs more reasoning. After the canvas works, you can use a smaller, faster model for focused changes.
 
 1. In the current session, type `/` in the prompt box and select `/create-canvas`, **then** paste the prompt below:
 
@@ -175,9 +224,33 @@ You will build a reusable canvas that manages the local development inner loop f
 1. The canvas should open in the right side panel once the agent is done building it.
 
     >[!IMPORTANT]
-    > LLMs are non-deterministic, and so the prompt will produce different outputs on different runs. If you don't get the expected result, try running the prompt again and/or follow the prompt with additional clarifying instructions.
+    > Generated results can differ between runs. Check the expected structure below before you continue. Do not repeatedly regenerate the full canvas.
 
-    ![Screenshot of the feature workbench canvas](assets/app-create-canvas-screenshot.png)
+    ![Screenshot of the feature workbench canvas](assets/app-create-canvas-screenshot.webp)
+
+    Confirm that the canvas has:
+
+    - Five stages: **Propose**, **Plan**, **Baseline**, **Implement**, and **Validate**
+    - One feature proposal field and one **Generate plan** button
+    - Eight checklist items
+    - Actions for baseline, implementation, browser validation, final checks, and evidence refresh
+    - An empty evidence area before any action runs
+
+    If one part is wrong, use the matching repair prompt:
+
+    ```text
+    Keep the current canvas. Add any missing stages, checklist items, or actions from my original request. Do not redesign parts that already work.
+    ```
+
+    ```text
+    Keep the current canvas. Update checklist and progress state only from recorded action evidence. Do not infer success from chat text.
+    ```
+
+    ```text
+    Keep the current canvas. Give baseline, implementation, browser validation, and final-check actions enough time to complete npm and browser work. Show loading, success, and error states.
+    ```
+
+    If the canvas still does not match after two focused repairs, use the [Markdown fallback](#markdown-fallback) and continue with the validation steps manually.
 
 1. In **Feature proposal**, paste the following, then select **Generate plan**:
 
@@ -186,15 +259,15 @@ You will build a reusable canvas that manages the local development inner loop f
     ```
 
     This will:
-    - Switch the session mode to **Plan**,
-    - Drop a kick-off prompt asking the agent to create an implementation plan for the proposed feature
-    - Update the stage on the canvas to reflect current **Propose** stage and the status to **Working ...**
+    - Switch the session mode to **Plan**
+    - Send a prompt that asks the agent to create an implementation plan for the proposed feature
+    - Keep the canvas at the **Propose** stage and show the status as **Working ...**
 
-        ![Screenshot of the proposed plan](assets/propose.png)
+        ![Screenshot of the proposed plan](assets/propose.webp)
 
-1. Review the visible plan in the **Plan tab**, switch back to the canvas tab and then select option **2. Exit plan mode and I will prompt myself** in the chat. The canvas will update to **Plan** stage and status of the proposed feature show **Approved**
+1. Review the visible plan in the **Plan** tab. In the plan approval controls, select **2. Exit plan mode and I will prompt myself**. Then return to the canvas. The **Plan** stage should be complete, and the feature status should show **Approved**.
 
-    ![Screenshot of the approved plan](assets/plan.png)
+    ![Screenshot of the approved plan](assets/plan.webp)
 
 1. Select **Run baseline** on the canvas. This ensures that the initial state of the application is recorded before making any changes.
 
@@ -202,30 +275,49 @@ You will build a reusable canvas that manages the local development inner loop f
     
     The board is useful only when it stays linked to evidence from the same session. Checking a validation box because the chat sounded confident is not enough.
 
-    ![Screenshot of the baseline evidence](assets/baseline.png)
+    ![The baseline action runs four tests before implementation](assets/baseline.webp)
 
-    Once done, the **Baseline** stage should show as completed on the canvas, baseline test and build items should be crossed off/ marked as done on the checklist and evidence captures the number of tests executed.
+    When the action finishes, the **Baseline** stage should show as complete. The baseline test and build items should show **Done**, and the evidence should include the number of tests.
 
 1. Select **Implement** to build the feature according to the generated plan.
 
     See the **Changes** tab to review the modifications and confirm it is limited to the approved feature. The canvas will update to reflect the current **Implement** stage, check off items related to implementation on the checklist and include Diff changes as part of the evidence.
 
-    ![Screenshot of the changes tab](assets/implement.png)
+    ![The Feature Workbench records implementation and diff evidence](assets/implement.webp)
 
 1. Select **Browser validation** to have the agent perform a visual check in the browser. You can manually test the feature by interacting with the application and observing the visual changes. In the browser, apply a filter and confirm **Clear filters** appears.
 
-    ![Screenshot of the browser validation](assets/browser-validation.png)
+    Complete all of these checks:
 
-1. Select **Run final checks** to ensure that all tests pass - no breaking changes have been introduced.
+    | State | Expected behavior |
+    |---|---|
+    | No filters are active | **Clear filters** is not visible |
+    | A search term is active | **Clear filters** is visible |
+    | A genre or reading status is active | **Clear filters** is visible |
+    | You select **Clear filters** | Search, genre, and reading status return to their defaults |
+    | Filters have been cleared | **Clear filters** is not visible, and the full book list and statistics return |
 
-    ![Screenshot of the final checks](assets/validate.png)
+    ![The Feature Workbench runs browser validation](assets/browser-validation.webp)
+
+1. Select **Run final checks** to confirm that the existing automated checks still pass.
+
+    Compare the final evidence with your own baseline. Test counts can increase if implementation adds focused tests, but the final total must not be lower than the baseline total.
+
+    | Evidence | What to confirm |
+    |---|---|
+    | Baseline | Test and build results match the original terminal output |
+    | Diff | Changed files are limited to the approved feature |
+    | Browser | All five browser states above were checked |
+    | Final | Tests and build pass, and the final test total is at least the baseline total |
+
+    ![Final evidence shows four baseline tests and six final tests](assets/validate.webp)
 
 You've seen how the workbench reflects what actually happened in the session, not because a chat response sounds confident. Copilot can update the canvas after an action gathers evidence, but you decide whether that evidence is sufficient.
 
 <details>
-<summary>Advanced: Where canvas files live</summary>
+<summary>Behind the canvas: Where canvas files live</summary>
 
-You already ran `/create-canvas` on the beginner path. Opening the generated files is optional.
+You ran `/create-canvas` in Exercises 2 and 3. Opening the generated files is optional.
 
 | Location | Scope | Best for |
 |---|---|---|
@@ -251,10 +343,14 @@ If you are still stuck, see the [Troubleshooting Reference](../appendices/troubl
 
 | Problem | What to check |
 |---|---|
-| No canvas opens | Confirm you typed `/create-canvas`. If the command or panel is missing, keep the same board as markdown in the session |
+| No canvas opens | Confirm you typed `/create-canvas`. Restart canvas extensions once. If the command or panel is still missing, use the [Markdown fallback](#markdown-fallback) |
+| Community canvas is not listed | Look for **Repository Issues Kanban**. `accessibility-kanban` is the package name, not the display name |
+| Generated layout is incomplete | Compare it with the expected structure and use one focused repair prompt |
+| Plan stays in Working state | Complete the plan approval control in the **Plan** tab, then refresh the canvas evidence |
 | Built-in terminal or browser missing | Review panel toggle, View menu, app version |
 | Agent says it updated the board but state looks wrong | Ask for the full board again and compare it with terminal or browser evidence |
 | Validation marked complete without proof | Require evidence; uncheck items that lack output |
+| Baseline and final totals look wrong | Compare both values with terminal output from this worktree. Do not copy totals from an example image or another session |
 | Browser or terminal validation is stale | Confirm the command ran in the correct `samples/book-app-web` worktree |
 | Sensitive data appears in a custom canvas | Remove it, regenerate safe sample data, retake screenshots |
 
@@ -275,15 +371,28 @@ If you are still stuck, see the [Troubleshooting Reference](../appendices/troubl
 
 ![Assignment](../assets/assignment.webp)
 
-Extend the Feature Workbench canvas into a full production flow: assess, plan, implement, validate, then carry the change through an issue and a pull request with Copilot review.
+### Core assignment
+
+Extend the Feature Workbench with an **Assess** stage after **Propose**. The stage must compare a feature proposal with the app's current behavior before planning starts.
 
 Pick one small, beginner-safe improvement in `samples/book-app-web` that you have not already shipped in an earlier chapter.
 
-1. Add an **Assess** stage after **Propose** to evaluate the feature proposal against the app's current behavior
-1. Add steps to create a pull request linking to the created issue and request Copilot review.
-1. Run the workbench end to end: assess the proposal, plan, implement, validate, then create an issue, open a pull request, and request Copilot review.
+1. Add an **Assess** stage after **Propose** to evaluate the feature proposal against the app's current behavior.
+1. Run the workbench through assess, plan, baseline, implement, and validate.
+1. Confirm that each completed stage has evidence from the current session.
 
-Success criteria: The canvas shows evidence-backed progress from assessment through an open pull request with Copilot review requested, and you can tell the next decision from the board without rereading the whole chat.
+**Core success criteria:** The canvas shows evidence-backed progress from assessment through local validation, and you can identify the next decision without rereading the whole chat.
+
+### Optional GitHub workflow challenge
+
+Complete this challenge only if you have permission to create issues and pull requests in the training repository. Review the [issue and pull-request workflow from Chapter 03](../03-development-workflows/README.md) before you start.
+
+1. Add actions that create an issue for the assessed feature.
+1. Create a pull request that links to the issue.
+1. Request Copilot review.
+1. Keep the issue, pull-request link, and review status visible as evidence on the canvas.
+
+**Challenge success criteria:** The canvas shows an open pull request linked to the issue, with Copilot review requested. Do not merge the pull request as part of this assignment.
 
 ---
 

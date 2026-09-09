@@ -159,7 +159,10 @@ In Chapter 02, you attached an issue to practice giving Copilot focused context.
 
 1. In the review panel, select **+**, then **Browser** (if it isn't already open). Enter the **Local** URL shown in the **Terminal** tab and press `Enter`.
 
-1. Set the reading-status filter to **Unread**. Confirm that the unread count matches the visible book cards.
+1. Leave the search field empty, set the genre filter to **Fantasy**, and set the reading-status filter to **Unread**. Confirm that only **The Night Circus** appears and the unread count is **1**.
+
+   With the original bug, the unread count stays at **5** because statistics use the full book list. Selecting **Unread** alone wouldn't reveal this problem: all five unread books would still be visible.
+
 1. Return to **Terminal** and press `Ctrl+C` to stop the development server. This shortcut is Control+C on macOS, Windows, and Linux.
 
 You've completed one inner-loop cycle: plan, change, inspect, test, build, and preview.
@@ -172,7 +175,7 @@ A regression test proves the bug would fail before the fix and pass afterward.
 1. Submit:
 
    ```text
-   Add or update a focused test for the unread count when filters are active. The test should fail with the original bug and pass with the fix.
+   Add or update a focused test that renders the Book App, selects Fantasy and Unread with an empty search field, and confirms that only The Night Circus appears and the displayed unread count is 1. The test should fail with the original bug and pass with the fix.
    ```
 
 1. Inspect the test change in the **Changes** tab. Confirm that it checks the visible filtered results rather than weakening an existing expectation.

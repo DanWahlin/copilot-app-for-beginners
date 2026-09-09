@@ -112,7 +112,14 @@ Select **+** next to **Projects**, then choose the option that matches what you 
 
 ## Add the course practice items
 
-Run the setup script to create the practice items used in later chapters.
+The setup script prepares your fork with the practice items used in later chapters:
+
+- **Labels** to organize the course tasks.
+- **Issues** describing bugs and improvements you'll work on.
+- **Practice branches** with separate versions of the Book App, including intentional bugs to fix.
+- **Pull requests** with changes to review, a feedback comment to address, and an intentionally failing automated check.
+
+These are training scenarios, not problems with your setup. The intentional bugs stay on practice branches, not `main`. The script creates items on GitHub in your fork, so you'll preview its target and planned changes before running it.
 
 1. Open the **Actions** tab in your fork on GitHub.com. New forks disable workflows by default. If you see **Workflows aren't being run on this forked repository**, select **I understand my workflows, go ahead and enable them**.
 

@@ -16,15 +16,17 @@ By the end of this chapter, you'll be able to:
 - Compare retrieved guidance with local code without sending that code to an external service
 - Review permissions and distinguish completed tool activity from an agent's unsupported claims
 
-> ⏱️ **Estimated Time**: ~35 minutes
+> ⏱️ **Estimated Time**: ~45 minutes
 
 ## Prerequisites
 
 Complete [Chapter 04](../04-skills-custom-agents/README.md) so you're familiar with skills, custom agents, and the **Customize** tab. Use your course fork and the Node.js setup from Chapter 00. You don't need to merge Chapter 04's changes or bring its edited skill and agent profile into this chapter.
 
+Because this chapter starts a new worktree from `main`, the custom agent from Chapter 04 normally won't appear here unless you merged that profile. That is expected.
+
 The Context7 exercise needs internet access and permission to add an MCP server. The plugin exercise needs permission to install a plugin and use its documentation tool, which runs through Node.js. No cloud-provider subscription or deployment is required.
 
-If your organization blocks an integration, read its example and expected output, note that you couldn't run it, and continue with the other exercise. Neither exercise depends on the other. Don't change organization policies to complete the chapter.
+If your organization blocks an integration, read its example and expected output, note that you couldn't run it, and continue with the other exercise. Neither exercise depends on the other.
 
 ## From the Studio: Connecting the Gear
 
@@ -51,7 +53,7 @@ Find both under the sidebar **Customize** tab. Start with the tools you already 
 
 1. Select **Create from** next to your course project.
 2. Select **Branches**, then `main`, to start a session in a new worktree.
-3. Set the mode to **Interactive** and confirm that **Default agent** is selected. The read-only explainer from Chapter 04 can't make external requests.
+3. Set the mode to **Interactive** and confirm that **Default agent** is selected. If the read-only explainer agent from Chapter 04 appears because you merged its profile, don't select it.
 4. Submit:
 
    ```text
@@ -135,6 +137,9 @@ You can add skills and MCP servers separately, or install them as part of a **pl
 
 Choose a maintained plugin that provides the capability you need. Read its contents, not only the marketplace description. Some plugins start processes, call services, or run hooks, which are commands triggered by agent events.
 
+> [!TIP]
+> Browse the [Awesome Copilot plugin directory][awesome-plugins] to find community plugins. Review a plugin's source, included capabilities, and required access before you install it.
+
 ### Exercise: Plan a CSS Improvement with Modern Web Guidance
 
 The `modern-web-guidance` plugin from [GoogleChrome/modern-web-guidance][modern-web-guidance] supplies a skill that searches web-platform guides. You'll use it for one book-title layout question, not a redesign. This exercise doesn't require the Context7 exercise.
@@ -144,7 +149,9 @@ The skill uses `npx` to download and run its documentation tool. Node.js and int
 1. Select **Customize**, then **Plugins**.
 2. Search for `modern-web-guidance`. Use the marketplace filter to select `awesome-copilot`. If that marketplace is missing and your policy permits it, use the gear icon beside the filter to add `github/awesome-copilot`.
 
-   <img src="assets/app-customize-plugins.webp" alt="Customize Plugins filtered to modern-web-guidance in the awesome-copilot marketplace, with the Install control" width="800" />
+   <img src="assets/app-customize-plugins.webp" alt="Customize Plugins filtered to modern-web-guidance in the awesome-copilot marketplace before installation, with the Install control" width="800" />
+
+   The screenshot shows the plugin before installation. After installation, use the live **Installed** view as the check: the plugin should appear there with its enabled toggle on.
 
 1. Confirm that the plugin's source is `GoogleChrome/modern-web-guidance`. Review the plugin's description, then select **Install** if it isn't already installed.
 2. Confirm that the plugin is enabled in the **Installed** view under **Customize**.
@@ -185,7 +192,7 @@ If the plugin no longer supplies the skill, record the exercise as blocked rathe
 
 ### The Agent Cannot Use the Integration
 
-Confirm that **Default agent** is selected, not the read-only explainer from Chapter 04. Then check tool approvals and organization policy. Don't broaden the explainer's tools or change policy just to finish the exercise.
+Confirm that **Default agent** is selected. If you merged the read-only explainer agent from Chapter 04 and it appears in this session, don't select it. Then check tool approvals and organization policy. Don't broaden the explainer's tools or change policy just to finish the exercise.
 
 </details>
 
@@ -196,7 +203,7 @@ Confirm that **Default agent** is selected, not the read-only explainer from Cha
 1. An MCP server supplies tools for retrieving information or performing actions through a connected service.
 2. A plugin packages capabilities such as skills, agents, MCP servers, or canvas extensions. Installing one doesn't automatically run its contents.
 3. Review what each tool can do and what data it sends. General documentation questions don't need repository code.
-4. Check tool activity and source links, not only the agent's statement that an integration worked.
+4. Check tool activity, retrieved guidance, and any returned source links, not only the agent's statement that an integration worked.
 5. Add only the capabilities you need. A worktree doesn't isolate installed tools from other sessions.
 
 ## Assignment
@@ -208,16 +215,18 @@ Summarize the evidence from these exercises. You don't need another code change 
 1. In the same session, ask the default agent:
 
    ```text
-   Summarize this chapter's Context7 and Modern Web Guidance exercises in a short table. For each, name the capability used, the evidence that it ran, the source link returned, and what we learned about the Book App.
+   Summarize this chapter's Context7 and Modern Web Guidance exercises in a short table. For each, name the capability used, the evidence that it ran, the source evidence, and what we learned about the Book App.
+
+   For source evidence, include a returned source link when one is available. If the tool returned a guide without a source link, include the guide name and ID instead. Do not invent a link.
 
    Separate completed work from proposed browser checks. If an exercise couldn't run, state why and do not invent results or sources. Use only this session's existing evidence. Do not edit files, run commands, or make more external requests.
    ```
 
-2. Compare the table with the tool activity and retrieved sources. Correct any unsupported claims. Open **Changes** and confirm that the exercises left repository files unchanged.
+2. Compare the table with the tool activity, retrieved guidance, and sources. Correct any unsupported claims. Open **Changes** and confirm that the exercises left repository files unchanged.
 3. Explain in your own words why the Context7 connection is an MCP server and Modern Web Guidance is a plugin supplying a skill.
 4. Disable only the MCP connection or plugin you added for this exercise if you don't want to keep using it. Leave pre-existing tools unchanged. Chapter 06 doesn't require either integration to remain enabled.
 
-**Success criteria:** You can distinguish an MCP connection from a plugin, identify the evidence from each integration you used, and explain what stayed local. If an integration was blocked, your summary says so instead of claiming it ran. No Book App files changed.
+**Success criteria:** You can distinguish an MCP connection from a plugin, identify the tool and source evidence from each integration you used, and explain what stayed local. If an integration was blocked, your summary says so instead of claiming it ran. No Book App files changed.
 
 ## What's Next
 
@@ -239,6 +248,7 @@ In Chapter 06, you'll use canvases to keep a session's plan, progress, and valid
 - [Modern Web Guidance source][modern-web-guidance]
 - [Modern Web Guidance skill instructions][modern-web-skill]
 - [Slash commands for the GitHub Copilot app][slash-commands]
+- [Awesome Copilot plugins][awesome-plugins]
 
 [customizing]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/customize-github-copilot-app
 [mcp-setup]: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers
@@ -248,3 +258,4 @@ In Chapter 06, you'll use canvases to keep a session's plan, progress, and valid
 [modern-web-guidance]: https://github.com/GoogleChrome/modern-web-guidance
 [modern-web-skill]: https://github.com/GoogleChrome/modern-web-guidance/blob/main/skills/modern-web-guidance/SKILL.md
 [slash-commands]: https://docs.github.com/en/copilot/reference/github-copilot-app-reference/slash-commands
+[awesome-plugins]: https://awesome-copilot.github.com/plugins/

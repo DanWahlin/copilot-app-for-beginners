@@ -15,7 +15,7 @@ By the end of this chapter, you'll be able to:
 - Create and select a custom agent that can read and explain the sample without editing it
 - Apply one skill-guided improvement and validate it with the Chapter 03 workflow
 
-> ⏱️ **Estimated Time**: ~50 minutes
+> ⏱️ **Estimated Time**: ~60 minutes
 
 ## Prerequisites
 
@@ -45,6 +45,9 @@ These features solve different problems. You don't need a custom agent for every
 
 Find skills in the sidebar **Customize** tab. Select custom agents with `/agent` or the agent picker in the prompt box.
 
+> [!TIP]
+> Browse the Awesome Copilot directories for examples of community-created [agents][awesome-agents] and [skills][awesome-skills]. Review an agent's tools and a skill's instructions before you add or use it.
+
 ### Skill versus instructions versus a one-off prompt
 
 The repository's `.github/copilot-instructions.md` file gives the Copilot app project-wide rules. A skill adds instructions for one kind of task.
@@ -57,7 +60,7 @@ The repository's `.github/copilot-instructions.md` file gives the Copilot app pr
 
 <img src="assets/skill-vs-one-off-prompt.webp" alt="One-off prompt versus skill" width="800" />
 
-Instructions are the house rules. A skill is the chart for a one kind of song.
+Instructions are the house rules. A skill is the chart for one kind of song.
 
 > [!IMPORTANT]
 > A skill tells Copilot how to approach a task, but its instructions do not enforce what Copilot is allowed to do. For example, a skill that says "review without editing" does not disable file-editing tools. Skills can also include scripts or tell Copilot to use tools, so read unfamiliar skills before enabling them. The course review skill contains instructions only.
@@ -231,7 +234,7 @@ The agent profile is a Markdown file with YAML frontmatter, like a skill:
 
    ![The /agent suggestions with book-app-explainer highlighted and its read-only description visible](assets/app-custom-agent-picker.webp)
 
-   The screenshot shows the selection before the command is sent, so the agent picker still shows **Default agent**.
+   The screenshot shows the selection before the command is sent, so the agent picker still shows **Default agent**. After you send the command, use the live agent picker as the check: it should show **book-app-explainer**.
 
 1. With the agent selected, submit:
 
@@ -300,13 +303,11 @@ The example permits only reading and searching. Return to the default agent to r
 The exercises stopped at review and explanation. Now use one reviewed recommendation to complete the Chapter 03 inner loop.
 
 1. Stay in the same worktree with the default agent. Use the skill's heading recommendation. If the review didn't identify a needed change, choose a focused test for the current heading structure.
-2. Set the mode to **Plan** and submit:
+2. Set the mode to **Plan**. Type `/`, select `/book-app-reviewer`, then add the specific recommendation to this prompt and submit it:
 
    ```text
-   Use /book-app-reviewer. Plan only the recommendation I select from this chapter. Name the source, CSS, and test files it affects. Preserve filtering, statistics, and the existing design. Include test, build, and browser checks. Do not implement yet.
+   Plan only the recommendation I select from this chapter. Name the source, CSS, and test files it affects. Preserve filtering, statistics, and the existing design. Include test, build, and browser checks. Do not implement yet.
    ```
-
-   Add the specific recommendation to the prompt before you send it.
 
 1. Before implementation, open **Terminal** in the review panel. From the session's repository root, run:
 
@@ -357,9 +358,13 @@ In Chapter 05, you'll extend what the app can access. You'll connect an MCP serv
 - [Creating and using custom agents for Copilot CLI][custom-agents]
 - [Custom-agent configuration and tool aliases][agent-config]
 - [Slash commands for the GitHub Copilot app][slash-commands]
+- [Awesome Copilot agents][awesome-agents]
+- [Awesome Copilot skills][awesome-skills]
 
 [customizing]: https://docs.github.com/en/copilot/how-tos/github-copilot-app/customize-github-copilot-app
 [agent-skills]: https://docs.github.com/en/copilot/concepts/agents/about-agent-skills
 [custom-agents]: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli
 [agent-config]: https://docs.github.com/en/copilot/reference/custom-agents-configuration
 [slash-commands]: https://docs.github.com/en/copilot/reference/github-copilot-app-reference/slash-commands
+[awesome-agents]: https://awesome-copilot.github.com/agents/
+[awesome-skills]: https://awesome-copilot.github.com/skills/

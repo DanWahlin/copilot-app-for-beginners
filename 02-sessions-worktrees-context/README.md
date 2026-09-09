@@ -129,7 +129,7 @@ When in doubt, type `/` and use the in-app palette to discover what's available.
 
 ## Exercise: Start a Session from an Issue
 
-You'll start a session from a practice branch that contains an intentional empty-state regression, then attach the corresponding GitHub issue as context. Your forked repository already has the branch and issue if you ran the setup script in [00 - Setup](../00-setup/README.md).
+An **empty state** is the message shown when no books match your filters. You'll start a session from a practice branch where that message has intentionally been made less helpful, then attach the corresponding GitHub issue as context. Your forked repository already has the branch and issue if you ran the setup script in [00 - Setup](../00-setup/README.md).
 
 Perform these steps:
 
@@ -175,7 +175,7 @@ Perform these steps:
 
 1. Click on the *Changes tab* on the panel or on the *Changes pill* right on top of the prompt box to inspect the diff.
 
-1. Reload the browser tab and try the same search again. The empty state should now have a more friendly message.
+1. Reload the browser tab and try the same search again. Confirm that the empty-state message suggests changing the search term, genre, or reading status.
 
 ## Slash Commands
 

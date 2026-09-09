@@ -40,7 +40,7 @@ The sidebar control next to a project name that starts a session from a branch, 
 
 ## Custom agent
 
-A specialized agent configuration for a role or workflow, such as review, documentation, testing, or security. In the GitHub Copilot app, choose one with `/agent` or the agent picker when your build shows it. Custom agents are an advanced topic in this beginner course.
+A specialized agent configuration for a role or workflow, such as review, documentation, or testing. Its profile defines instructions and available tools. In the GitHub Copilot app, choose one with `/agent` or the agent picker. [Chapter 04](./04-skills-mcp-plugins/README.md#custom-agents-define-a-role-and-its-tools) includes a small read-only example.
 
 ## Diff
 
@@ -92,7 +92,7 @@ A session mode where the agent proposes a plan first. You review and approve bef
 
 ## Plugin
 
-A packaged extension that can add capabilities to the GitHub Copilot app. Plugins may include custom agents, skills, hooks, MCP server configurations, or LSP server configurations. Canvas extensions are a separate extension type. Enable only what a workflow needs. In the app, browse and install them from the sidebar **Customize** tab.
+A packaged extension that can add capabilities to the GitHub Copilot app. Plugins may include custom agents, skills, hooks, MCP server configurations, or LSP server configurations. In the app, plugins can also package canvas extensions. Enable only what a workflow needs. Browse and install plugins from the sidebar **Customize** tab.
 
 ## PR
 

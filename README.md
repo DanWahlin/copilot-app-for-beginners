@@ -69,7 +69,7 @@ This course focuses on the GitHub Copilot app. Along the way, you'll see how it 
 | 01 | 👋 [Tour the App](./01-tour-the-app/README.md) | Learn why you'd use the app, then tour key features: UI, Chats, settings, sessions, modes, and model controls |
 | 02 | 🌳 [Sessions, Worktrees, and Context](./02-sessions-worktrees-context/README.md) | Start isolated sessions and use `@`, `#`, and `/` for context |
 | 03 | ⚡ [Development and GitHub Workflows](./03-development-workflows/README.md) | Review, debug, test, and preview a change, then move it through My work, issues, PRs, review comments, checks, and guided fixes |
-| 04 | 🧰 [Skills, Model Context Protocol (MCP) Servers, and Plugins](./04-skills-mcp-plugins/README.md) | Start with local agent skills, then learn optional MCP servers, plugins and custom agents |
+| 04 | 🧰 [Skills, Model Context Protocol (MCP) Servers, and Plugins](./04-skills-mcp-plugins/README.md) | Update a review skill, use an MCP server, install and use a plugin, and create a read-only custom agent |
 | 05 | 🖼️ [Canvases](./05-canvases/README.md) | Run `/create-canvas` for a visual session board to keep the plan, progress and validation evidence visible |
 | 06 | 🔁 [Automations](./06-automations/README.md) | Start with a manual open-work summary, then learn schedules and optional cloud automations |
 

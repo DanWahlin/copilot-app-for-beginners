@@ -8,7 +8,7 @@ In Chapter 01 you saw the "shared working copy" problem: two agent tasks can blu
 
 By the end of this chapter, you'll be able to:
 
-- Start a session from a prompt, issue or pull request
+- Start a worktree-backed session from a branch and attach an issue as context
 - Explain what a git worktree is and why you'd use it
 - Understand why isolated sessions protect your main branch
 - Add relevant context to a session so Copilot can understand the task and its supporting information
@@ -49,7 +49,7 @@ This allows you to work on multiple tasks or branches simultaneously without sta
 
 ### Running Multiple Sessions in Parallel
 
-Because each session works in its own worktree, you can run several at once without them colliding: one session fixing a bug while another explores a different branch, each with its own folder and diff. This is the real payoff of worktrees. An optional advanced section in [Chapter 03](../03-development-workflows/README.md) covers parallel sessions and `/orchestrate` if you want that later.
+When each session uses its own worktree, you can work on several tasks without mixing their file changes: one session fixing a bug while another explores a different branch, each with its own folder and diff. This is the real payoff of worktrees. For this chapter, work through one session at a time.
 
 ### Where a Session Runs
 
@@ -214,9 +214,7 @@ Perform these steps:
    2. The **Context usage** section shows how many **tokens** the session is using (both cached and reasoning tokens), the **context window usage so far** with granular distribution across the system prompt, tools, messages etc. and your current **AI credit spend** for the session.
 
 > [!NOTE]
-> This practice branch contains an intentional regression. You do not need to create a pull request or merge the completed fix into `main`, because `main` already contains the correct behaviour. After you validate the fix, you can archive the session.
->
-> On the context card, select **Archive session** to remove it from the sidebar. The worktree and branch remain on your machine, but the session is no longer active.
+> This practice branch contains an intentional regression. You don't need to create a pull request or merge the fix into `main`, because `main` already contains the correct behavior. Ask Copilot to stop this session's development server before continuing.
 
 ---
 
@@ -263,37 +261,40 @@ Worktrees isolate files and branches, not ports. Stop one Vite server or start t
 
 ![Assignment](../assets/assignment.webp)
 
-Use the workflow from this chapter to add a light and dark theme to the Book App.
+Use the workflow from this chapter to add a light and dark theme to the Book App in an isolated worktree. The earlier exercise used `#` to attach an issue; this time, use `@` to attach the code the agent needs. Keep the work local. Chapter 03 covers the issue and pull request workflow.
 
 1. In the sidebar, select **Create from** for the `copilot-app-for-beginners` project and start a new worktree session from `main`.
+
+1. Submit `/context` and inspect the session details. Confirm that the working branch is separate from `main` and note the worktree path.
 
 1. Ask Copilot to run `samples/book-app-web` and open the preview.
 
 1. Inspect the app and confirm that it only supports a light theme.
 
-1. In **My work**, create an issue requesting a theme toggle. Include these acceptance criteria:
+1. Set the session to **Plan** mode. Type `@samples/book-app-web/src`, select the folder from the picker, and include the following request:
+
+   ```text
+   Plan a light and dark theme toggle for the Book App using the attached source folder.
 
    - The user can switch between light and dark themes.
    - The toggle has a clear, accessible label.
    - Text, controls, cards, and backgrounds remain readable in both themes.
+   - Search, filters, and reading statistics keep their current behavior.
 
-1. Return to the same session and set it to **Plan** mode. Type `#`, select the issue you created, and add this prompt:
-
-   ```text
-   Investigate this issue and create a small implementation and validation plan. Do not change any files yet.
+   Name the files you expect to change and the checks that will show the feature works. Keep the plan small. Do not change any files yet.
    ```
 
-1. Review the plan, exit Plan mode, and ask Copilot to implement it.
+1. Review the plan, select **Exit plan mode and I will prompt myself**, then ask Copilot to implement it.
 
-1. Inspect the diff, reload the browser preview, and verify that the toggle switches between readable light and dark themes.
+1. Inspect the diff and confirm that it only contains changes needed for the theme toggle. Reload the browser preview and verify that the toggle switches between readable light and dark themes. Try `hobbit` and `zzzz-no-match` in both themes to check the book cards and empty state.
 
-1. Ask Copilot to run the relevant tests and build. After the change is validated, choose how to finish:
+1. Ask Copilot to run the relevant tests and build. Inspect the command output before treating the change as complete. Chapter 03 explains these validation steps in more detail.
 
-   - **Keep it as practice:** Archive the session. The theme feature remains in its worktree and is not added to `main`.
-   - **Keep the feature:** Select **Create PR**, review the pull request and its checks then merge it into `main`. Close the issue after the pull request is merged, then archive the session.
+1. Submit `/chronicle standup`. Compare the recap with the diff and checks you observed. It should distinguish completed work from anything still needing attention.
 
-   > [!TIP]
-   > Add `Closes #ISSUE-NUMBER` to the pull request description if you want GitHub to close the issue automatically when the pull request is merged.
+1. Ask Copilot to stop this session's development server. The theme feature remains in its worktree and isn't added to `main`. You don't need to create an issue or pull request for this assignment.
+
+**Success criteria:** You can identify the session's branch and worktree, explain which context you attached, and show the theme change and its validation evidence without changing `main`.
 
 ## What's Next
 

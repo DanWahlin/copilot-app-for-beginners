@@ -1,6 +1,8 @@
-![Chapter 05: Canvases](assets/chapter-header.svg)
+![Chapter 06: Canvases](assets/chapter-header.svg)
 
 > **What if you and the agent shared a real-time progress board instead of a buried chat thread?**
+
+Chapter 05 introduced MCP servers and plugins. Now you'll use a canvas extension, which can be installed through a plugin or created for your own workflow.
 
 Chat works well for instruction and ambiguity. Once a GitHub Copilot session is doing real work, a long chat thread becomes hard to scan. You need a visible workspace for human-agent collaboration.
 
@@ -27,11 +29,12 @@ By the end of this chapter, you'll be able to:
 
 ## Prerequisites
 
-1. Complete Chapters [00](../00-setup/README.md) and [01](../01-tour-the-app/README.md) for the necessary setup and understanding of the app.
+1. Complete [Chapter 05](../05-mcp-plugins/README.md) for the plugin installation workflow and the earlier chapters for sessions, worktrees, and the local development loop. You don't need to merge earlier practice changes or keep Context7 or Modern Web Guidance enabled.
+1. The community-canvas example requires permission to install a plugin. If policy blocks installation, read that example and continue to the generated-canvas exercise. If canvas creation is also unavailable, use the Markdown fallback described above.
 1. Confirm the sample app is ready.
 
-    - Open or create a session for the course repository in a new worktree. 
-    - Run the following commands to confirm the sample app is ready:
+    - Use **Create from** > **Branches** > `main` to start a new worktree session for the course repository. Select **Interactive** mode and **Default agent**.
+    - In the review panel's **Terminal** tab, run the following commands from the worktree's repository root:
 
         ```bash
         cd samples/book-app-web
@@ -124,7 +127,7 @@ Before building your own canvas, try one from the community. [Awesome GitHub Cop
     - Click **Install** to install if from the awesome-copilot marketplace, `accessibility-kanban@awesome-copilot`
     - Ensure the plugin is listed under your installed and enabled plugins.
 
-1. Start a new session for the course repository, and submit the prompt `Restart canvas extensions`. This will reload the extensions and pick up the newly installed one.
+1. Return to the worktree session you prepared in the prerequisites and submit the prompt `Restart canvas extensions`. This will reload the extensions and pick up the newly installed one.
 1. Navigate to **View** > **Toggle Review Panel** > **+** > **Extensions>** and select the **Accessibility Kanban** extension.
 
     ![Accessibility Kanban extension selection](assets/open-repo-issues-canvas.png)
@@ -286,9 +289,9 @@ Success criteria: The canvas shows evidence-backed progress from assessment thro
 
 ## What's Next
 
-In the next chapter, you'll turn repeatable prompts into automations. You'll start with a manual open-work summary before trying schedules or cloud workflows.
+In Chapter 07, you'll turn repeatable prompts into automations. You'll start with a manual open-work summary before trying schedules or cloud workflows. You don't need to merge this chapter's feature or keep its canvas open to continue.
 
-**[← Back to Chapter 04](../04-skills-mcp-plugins/README.md)** | **[Next: Automations →](../06-automations/README.md)**
+**[← Back to Chapter 05](../05-mcp-plugins/README.md)** | **[Continue to Chapter 07 →](../07-automations/README.md)**
 
 ---
 

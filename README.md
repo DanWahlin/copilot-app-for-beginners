@@ -16,6 +16,8 @@ This course treats the app as a place to guide and review work, not a magic code
 
 ![GitHub Copilot app](assets/github-copilot-app.webp)
 
+<a id="what-youll-learn"></a>
+
 ## 🎯 What You'll Learn
 
 By the end of the course, you'll be able to:
@@ -27,7 +29,7 @@ By the end of the course, you'll be able to:
 - Attach and manage agent context
 - Review diffs, run tests, preview a web app, and validate changes
 - Use *My work* view for issues, PRs, review comments, and failing checks
-- Understand where settings, instructions, skills, canvases, and automations fit
+- Understand where settings, instructions, skills, custom agents, MCP servers, plugins, canvases, and automations fit
 
 The main sample used throughout the course can be found at:
 
@@ -48,6 +50,8 @@ No agentic development experience is required. Basic GitHub, Git, and JavaScript
 
 The GitHub Copilot app works with a Copilot plan or with your own model provider. Business and Enterprise accounts need the **GitHub Copilot app** policy left enabled. That policy is separate from the Copilot CLI policy.
 
+<a id="understanding-the-github-copilot-family"></a>
+
 ## 🤖 Understanding the GitHub Copilot Family
 
 | Product | Where it runs | Best for |
@@ -61,6 +65,8 @@ The GitHub Copilot app works with a Copilot plan or with your own model provider
 
 This course focuses on the GitHub Copilot app. Along the way, you'll see how it connects to GitHub, local tools, browser previews, terminal output, and cloud capabilities when available.
 
+<a id="course-structure"></a>
+
 ## 📚 Course Structure
 
 | Chapter | Title | What learners do |
@@ -69,9 +75,10 @@ This course focuses on the GitHub Copilot app. Along the way, you'll see how it 
 | 01 | 👋 [Tour the App](./01-tour-the-app/README.md) | Learn why you'd use the app, then tour key features: UI, Chats, settings, sessions, modes, and model controls |
 | 02 | 🌳 [Sessions, Worktrees, and Context](./02-sessions-worktrees-context/README.md) | Start isolated sessions and use `@`, `#`, and `/` for context |
 | 03 | ⚡ [Development and GitHub Workflows](./03-development-workflows/README.md) | Review, debug, test, and preview a change, then move it through My work, issues, PRs, review comments, checks, and guided fixes |
-| 04 | 🧰 [Skills, Model Context Protocol (MCP) Servers, and Plugins](./04-skills-mcp-plugins/README.md) | Update a review skill, use an MCP server, install and use a plugin, and create a read-only custom agent |
-| 05 | 🖼️ [Canvases](./05-canvases/README.md) | Run `/create-canvas` for a visual session board to keep the plan, progress and validation evidence visible |
-| 06 | 🔁 [Automations](./06-automations/README.md) | Start with a manual open-work summary, then learn schedules and optional cloud automations |
+| 04 | 🧰 [Skills and Custom Agents](./04-skills-custom-agents/README.md) | Update a review skill, create a read-only custom agent, and validate one skill-guided improvement |
+| 05 | 🔌 [MCP Servers and Plugins](./05-mcp-plugins/README.md) | Retrieve documentation through an MCP server and use a plugin's skill for a focused recommendation |
+| 06 | 🖼️ [Canvases](./06-canvases/README.md) | Run `/create-canvas` for a visual session board to keep the plan, progress and validation evidence visible |
+| 07 | 🔁 [Automations](./07-automations/README.md) | Start with a manual open-work summary, then learn schedules and optional cloud automations |
 
 ## 📖 How This Course Works
 

@@ -79,7 +79,7 @@ The automations tab is your home for recurring agent tasks that can save and eit
 
 ### Customize
 
-This is where you manage the ways to extend the app: skills, Model Context Protocol (MCP) servers, plugins, and extensions. You don't need any of them yet. Chapter 04 covers skills hands-on and explains when the others fit.
+This is where you manage the ways to extend the app: skills, Model Context Protocol (MCP) servers, plugins, and extensions. You don't need any of them yet. Chapter 04 covers skills and custom agents, Chapter 05 covers MCP servers and plugins, and Chapter 06 introduces canvases.
 
 ### Sessions
 

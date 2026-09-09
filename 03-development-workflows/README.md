@@ -492,9 +492,9 @@ Run both loops on a small UI task:
 
 ## What's Next
 
-In the next chapter, you'll extend the app with reusable expertise and optional tool integrations: skills, Model Context Protocol (MCP) servers, and plugins.
+In the next chapter, you'll reuse this workflow with a review skill and create a custom agent that explains the Book App without editing it. MCP servers and plugins follow in Chapter 05.
 
-**[← Back to Chapter 02](../02-sessions-worktrees-context/README.md)** | **[Continue to Chapter 04 →](../04-skills-mcp-plugins/README.md)**
+**[← Back to Chapter 02](../02-sessions-worktrees-context/README.md)** | **[Continue to Chapter 04 →](../04-skills-custom-agents/README.md)**
 
 ---
 

@@ -10,8 +10,8 @@ Use a fork or disposable training repository. Do not use a production repository
 |---|---|---|
 | Nine labels and five issues | [Course issue drafts](../samples/app-course-issues.md) | Chapters 02, 03 |
 | Seven practice branches | [Branch names and changes](#manual-fallback-create-practice-branches) | Chapters 02, 03 |
-| Three pull requests and one conversation comment | [Pull request setup](#manual-fallback-create-pull-request-scenarios) | Chapters 03, 06 |
-| One failing-check PR | [Failing-check example](#manual-fallback-create-a-failing-check-example) | Chapters 03, 06 |
+| Three pull requests and one conversation comment | [Pull request setup](#manual-fallback-create-pull-request-scenarios) | Chapters 03, 07 |
+| One failing-check PR | [Failing-check example](#manual-fallback-create-a-failing-check-example) | Chapters 03, 07 |
 
 ## Prerequisites
 

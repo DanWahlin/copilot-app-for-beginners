@@ -40,7 +40,7 @@ The sidebar control next to a project name that starts a session from a branch, 
 
 ## Custom agent
 
-A specialized agent configuration for a role or workflow, such as review, documentation, or testing. Its profile defines instructions and available tools. In the GitHub Copilot app, choose one with `/agent` or the agent picker. [Chapter 04](./04-skills-mcp-plugins/README.md#custom-agents-define-a-role-and-its-tools) includes a small read-only example.
+A specialized agent configuration for a role or workflow, such as review, documentation, or testing. Its profile defines instructions and available tools. In the GitHub Copilot app, choose one with `/agent` or the agent picker. [Chapter 04](./04-skills-custom-agents/README.md#custom-agents-define-a-role-and-its-tools) includes a small read-only example.
 
 ## Diff
 

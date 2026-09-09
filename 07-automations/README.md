@@ -1,8 +1,8 @@
-![Chapter 06: Automations](assets/chapter-header.svg)
+![Chapter 07: Automations](assets/chapter-header.svg)
 
 > **What if a prompt you run every morning could run itself?**
 
-Chapter 05 made session work visible with canvases. This chapter makes repeatable work reusable.
+Chapter 06 made session work visible with canvases. This chapter makes repeatable work reusable.
 
 Automations let you save agent tasks in the GitHub Copilot app and run them on demand or later on a schedule. You'll start with a manual review readiness report that runs only when you choose, then schedule it so the summary is waiting each morning. The chapter closes with event triggers and cloud automations.
 
@@ -21,6 +21,8 @@ By the end of this chapter, you'll be able to:
 ---
 
 ## Prerequisites
+
+Complete [Chapter 06](../06-canvases/README.md) and the preceding chapters. You'll reuse **My work** from Chapter 03 and the tool-access principles from Chapters 04 and 05. You don't need to keep a canvas open or an MCP server or plugin enabled for this chapter.
 
 If you skipped the setup script earlier, [run it now](../00-setup/README.md#seed-the-repository) before the first automation exercise. The review readiness report needs open pull requests to inspect.
 
@@ -299,22 +301,23 @@ Success criteria: You're able to explain why the automation is safe to run again
 
 ## Course Complete
 
-That automation was your last exercise. Here's a look back at everything you practiced across all six chapters.
+That automation was your last exercise. Here's a look back at everything you practiced across Chapters 00 through 07.
 
-You've gone from setup and orientation through sessions, worktrees, and context; the development-and-GitHub workflow loop; skills, MCP servers, and plugins; canvases; and automations. Along the way, one habit stayed constant: keeping a human in control of quality and delivery.
+You've gone from setup and orientation through sessions, worktrees, and context; the development-and-GitHub workflow loop; skills and custom agents; MCP servers and plugins; canvases; and automations. Along the way, one habit stayed constant: keeping a human in control of quality and delivery.
 
 | Area | What you practiced |
 |---|---|
 | Sessions and worktrees | Work in scoped branches and isolated worktrees. Parallel sessions were optional |
 | Context | Use prompts, files, issues, and instructions intentionally |
 | Development and GitHub | Plan, change, and validate with tests, builds, browser previews, and diffs, then move work through issues, PRs, checks, and guided fixes |
-| Customization | Repository instructions, skills, MCP servers, and plugins |
+| Instructions and roles | Repository instructions, reusable skills, and read-only custom agents |
+| Connected tools and packages | MCP servers for documentation and plugins that supply capabilities |
 | Visibility | Canvases for shared, inspectable state |
 | Repetition | Manual and scheduled automations, used safely |
 
 That last habit is the whole point: human judgment stays in the loop at every major control point, before implementation starts, before a pull request is opened, and before any merge automation is enabled. Practice on small, real issues first, then add advanced workflows as the work stays independent, validated, and reviewable.
 
-**[← Back to Chapter 05](../05-canvases/README.md)** | **[Return to Course Home →](../README.md)**
+**[← Back to Chapter 06](../06-canvases/README.md)** | **[Return to Course Home →](../README.md)**
 
 ---
 

@@ -26,7 +26,7 @@
 #   capture-window.sh <output_dir> <base_name> [timeout_seconds]
 #
 # Example:
-#   capture-window.sh 04-skills-mcp-plugins/assets app-settings-skills 40
+#   capture-window.sh 04-skills-custom-agents/assets app-settings-skills 40
 set -euo pipefail
 
 out_dir="${1:?output_dir required}"
